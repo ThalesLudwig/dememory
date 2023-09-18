@@ -11,9 +11,10 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
+    "expo": {
+      "userInterfaceStyle": "automatic"
+    },
     "ios": {
       "supportsTablet": true
     },

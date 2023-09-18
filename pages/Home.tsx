@@ -1,8 +1,10 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { SafeAreaView, StyleSheet, View, FlatList, ScrollView } from "react-native";
 import { Button, IconButton, Searchbar, Text } from "react-native-paper";
-import { useSelector } from "react-redux";
 import { format } from "date-fns";
+import { useSelector } from "react-redux";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
 import { RootState } from "../types/RootState";
@@ -12,11 +14,20 @@ import { useMonthDays } from "../hooks/useMonthDays";
 import EntryCard from "../Components/EntryCard";
 import { entryMock, favoriteMock } from "../utils/entryMocks";
 import FavoriteCard from "../Components/FavoriteCard";
+import { setDate } from "../config/dateSlice";
 
 export default function Home() {
   const { navigate } = useNavigation<any>();
   const { value: selectedDay } = useSelector((state: RootState) => state.date);
   const daysInMonth = useMonthDays(new Date(selectedDay));
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const dispatch = useDispatch();
+
+  const confirmDate = (date: Date) => {
+    const newDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getDate()}`;
+    dispatch(setDate(format(new Date(), newDate)));
+    setDatePickerVisibility(false);
+  };
 
   const currentDate = useCallback(
     (stringFormat: string) => {
@@ -55,10 +66,21 @@ export default function Home() {
               <Button mode="contained" onPress={() => navigate("NewEntry")}>
                 New entry
               </Button>
-              <IconButton icon="calendar" size={ICON_SIZE} mode="contained" onPress={() => console.log("Pressed")} />
+              <IconButton
+                icon="calendar"
+                size={ICON_SIZE}
+                mode="contained"
+                onPress={() => setDatePickerVisibility(true)}
+              />
             </View>
           </View>
         </View>
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="date"
+          onConfirm={confirmDate}
+          onCancel={() => setDatePickerVisibility(false)}
+        />
         <FlatList
           data={daysInMonth}
           showsHorizontalScrollIndicator={false}
