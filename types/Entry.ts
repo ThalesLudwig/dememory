@@ -8,4 +8,5 @@ export type Entry = {
   mood?: MoodEnum;
   isCrypto?: boolean;
   isPinned?: boolean;
+  date: Date;
 };

@@ -1,16 +1,24 @@
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import { Image, KeyboardAvoidingView, Platform, StyleSheet, View, ScrollView } from "react-native";
 import { Button, Chip, SegmentedButtons, Surface, Text, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-navigation";
+import "react-native-get-random-values";
+import { useDispatch } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 
 import { EntryStorage } from "../constants/EntryStorage";
 import { getMoodColor, getMoodsArray } from "../utils/moodHelper";
 import { MoodEnum } from "../constants/moods";
+import { Entry } from "../types/Entry";
+import { addEntry } from "../config/entriesSlice";
 
 export default function NewEntry() {
+  const dispatch = useDispatch<any>();
   const [entryStorage, setEntryStorage] = useState(EntryStorage.LOCAL.toString());
   const [content, setContent] = useState("");
   const [selectedMood, setSelectedMood] = useState(MoodEnum.NEUTRAL);
+  const { navigate } = useNavigation<any>();
 
   const storageButtons = [
     {
@@ -24,6 +32,19 @@ export default function NewEntry() {
       icon: "ethereum",
     },
   ];
+
+  const submitForm = () => {
+    const entry: Entry = { id: uuidv4(), mood: selectedMood, content, date: new Date() };
+    dispatch(addEntry(entry));
+    resetForm();
+    navigate("ViewEntry", { id: entry.id });
+  };
+
+  const resetForm = () => {
+    setEntryStorage(EntryStorage.LOCAL.toString());
+    setContent("");
+    setSelectedMood(1);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -66,7 +87,8 @@ export default function NewEntry() {
           contentStyle={{ flexDirection: "row-reverse" }}
           style={styles.submit}
           mode="contained"
-          onPress={() => console.log("Pressed")}
+          onPress={submitForm}
+          disabled={!content.trim()}
         >
           SUBMIT
         </Button>

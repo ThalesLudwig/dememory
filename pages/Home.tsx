@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { SafeAreaView, StyleSheet, View, FlatList, ScrollView } from "react-native";
 import { Button, IconButton, Searchbar, Text } from "react-native-paper";
 import { format } from "date-fns";
@@ -7,35 +7,35 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
-import { RootState } from "../types/RootState";
 import { ICON_SIZE } from "../constants/icons";
 import MonthDayButton from "../Components/MonthDayButton";
 import { useMonthDays } from "../hooks/useMonthDays";
 import EntryCard from "../Components/EntryCard";
-import { entryMock, favoriteMock } from "../utils/entryMocks";
+import { favoriteMock } from "../utils/entryMocks";
 import FavoriteCard from "../Components/FavoriteCard";
 import { setDate } from "../config/dateSlice";
+import { RootState } from "../config/store";
+import { useCurrentDate } from "../hooks/useCurrentDate";
 
 export default function Home() {
   const { navigate } = useNavigation<any>();
   const { value: selectedDay } = useSelector((state: RootState) => state.date);
+  const { value: entries } = useSelector((state: RootState) => state.entries);
   const daysInMonth = useMonthDays(new Date(selectedDay));
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const dispatch = useDispatch();
+  const currentDate = useCurrentDate();
 
   const confirmDate = (date: Date) => {
-    const newDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getDate()}`;
-    dispatch(setDate(format(new Date(), newDate)));
+    dispatch(setDate(format(new Date(date), "yyyy-MM-dd")));
     setDatePickerVisibility(false);
   };
 
-  const currentDate = useCallback(
-    (stringFormat: string) => {
-      const rawDate = new Date(selectedDay);
-      return format(new Date(rawDate.valueOf() + rawDate.getTimezoneOffset() * 60 * 1000), stringFormat);
-    },
-    [selectedDay],
-  );
+  const todaysEntries = useMemo(() => {
+    return entries.filter(
+      (entry) => !!entry.date && format(new Date(entry.date), "yyyy-MM-dd") === currentDate("yyyy-MM-dd"),
+    );
+  }, [selectedDay, entries]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -89,13 +89,13 @@ export default function Home() {
           extraData={selectedDay}
           style={{ flexGrow: 0 }}
           contentContainerStyle={styles.slider}
-          initialScrollIndex={11}
+          initialScrollIndex={parseInt(currentDate("d"))}
           getItemLayout={(_, i) => ({ length: 49, offset: 49 * i, index: i })}
           horizontal
         />
         <View style={styles.entryList}>
-          {entryMock.map((item) => (
-            <EntryCard key={item.id} {...item} />
+          {todaysEntries.map((item) => (
+            <EntryCard key={item.id} {...item} onPress={() => navigate("ViewEntry", { id: item.id })} />
           ))}
         </View>
       </ScrollView>

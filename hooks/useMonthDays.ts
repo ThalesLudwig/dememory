@@ -5,10 +5,15 @@ import { Day } from "../types/Day";
 
 export const useMonthDays = (date: Date) => {
   const currentDate = useMemo(() => date, [date]);
+  const parsedCurrentDate = new Date(currentDate.valueOf() + currentDate.getTimezoneOffset() * 60 * 1000);
 
-  const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-  const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
-  const dateInterval = eachDayOfInterval({ start: firstDayOfMonth, end: lastDayOfMonth });
+  const firstDayOfMonth = new Date(parsedCurrentDate.getFullYear(), parsedCurrentDate.getMonth(), 1, 0);
+  const lastDayOfMonth = new Date(parsedCurrentDate.getFullYear(), parsedCurrentDate.getMonth() + 1, 0);
+
+  const dateInterval = eachDayOfInterval({
+    start: firstDayOfMonth,
+    end: lastDayOfMonth,
+  });
 
   const daysInMonth: Day[] = dateInterval.map((date) => {
     return {

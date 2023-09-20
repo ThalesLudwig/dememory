@@ -1,17 +1,16 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { Text, Card, Chip, Avatar, IconButton, useTheme } from "react-native-paper";
+import { Text, Card, Chip, Avatar, IconButton } from "react-native-paper";
 
 import { ICON_SIZE } from "../constants/icons";
 import { Entry } from "../types/Entry";
 import { getMoodColor, getMoodName } from "../utils/moodHelper";
 
-const EntryCard = (props: Entry) => {
+const EntryCard = (props: Entry & { onPress: Function }) => {
   const moodColor = !!props.mood ? getMoodColor(props.mood) : "";
-  const theme = useTheme();
 
   return (
-    <Card>
+    <Card onPress={() => props.onPress()}>
       <Card.Content>
         <Text variant="bodyMedium">{props.content}</Text>
       </Card.Content>

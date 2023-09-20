@@ -11,9 +11,29 @@ import Favorites from "../pages/Favorites";
 import { ICON_SIZE } from "../constants/icons";
 import NewEntry from "../pages/NewEntry";
 import Header from "./Header";
+import ViewEntry from "../pages/ViewEntry";
 
-const Tab = createMaterialBottomTabNavigator();
-const Stack = createStackNavigator();
+export type RootStackParamList = {
+  Home: undefined;
+  NewEntry: undefined;
+  ViewEntry: { id: string };
+  Search: undefined;
+  Favorites: undefined;
+  Settings: undefined;
+};
+
+export type RootTabParamList = {
+  Home: undefined;
+  HomeStack: undefined;
+  SearchStack: undefined;
+  FavoritesStack: undefined;
+  Search: undefined;
+  Favorites: undefined;
+  Settings: undefined;
+};
+
+const Tab = createMaterialBottomTabNavigator<RootTabParamList>();
+const Stack = createStackNavigator<RootStackParamList>();
 
 const getRouteIcon = (route: string) => ({
   tabBarIcon: ({ focused }: { focused: boolean }) => {
@@ -40,6 +60,7 @@ function HomeStack() {
     >
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="NewEntry" component={NewEntry} />
+      <Stack.Screen name="ViewEntry" component={ViewEntry} initialParams={{ id: "" }} />
     </Stack.Navigator>
   );
 }
