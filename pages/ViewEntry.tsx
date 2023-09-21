@@ -1,9 +1,10 @@
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, View, Image, ScrollView } from "react-native";
+import { SafeAreaView, StyleSheet, View, Image, ScrollView, Pressable } from "react-native";
 import { Button, Chip, Surface, Text } from "react-native-paper";
 import { format } from "date-fns";
 import { useDispatch } from "react-redux";
+import ImageView from "react-native-image-viewing";
 
 import { RootStackParamList } from "../Components/Router";
 import { useSelector } from "react-redux";
@@ -25,6 +26,7 @@ export const ViewEntry = ({ route }: Props) => {
   const entries = useSelector((state: RootState) => state.entries.value);
   const [entry, setEntry] = useState<Entry>(entries.find((entry) => entry.id === route.params.id) || initialState);
   const moodColor = getMoodColor(entry.mood || 1);
+  const [isImageOpen, setIsImageOpen] = useState(false);
 
   useEffect(() => {
     const stateEntry = entries.find((entry) => entry.id === route.params.id);
@@ -55,9 +57,9 @@ export const ViewEntry = ({ route }: Props) => {
           {!!entry.imageUrl && (
             <>
               <Text variant="titleMedium">Photo:</Text>
-              <View style={styles.images}>
+              <Pressable style={styles.images} onPress={() => setIsImageOpen(true)}>
                 <Image source={{ uri: entry.imageUrl }} style={styles.thumbnail} />
-              </View>
+              </Pressable>
             </>
           )}
         </View>
@@ -70,6 +72,12 @@ export const ViewEntry = ({ route }: Props) => {
           </Button>
         </View>
       </ScrollView>
+      <ImageView
+        images={[{ uri: entry.imageUrl }]}
+        imageIndex={0}
+        visible={isImageOpen}
+        onRequestClose={() => setIsImageOpen(false)}
+      />
     </SafeAreaView>
   );
 };

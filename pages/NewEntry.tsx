@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Image, KeyboardAvoidingView, Platform, StyleSheet, View, ScrollView, Pressable } from "react-native";
-import { Button, Chip, SegmentedButtons, Surface, Text, TextInput } from "react-native-paper";
+import { Button, Chip, IconButton, SegmentedButtons, Surface, Text, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-navigation";
 import "react-native-get-random-values";
 import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import * as ImagePicker from "expo-image-picker";
+import ImageView from "react-native-image-viewing";
 
 import { EntryStorage } from "../constants/EntryStorage";
 import { getMoodColor, getMoodsArray } from "../utils/moodHelper";
@@ -21,6 +22,7 @@ export default function NewEntry() {
   const [content, setContent] = useState("");
   const [selectedMood, setSelectedMood] = useState(MoodEnum.NEUTRAL);
   const [image, setImage] = useState("");
+  const [isImageOpen, setIsImageOpen] = useState(false);
 
   const storageButtons = [
     {
@@ -82,7 +84,14 @@ export default function NewEntry() {
           </View>
           <Text variant="titleMedium">Photo:</Text>
           <View style={styles.images}>
-            {!!image && <Image source={{ uri: image }} style={styles.thumbnail} />}
+            {!!image && (
+              <View style={styles.imageViewer}>
+                <Pressable onPress={() => setIsImageOpen(true)}>
+                  <Image source={{ uri: image }} style={styles.thumbnail} />
+                </Pressable>
+                <IconButton icon="delete" size={18} mode="contained" onPress={() => setImage("")} />
+              </View>
+            )}
             {!image && (
               <Pressable onPress={pickImage}>
                 <Surface style={styles.addImage} elevation={0}>
@@ -105,6 +114,12 @@ export default function NewEntry() {
           SUBMIT
         </Button>
       </ScrollView>
+      <ImageView
+        images={[{ uri: image }]}
+        imageIndex={0}
+        visible={isImageOpen}
+        onRequestClose={() => setIsImageOpen(false)}
+      />
     </SafeAreaView>
   );
 }
@@ -146,5 +161,10 @@ const styles = StyleSheet.create({
     borderColor: "lightgrey",
     borderWidth: 1,
     borderStyle: "dashed",
+  },
+  imageViewer: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    gap: 10,
   },
 });
