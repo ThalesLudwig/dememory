@@ -5,8 +5,8 @@ import { Button, Surface, Text } from "react-native-paper";
 type EmptyStateProps = {
   title: string;
   description: string;
-  buttonLabel: string;
-  onClick: Function;
+  buttonLabel?: string;
+  onClick?: Function;
 };
 
 const EmptyState = (props: EmptyStateProps) => {
@@ -19,9 +19,11 @@ const EmptyState = (props: EmptyStateProps) => {
       <Text variant="bodyLarge" style={styles.description}>
         {props.description}
       </Text>
-      <Button mode="contained" onPress={() => props.onClick()}>
-        {props.buttonLabel.toUpperCase()}
-      </Button>
+      {!!props.buttonLabel && !!props.onClick && (
+        <Button mode="contained" onPress={() => !!props.onClick && props.onClick()}>
+          {props.buttonLabel.toUpperCase()}
+        </Button>
+      )}
     </Surface>
   );
 };

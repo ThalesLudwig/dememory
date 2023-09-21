@@ -17,7 +17,7 @@ const EntryCard = (props: Entry & { onPress: Function }) => {
       </Card.Content>
       {!!props.imageUrl && <Card.Cover style={styles.image} source={{ uri: props.imageUrl }} />}
       <Card.Actions style={styles.actions}>
-        <Chip icon="clock">{format(new Date(props.date), "MMM Qo, kk:mm")}</Chip>
+        <Chip icon="clock">{format(new Date(props.date), "MMM do, kk:mm")}</Chip>
         {!!props.tag && <Chip icon="tag">{props.tag}</Chip>}
         {!!props.mood && (
           <Chip icon="heart" style={{ backgroundColor: moodColor }}>
