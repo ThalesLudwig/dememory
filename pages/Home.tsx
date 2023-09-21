@@ -11,7 +11,6 @@ import { ICON_SIZE } from "../constants/icons";
 import MonthDayButton from "../Components/MonthDayButton";
 import { useMonthDays } from "../hooks/useMonthDays";
 import EntryCard from "../Components/EntryCard";
-import { favoriteMock } from "../utils/entryMocks";
 import FavoriteCard from "../Components/FavoriteCard";
 import { setDate } from "../config/dateSlice";
 import { RootState } from "../config/store";
@@ -32,6 +31,10 @@ export default function Home() {
     setDatePickerVisibility(false);
   };
 
+  const favoriteEntries = useMemo(() => {
+    return entries.filter((entry) => entry.isPinned).splice(0, 4);
+  }, [entries]);
+
   const todaysEntries = useMemo(() => {
     return entries.filter(
       (entry) => !!entry.date && format(new Date(entry.date), "yyyy-MM-dd") === currentDate("yyyy-MM-dd"),
@@ -51,9 +54,9 @@ export default function Home() {
           </View>
         </View>
         <FlatList
-          data={favoriteMock}
+          data={favoriteEntries}
           showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => <FavoriteCard {...item} />}
+          renderItem={({ item }) => <FavoriteCard {...item} onPress={() => navigate("ViewEntry", { id: item.id })} />}
           keyExtractor={(item) => item.id}
           extraData={selectedDay}
           style={{ flexGrow: 0 }}

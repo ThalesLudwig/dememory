@@ -6,14 +6,16 @@ import { Entry } from "../types/Entry";
 import { getMoodColor } from "../utils/moodHelper";
 import { ICON_SIZE } from "../constants/icons";
 
-const FavoriteCard = (props: Entry) => {
+const FavoriteCard = (props: Entry & { onPress: Function }) => {
   const moodColor = !!props.mood ? getMoodColor(props.mood) : "";
   const theme = useTheme();
 
   return (
-    <Card style={styles.container}>
+    <Card style={styles.container} onPress={() => props.onPress()}>
       <Card.Content>
-        <Text variant="bodyMedium">Lorem ipsum dolor sit amet...</Text>
+        <Text variant="bodyMedium" numberOfLines={2}>
+          {props.content}
+        </Text>
       </Card.Content>
       <View style={styles.actions}>
         <View style={styles.row}>

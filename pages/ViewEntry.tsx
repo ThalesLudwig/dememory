@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, View, Image, ScrollView } from "react-native";
 import { Button, Chip, Surface, Text } from "react-native-paper";
 import { format } from "date-fns";
+import { useDispatch } from "react-redux";
 
 import { RootStackParamList } from "../Components/Router";
 import { useSelector } from "react-redux";
 import { RootState } from "../config/store";
 import { Entry } from "../types/Entry";
 import { getMoodColor, getMoodName } from "../utils/moodHelper";
+import { updateEntry } from "../config/entriesSlice";
 
 type Props = NativeStackScreenProps<RootStackParamList, "ViewEntry">;
 
@@ -19,6 +21,7 @@ const initialState: Entry = {
 };
 
 export const ViewEntry = ({ route }: Props) => {
+  const dispatch = useDispatch();
   const entries = useSelector((state: RootState) => state.entries.value);
   const [entry, setEntry] = useState<Entry>(entries.find((entry) => entry.id === route.params.id) || initialState);
   const moodColor = getMoodColor(entry.mood || 1);
@@ -27,6 +30,10 @@ export const ViewEntry = ({ route }: Props) => {
     const stateEntry = entries.find((entry) => entry.id === route.params.id);
     if (stateEntry) setEntry(stateEntry);
   }, [entries, route.params]);
+
+  const toogleFavorites = () => {
+    dispatch(updateEntry({ ...entry, isPinned: !entry.isPinned }));
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -38,8 +45,8 @@ export const ViewEntry = ({ route }: Props) => {
           <Surface style={styles.content}>
             <Text variant="bodyLarge">{entry.content}</Text>
           </Surface>
-          <Button mode="contained-tonal" style={{ alignSelf: "flex-start" }} onPress={() => {}}>
-            Add to Favorites
+          <Button mode="contained-tonal" style={{ alignSelf: "flex-start" }} onPress={toogleFavorites}>
+            {entry.isPinned ? "Remove from Favorites" : "Add to Favorites"}
           </Button>
           <Text variant="titleMedium">How were you feeling?</Text>
           <Chip icon="heart" style={{ backgroundColor: moodColor, ...styles.chip }}>
