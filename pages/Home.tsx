@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { SafeAreaView, StyleSheet, View, FlatList, ScrollView } from "react-native";
 import { Button, Chip, IconButton, Searchbar, Text } from "react-native-paper";
 import { format } from "date-fns";
@@ -16,6 +16,7 @@ import { setDate } from "../config/dateSlice";
 import { RootState } from "../config/store";
 import { useCurrentDate } from "../hooks/useCurrentDate";
 import EmptyState from "../Components/EmptyState";
+import { useFavoriteEntries } from "../hooks/useFavoriteEntries";
 
 export default function Home() {
   const { navigate } = useNavigation<any>();
@@ -25,18 +26,14 @@ export default function Home() {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const dispatch = useDispatch();
   const currentDate = useCurrentDate();
+  const favoriteEntries = useFavoriteEntries();
 
   const confirmDate = (date: Date) => {
     dispatch(setDate(format(new Date(date), "yyyy-MM-dd")));
     setDatePickerVisibility(false);
   };
 
-  const favoriteEntries = useMemo(() => {
-    return entries
-      .filter((entry) => entry.isPinned)
-      .splice(0, 4)
-      .sort((a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
-  }, [entries]);
+  const sortedFavorites = useMemo(() => favoriteEntries.splice(0, 4), [entries]);
 
   const todaysEntries = useMemo(() => {
     return entries.filter(
@@ -56,13 +53,13 @@ export default function Home() {
             </Button>
           </View>
         </View>
-        {favoriteEntries.length === 0 && (
+        {sortedFavorites.length === 0 && (
           <Chip icon="pin" style={styles.pinnedChip}>
             You haven't pinned any entries yet.
           </Chip>
         )}
         <FlatList
-          data={favoriteEntries}
+          data={sortedFavorites}
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => <FavoriteCard {...item} onPress={() => navigate("ViewEntry", { id: item.id })} />}
           keyExtractor={(item) => item.id}

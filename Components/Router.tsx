@@ -77,6 +77,7 @@ function FavoritesStack() {
   return (
     <Stack.Navigator initialRouteName="Home" screenOptions={{ header: (props) => <Header {...props} /> }}>
       <Tab.Screen name="Favorites" component={Favorites} options={getRouteIcon("Favorites")} />
+      <Stack.Screen name="ViewEntry" component={ViewEntry} initialParams={{ id: "" }} />
     </Stack.Navigator>
   );
 }

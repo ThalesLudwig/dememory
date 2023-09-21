@@ -5,6 +5,7 @@ import { Text, Card, Chip, Avatar, IconButton } from "react-native-paper";
 import { ICON_SIZE } from "../constants/icons";
 import { Entry } from "../types/Entry";
 import { getMoodColor, getMoodName } from "../utils/moodHelper";
+import { format } from "date-fns";
 
 const EntryCard = (props: Entry & { onPress: Function }) => {
   const moodColor = !!props.mood ? getMoodColor(props.mood) : "";
@@ -16,6 +17,7 @@ const EntryCard = (props: Entry & { onPress: Function }) => {
       </Card.Content>
       {!!props.imageUrl && <Card.Cover style={styles.image} source={{ uri: props.imageUrl }} />}
       <Card.Actions style={styles.actions}>
+        <Chip icon="clock">{format(new Date(props.date), "MMM Qo, kk:mm")}</Chip>
         {!!props.tag && <Chip icon="tag">{props.tag}</Chip>}
         {!!props.mood && (
           <Chip icon="heart" style={{ backgroundColor: moodColor }}>
