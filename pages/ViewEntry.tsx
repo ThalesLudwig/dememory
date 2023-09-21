@@ -38,6 +38,9 @@ export const ViewEntry = ({ route }: Props) => {
           <Surface style={styles.content}>
             <Text variant="bodyLarge">{entry.content}</Text>
           </Surface>
+          <Button mode="contained-tonal" style={{ alignSelf: "flex-start" }} onPress={() => {}}>
+            Add to Favorites
+          </Button>
           <Text variant="titleMedium">How were you feeling?</Text>
           <Chip icon="heart" style={{ backgroundColor: moodColor, ...styles.chip }}>
             {getMoodName(entry.mood || 1)}
@@ -48,10 +51,10 @@ export const ViewEntry = ({ route }: Props) => {
           </View>
         </View>
         <View style={styles.buttons}>
-          <Button mode="contained" onPress={() => {}}>
+          <Button icon="pencil" mode="contained" onPress={() => {}}>
             EDIT ENTRY
           </Button>
-          <Button mode="outlined" onPress={() => {}}>
+          <Button icon="delete" mode="elevated" onPress={() => {}}>
             DELETE
           </Button>
         </View>
