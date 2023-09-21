@@ -1,12 +1,14 @@
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
-import { Text } from "react-native-paper";
+import { SafeAreaView, StyleSheet, View, Image, ScrollView } from "react-native";
+import { Button, Chip, Surface, Text } from "react-native-paper";
+import { format } from "date-fns";
 
 import { RootStackParamList } from "../Components/Router";
 import { useSelector } from "react-redux";
 import { RootState } from "../config/store";
 import { Entry } from "../types/Entry";
+import { getMoodColor, getMoodName } from "../utils/moodHelper";
 
 type Props = NativeStackScreenProps<RootStackParamList, "ViewEntry">;
 
@@ -19,6 +21,7 @@ const initialState: Entry = {
 export const ViewEntry = ({ route }: Props) => {
   const entries = useSelector((state: RootState) => state.entries.value);
   const [entry, setEntry] = useState<Entry>(entries.find((entry) => entry.id === route.params.id) || initialState);
+  const moodColor = getMoodColor(entry.mood || 1);
 
   useEffect(() => {
     const stateEntry = entries.find((entry) => entry.id === route.params.id);
@@ -27,11 +30,32 @@ export const ViewEntry = ({ route }: Props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.body}>
-        {/* <Text variant="headlineSmall">{}</Text> */}
-        <Text variant="titleLarge">What happened today?</Text>
-        <Text variant="bodyLarge">{entry.content}</Text>
-      </View>
+      <ScrollView>
+        <View style={styles.body}>
+          <Text variant="titleLarge">Entry date</Text>
+          <Chip icon="clock">{format(new Date(entry.date), "PPPP - p")}</Chip>
+          <Text variant="titleMedium">What happened today?</Text>
+          <Surface style={styles.content}>
+            <Text variant="bodyLarge">{entry.content}</Text>
+          </Surface>
+          <Text variant="titleMedium">How were you feeling?</Text>
+          <Chip icon="heart" style={{ backgroundColor: moodColor, ...styles.chip }}>
+            {getMoodName(entry.mood || 1)}
+          </Chip>
+          <Text variant="titleMedium">Photos</Text>
+          <View style={styles.images}>
+            <Image source={{ uri: "https://picsum.photos/700" }} style={styles.thumbnail} />
+          </View>
+        </View>
+        <View style={styles.buttons}>
+          <Button mode="contained" onPress={() => {}}>
+            EDIT ENTRY
+          </Button>
+          <Button mode="outlined" onPress={() => {}}>
+            DELETE
+          </Button>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -43,6 +67,30 @@ const styles = StyleSheet.create({
   },
   body: {
     marginHorizontal: 15,
+    gap: 15,
+  },
+  chip: {
+    alignSelf: "flex-start",
+    height: 32,
+  },
+  images: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+  },
+  thumbnail: {
+    width: 100,
+    height: 100,
+    borderRadius: 10,
+  },
+  content: {
+    padding: 15,
+    borderRadius: 10,
+  },
+  buttons: {
+    padding: 15,
+    gap: 10,
+    marginTop: 15,
   },
 });
 
