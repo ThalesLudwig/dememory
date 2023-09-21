@@ -13,7 +13,9 @@ const EntryCard = (props: Entry & { onPress: Function }) => {
   return (
     <Card onPress={() => props.onPress()}>
       <Card.Content>
-        <Text variant="bodyMedium">{props.content}</Text>
+        <Text variant="bodyMedium" numberOfLines={4}>
+          {props.content}
+        </Text>
       </Card.Content>
       {!!props.imageUrl && <Card.Cover style={styles.image} source={{ uri: props.imageUrl }} />}
       <Card.Actions style={styles.actions}>

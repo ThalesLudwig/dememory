@@ -40,7 +40,7 @@ export const ViewEntry = ({ route }: Props) => {
       <ScrollView>
         <View style={styles.body}>
           <Text variant="titleLarge">Entry date</Text>
-          <Chip icon="clock">{format(new Date(entry.date), "PPPP - p")}</Chip>
+          <Chip icon="clock">{format(new Date(entry.date), "PPPP - kk:mm")}</Chip>
           <Text variant="titleMedium">What happened today?</Text>
           <Surface style={styles.content}>
             <Text variant="bodyLarge">{entry.content}</Text>
@@ -52,10 +52,14 @@ export const ViewEntry = ({ route }: Props) => {
           <Chip icon="heart" style={{ backgroundColor: moodColor, ...styles.chip }}>
             {getMoodName(entry.mood || 1)}
           </Chip>
-          <Text variant="titleMedium">Photos</Text>
-          <View style={styles.images}>
-            <Image source={{ uri: "https://picsum.photos/700" }} style={styles.thumbnail} />
-          </View>
+          {!!entry.imageUrl && (
+            <>
+              <Text variant="titleMedium">Photo:</Text>
+              <View style={styles.images}>
+                <Image source={{ uri: entry.imageUrl }} style={styles.thumbnail} />
+              </View>
+            </>
+          )}
         </View>
         <View style={styles.buttons}>
           <Button icon="pencil" mode="contained" onPress={() => {}}>

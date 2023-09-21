@@ -26,6 +26,14 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your gallery to let you upload photos to your entries."
+        }
+      ]
+    ]
   }
 }

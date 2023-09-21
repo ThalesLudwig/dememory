@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Image, KeyboardAvoidingView, Platform, StyleSheet, View, ScrollView } from "react-native";
+import { Image, KeyboardAvoidingView, Platform, StyleSheet, View, ScrollView, Pressable } from "react-native";
 import { Button, Chip, SegmentedButtons, Surface, Text, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-navigation";
 import "react-native-get-random-values";
 import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
+import * as ImagePicker from "expo-image-picker";
 
 import { EntryStorage } from "../constants/EntryStorage";
 import { getMoodColor, getMoodsArray } from "../utils/moodHelper";
@@ -15,10 +16,11 @@ import { addEntry } from "../config/entriesSlice";
 
 export default function NewEntry() {
   const dispatch = useDispatch<any>();
+  const { navigate } = useNavigation<any>();
   const [entryStorage, setEntryStorage] = useState(EntryStorage.LOCAL.toString());
   const [content, setContent] = useState("");
   const [selectedMood, setSelectedMood] = useState(MoodEnum.NEUTRAL);
-  const { navigate } = useNavigation<any>();
+  const [image, setImage] = useState("");
 
   const storageButtons = [
     {
@@ -33,17 +35,28 @@ export default function NewEntry() {
     },
   ];
 
+  const resetForm = () => {
+    setEntryStorage(EntryStorage.LOCAL.toString());
+    setContent("");
+    setSelectedMood(1);
+    setImage("");
+  };
+
   const submitForm = () => {
-    const entry: Entry = { id: uuidv4(), mood: selectedMood, content, date: new Date() };
+    const entry: Entry = { id: uuidv4(), mood: selectedMood, content, date: new Date(), imageUrl: image };
     dispatch(addEntry(entry));
     resetForm();
     navigate("ViewEntry", { id: entry.id });
   };
 
-  const resetForm = () => {
-    setEntryStorage(EntryStorage.LOCAL.toString());
-    setContent("");
-    setSelectedMood(1);
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    if (!result.canceled) setImage(result.assets[0].uri);
   };
 
   return (
@@ -67,19 +80,18 @@ export default function NewEntry() {
               </Chip>
             ))}
           </View>
-          <Text variant="titleMedium">Photos:</Text>
+          <Text variant="titleMedium">Photo:</Text>
           <View style={styles.images}>
-            <Image
-              source={{
-                uri: "https://picsum.photos/700",
-              }}
-              style={styles.thumbnail}
-            />
-            <Surface style={styles.addImage} elevation={0}>
-              <Text variant="titleLarge" style={{ color: "lightgrey" }}>
-                +
-              </Text>
-            </Surface>
+            {!!image && <Image source={{ uri: image }} style={styles.thumbnail} />}
+            {!image && (
+              <Pressable onPress={pickImage}>
+                <Surface style={styles.addImage} elevation={0}>
+                  <Text variant="titleLarge" style={{ color: "lightgrey" }}>
+                    +
+                  </Text>
+                </Surface>
+              </Pressable>
+            )}
           </View>
         </KeyboardAvoidingView>
         <Button
