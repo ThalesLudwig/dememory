@@ -16,6 +16,7 @@ import FavoriteCard from "../Components/FavoriteCard";
 import { setDate } from "../config/dateSlice";
 import { RootState } from "../config/store";
 import { useCurrentDate } from "../hooks/useCurrentDate";
+import EmptyState from "../Components/EmptyState";
 
 export default function Home() {
   const { navigate } = useNavigation<any>();
@@ -64,7 +65,7 @@ export default function Home() {
             <Text variant="titleMedium">{currentDate("dd/MM/yyyy")}</Text>
             <View style={styles.spaceBetween}>
               <Button mode="contained" onPress={() => navigate("NewEntry")}>
-                New entry
+                NEW ENTRY
               </Button>
               <IconButton
                 icon="calendar"
@@ -97,6 +98,14 @@ export default function Home() {
           {todaysEntries.map((item) => (
             <EntryCard key={item.id} {...item} onPress={() => navigate("ViewEntry", { id: item.id })} />
           ))}
+          {todaysEntries.length === 0 && (
+            <EmptyState
+              title="No entries found."
+              description="There are no entries registered for this day. Your journal awaits, start by creating a new entry."
+              buttonLabel="Create New"
+              onClick={() => navigate("NewEntry")}
+            />
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
