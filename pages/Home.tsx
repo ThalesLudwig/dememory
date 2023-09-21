@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import { SafeAreaView, StyleSheet, View, FlatList, ScrollView } from "react-native";
-import { Button, IconButton, Searchbar, Text } from "react-native-paper";
+import { Button, Chip, IconButton, Searchbar, Text } from "react-native-paper";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -32,7 +32,10 @@ export default function Home() {
   };
 
   const favoriteEntries = useMemo(() => {
-    return entries.filter((entry) => entry.isPinned).splice(0, 4);
+    return entries
+      .filter((entry) => entry.isPinned)
+      .splice(0, 4)
+      .sort((a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
   }, [entries]);
 
   const todaysEntries = useMemo(() => {
@@ -53,6 +56,11 @@ export default function Home() {
             </Button>
           </View>
         </View>
+        {favoriteEntries.length === 0 && (
+          <Chip icon="pin" style={styles.pinnedChip}>
+            You haven't pinned any entries yet.
+          </Chip>
+        )}
         <FlatList
           data={favoriteEntries}
           showsHorizontalScrollIndicator={false}
@@ -137,5 +145,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     gap: 20,
     marginVertical: 20,
+  },
+  pinnedChip: {
+    marginHorizontal: 15,
   },
 });

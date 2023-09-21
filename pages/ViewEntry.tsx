@@ -45,7 +45,7 @@ export const ViewEntry = ({ route }: Props) => {
           <Surface style={styles.content}>
             <Text variant="bodyLarge">{entry.content}</Text>
           </Surface>
-          <Button mode="contained-tonal" style={{ alignSelf: "flex-start" }} onPress={toogleFavorites}>
+          <Button icon="pin" mode="contained-tonal" style={{ alignSelf: "flex-start" }} onPress={toogleFavorites}>
             {entry.isPinned ? "Remove from Favorites" : "Add to Favorites"}
           </Button>
           <Text variant="titleMedium">How were you feeling?</Text>
