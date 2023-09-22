@@ -1,6 +1,7 @@
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { Button, Surface, Text } from "react-native-paper";
+import Empty from "./EmptySvg";
 
 type EmptyStateProps = {
   title: string;
@@ -12,9 +13,7 @@ type EmptyStateProps = {
 const EmptyState = (props: EmptyStateProps) => {
   return (
     <Surface elevation={0} style={styles.container}>
-      <Surface style={styles.imageSurface}>
-        <Image source={require("../assets/relax.png")} style={styles.image} />
-      </Surface>
+      <Empty width={80} height={80} />
       <Text variant="titleLarge">{props.title}</Text>
       <Text variant="bodyLarge" style={styles.description}>
         {props.description}
@@ -36,17 +35,6 @@ const styles = StyleSheet.create({
   },
   description: {
     textAlign: "center",
-  },
-  imageSurface: {
-    width: 130,
-    height: 130,
-    borderRadius: 70,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  image: {
-    width: 90,
-    height: 90,
   },
 });
 
