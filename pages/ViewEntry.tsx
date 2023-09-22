@@ -20,6 +20,7 @@ const initialState: Entry = {
   id: "",
   content: "",
   date: new Date(),
+  imagesUrl: [],
 };
 
 export const ViewEntry = ({ route }: Props) => {
@@ -29,6 +30,7 @@ export const ViewEntry = ({ route }: Props) => {
   const [entry, setEntry] = useState<Entry>(entries.find((entry) => entry.id === route.params.id) || initialState);
   const moodColor = getMoodColor(entry.mood || 1);
   const [isImageOpen, setIsImageOpen] = useState(false);
+  const [openedImageIndex, setOpenedImageIndex] = useState(0);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   useEffect(() => {
@@ -44,6 +46,11 @@ export const ViewEntry = ({ route }: Props) => {
     dispatch(removeEntry(entry.id));
     setIsDeleteDialogOpen(false);
     goBack();
+  };
+
+  const onPressImage = (index: number) => {
+    setOpenedImageIndex(index);
+    setIsImageOpen(true);
   };
 
   return (
@@ -63,12 +70,16 @@ export const ViewEntry = ({ route }: Props) => {
           <Chip icon="heart" style={{ backgroundColor: moodColor, ...styles.chip }}>
             {getMoodName(entry.mood || 1)}
           </Chip>
-          {!!entry.imageUrl && (
+          {!!entry.imagesUrl && entry.imagesUrl.length > 0 && (
             <>
-              <Text variant="titleMedium">Photo:</Text>
-              <Pressable style={styles.images} onPress={() => setIsImageOpen(true)}>
-                <Image source={{ uri: entry.imageUrl }} style={styles.thumbnail} />
-              </Pressable>
+              <Text variant="titleMedium">Photos:</Text>
+              <View style={styles.images}>
+                {entry.imagesUrl.map((imageUrl, i) => (
+                  <Pressable onPress={() => onPressImage(i)} key={i}>
+                    <Image source={{ uri: imageUrl }} style={styles.thumbnail} />
+                  </Pressable>
+                ))}
+              </View>
             </>
           )}
         </View>
@@ -82,7 +93,7 @@ export const ViewEntry = ({ route }: Props) => {
         </View>
       </ScrollView>
       <ImageView
-        images={[{ uri: entry.imageUrl }]}
+        images={[{ uri: entry.imagesUrl?.[openedImageIndex] }]}
         imageIndex={0}
         visible={isImageOpen}
         onRequestClose={() => setIsImageOpen(false)}

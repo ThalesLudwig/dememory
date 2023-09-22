@@ -21,8 +21,9 @@ export default function NewEntry() {
   const [entryStorage, setEntryStorage] = useState(EntryStorage.LOCAL.toString());
   const [content, setContent] = useState("");
   const [selectedMood, setSelectedMood] = useState(MoodEnum.NEUTRAL);
-  const [image, setImage] = useState("");
+  const [images, setImages] = useState<string[]>([]);
   const [isImageOpen, setIsImageOpen] = useState(false);
+  const [openedImageIndex, setOpenedImageIndex] = useState(0);
 
   const storageButtons = [
     {
@@ -41,11 +42,11 @@ export default function NewEntry() {
     setEntryStorage(EntryStorage.LOCAL.toString());
     setContent("");
     setSelectedMood(1);
-    setImage("");
+    setImages([]);
   };
 
   const submitForm = () => {
-    const entry: Entry = { id: uuidv4(), mood: selectedMood, content, date: new Date(), imageUrl: image };
+    const entry: Entry = { id: uuidv4(), mood: selectedMood, content, date: new Date(), imagesUrl: images };
     dispatch(addEntry(entry));
     resetForm();
     navigate("ViewEntry", { id: entry.id });
@@ -58,7 +59,18 @@ export default function NewEntry() {
       aspect: [4, 3],
       quality: 1,
     });
-    if (!result.canceled) setImage(result.assets[0].uri);
+    if (!result.canceled) setImages([...images, result.assets[0].uri]);
+  };
+
+  const onPressImage = (index: number) => {
+    setOpenedImageIndex(index);
+    setIsImageOpen(true);
+  };
+
+  const onDeleteImage = (index: number) => {
+    const tempImages = [...images];
+    tempImages.splice(index, 1);
+    setImages(tempImages);
   };
 
   return (
@@ -82,25 +94,29 @@ export default function NewEntry() {
               </Chip>
             ))}
           </View>
-          <Text variant="titleMedium">Photo:</Text>
+          <Text variant="titleMedium">Photos:</Text>
           <View style={styles.images}>
-            {!!image && (
-              <View style={styles.imageViewer}>
-                <Pressable onPress={() => setIsImageOpen(true)}>
-                  <Image source={{ uri: image }} style={styles.thumbnail} />
+            {images.map((imageUrl, i) => (
+              <View key={i}>
+                <Pressable onPress={() => onPressImage(i)}>
+                  <Image source={{ uri: imageUrl }} style={styles.thumbnail} />
                 </Pressable>
-                <IconButton icon="delete" size={18} mode="contained" onPress={() => setImage("")} />
+                <IconButton
+                  style={styles.deleteImage}
+                  icon="delete"
+                  size={18}
+                  mode="contained"
+                  onPress={() => onDeleteImage(i)}
+                />
               </View>
-            )}
-            {!image && (
-              <Pressable onPress={pickImage}>
-                <Surface style={styles.addImage} elevation={0}>
-                  <Text variant="titleLarge" style={{ color: "lightgrey" }}>
-                    +
-                  </Text>
-                </Surface>
-              </Pressable>
-            )}
+            ))}
+            <Pressable onPress={pickImage}>
+              <Surface style={styles.addImage} elevation={0}>
+                <Text variant="titleLarge" style={{ color: "lightgrey" }}>
+                  +
+                </Text>
+              </Surface>
+            </Pressable>
           </View>
         </KeyboardAvoidingView>
         <Button
@@ -115,7 +131,7 @@ export default function NewEntry() {
         </Button>
       </ScrollView>
       <ImageView
-        images={[{ uri: image }]}
+        images={[{ uri: images[openedImageIndex] }]}
         imageIndex={0}
         visible={isImageOpen}
         onRequestClose={() => setIsImageOpen(false)}
@@ -162,9 +178,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderStyle: "dashed",
   },
-  imageViewer: {
-    flexDirection: "row",
-    alignItems: "flex-end",
-    gap: 10,
+  deleteImage: {
+    position: "absolute",
+    bottom: 2,
+    right: 2,
   },
 });

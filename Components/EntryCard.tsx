@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { Text, Card, Chip, Avatar, IconButton } from "react-native-paper";
 
 import { ICON_SIZE } from "../constants/icons";
@@ -17,7 +17,17 @@ const EntryCard = (props: Entry & { onPress: Function }) => {
           {props.content}
         </Text>
       </Card.Content>
-      {!!props.imageUrl && <Card.Cover style={styles.image} source={{ uri: props.imageUrl }} />}
+      {!!props.imagesUrl && props.imagesUrl.length === 1 && (
+        <Card.Cover style={styles.image} source={{ uri: props.imagesUrl[0] }} />
+      )}
+      {!!props.imagesUrl && props.imagesUrl.length > 1 && (
+        // <Card.Cover style={styles.image} source={{ uri: props.imagesUrl[0] }} />
+        <View style={styles.images}>
+          {props.imagesUrl.map((imageUrl, i) => (
+            <Image key={i} source={{ uri: imageUrl }} style={styles.thumbnail} />
+          ))}
+        </View>
+      )}
       <Card.Actions style={styles.actions}>
         <Chip icon="clock">{format(new Date(props.date), "MMM do, kk:mm")}</Chip>
         {!!props.tag && <Chip icon="tag">{props.tag}</Chip>}
@@ -35,11 +45,23 @@ const EntryCard = (props: Entry & { onPress: Function }) => {
 
 const styles = StyleSheet.create({
   image: {
-    marginHorizontal: 15,
     marginVertical: 10,
+    marginHorizontal: 15,
   },
   actions: {
     marginTop: 10,
+  },
+  images: {
+    marginVertical: 10,
+    marginHorizontal: 15,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 5,
+  },
+  thumbnail: {
+    width: 60,
+    height: 60,
+    borderRadius: 7,
   },
 });
 
