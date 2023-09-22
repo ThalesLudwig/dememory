@@ -1,11 +1,12 @@
 import * as React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { Text, Card, Chip, Avatar, IconButton } from "react-native-paper";
+import { format } from "date-fns";
 
 import { ICON_SIZE } from "../constants/icons";
 import { Entry } from "../types/Entry";
 import { getMoodColor, getMoodName } from "../utils/moodHelper";
-import { format } from "date-fns";
+import { EntryStorage } from "../constants/EntryStorage";
 
 const EntryCard = (props: Entry & { onPress: Function }) => {
   const moodColor = !!props.mood ? getMoodColor(props.mood) : "";
@@ -36,7 +37,7 @@ const EntryCard = (props: Entry & { onPress: Function }) => {
             {getMoodName(props.mood)}
           </Chip>
         )}
-        {props.isCrypto && <Avatar.Icon size={ICON_SIZE} icon="ethereum" />}
+        {props.storage === EntryStorage.BLOCKCHAIN && <Avatar.Icon size={ICON_SIZE} icon="ethereum" />}
         {props.isPinned && <IconButton icon="pin" size={12} />}
       </Card.Actions>
     </Card>

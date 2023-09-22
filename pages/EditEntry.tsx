@@ -5,23 +5,38 @@ import { Button, Chip, IconButton, SegmentedButtons, Surface, Text, TextInput } 
 import { SafeAreaView } from "react-navigation";
 import "react-native-get-random-values";
 import { useDispatch } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
 import * as ImagePicker from "expo-image-picker";
 import ImageView from "react-native-image-viewing";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useSelector } from "react-redux";
 
 import { EntryStorage } from "../constants/EntryStorage";
 import { getMoodColor, getMoodsArray } from "../utils/moodHelper";
 import { MoodEnum } from "../constants/moods";
 import { Entry } from "../types/Entry";
-import { addEntry } from "../config/entriesSlice";
+import { updateEntry } from "../config/entriesSlice";
+import { RootStackParamList } from "../Components/Router";
+import { RootState } from "../config/store";
 
-export default function NewEntry() {
+type Props = NativeStackScreenProps<RootStackParamList, "EditEntry">;
+
+const initialState: Entry = {
+  id: "",
+  content: "",
+  date: new Date(),
+  imagesUrl: [],
+};
+
+export default function EditEntry({ route }: Props) {
   const dispatch = useDispatch<any>();
   const { navigate } = useNavigation<any>();
-  const [entryStorage, setEntryStorage] = useState(EntryStorage.LOCAL.toString());
-  const [content, setContent] = useState("");
-  const [selectedMood, setSelectedMood] = useState(MoodEnum.NEUTRAL);
-  const [images, setImages] = useState<string[]>([]);
+  const entries = useSelector((state: RootState) => state.entries.value);
+  const entry = entries.find((entry) => entry.id === route.params.id) || initialState;
+
+  const [entryStorage, setEntryStorage] = useState<string>(entry.storage?.toString() || "0");
+  const [content, setContent] = useState(entry.content);
+  const [selectedMood, setSelectedMood] = useState<MoodEnum>(entry.mood || 1);
+  const [images, setImages] = useState<string[]>(entry.imagesUrl || []);
   const [isImageOpen, setIsImageOpen] = useState(false);
   const [openedImageIndex, setOpenedImageIndex] = useState(0);
 
@@ -39,17 +54,14 @@ export default function NewEntry() {
     },
   ];
 
-  const resetForm = () => {
-    setEntryStorage(EntryStorage.LOCAL.toString());
-    setContent("");
-    setSelectedMood(1);
-    setImages([]);
-  };
-
   const submitForm = () => {
-    const entry: Entry = { id: uuidv4(), mood: selectedMood, content, date: new Date(), imagesUrl: images };
-    dispatch(addEntry(entry));
-    resetForm();
+    const editedEntry: Entry = {
+      ...entry,
+      content,
+      mood: selectedMood,
+      imagesUrl: images,
+    };
+    dispatch(updateEntry(editedEntry));
     navigate("ViewEntry", { id: entry.id });
   };
 
@@ -128,7 +140,7 @@ export default function NewEntry() {
           onPress={submitForm}
           disabled={!content.trim()}
         >
-          SUBMIT
+          UPDATE ENTRY
         </Button>
       </ScrollView>
       <ImageView

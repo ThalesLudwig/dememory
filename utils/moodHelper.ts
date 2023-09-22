@@ -8,6 +8,7 @@ const COLORS = {
   NEUTRAL: "#fce0d8",
   SAD: "#ffdeea",
   STRESSED: "#c4b3e6",
+  NERVOUS: "#FAC898",
 };
 
 export const getMoodName = (mood: MoodEnum): string => {
@@ -26,6 +27,8 @@ export const getMoodName = (mood: MoodEnum): string => {
       return "Sad";
     case MoodEnum.STRESSED:
       return "Stressed";
+    case MoodEnum.NERVOUS:
+      return "Nervous";
     default:
       return "Neutral";
   }
@@ -40,6 +43,7 @@ export const getMoodsArray = () => {
   moods[MoodEnum.ANGRY] = { key: MoodEnum.ANGRY, name: getMoodName(MoodEnum.ANGRY) };
   moods[MoodEnum.GREAT] = { key: MoodEnum.GREAT, name: getMoodName(MoodEnum.GREAT) };
   moods[MoodEnum.STRESSED] = { key: MoodEnum.STRESSED, name: getMoodName(MoodEnum.STRESSED) };
+  moods[MoodEnum.NERVOUS] = { key: MoodEnum.NERVOUS, name: getMoodName(MoodEnum.NERVOUS) };
   return moods;
 };
 
@@ -59,6 +63,8 @@ export const getMoodColor = (mood: MoodEnum) => {
       return COLORS.SAD;
     case MoodEnum.STRESSED:
       return COLORS.STRESSED;
+    case MoodEnum.NERVOUS:
+      return COLORS.NERVOUS;
     default:
       return COLORS.NEUTRAL;
   }

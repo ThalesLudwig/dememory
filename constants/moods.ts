@@ -6,4 +6,5 @@ export enum MoodEnum {
   ANGRY,
   GREAT,
   STRESSED,
+  NERVOUS,
 }

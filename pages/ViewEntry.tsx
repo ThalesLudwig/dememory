@@ -25,7 +25,7 @@ const initialState: Entry = {
 
 export const ViewEntry = ({ route }: Props) => {
   const dispatch = useDispatch();
-  const { goBack } = useNavigation<any>();
+  const { goBack, navigate } = useNavigation<any>();
   const entries = useSelector((state: RootState) => state.entries.value);
   const [entry, setEntry] = useState<Entry>(entries.find((entry) => entry.id === route.params.id) || initialState);
   const moodColor = getMoodColor(entry.mood || 1);
@@ -84,7 +84,7 @@ export const ViewEntry = ({ route }: Props) => {
           )}
         </View>
         <View style={styles.buttons}>
-          <Button icon="pencil" mode="contained" onPress={() => {}}>
+          <Button icon="pencil" mode="contained" onPress={() => navigate("EditEntry", { id: entry.id })}>
             EDIT ENTRY
           </Button>
           <Button icon="delete" mode="elevated" onPress={() => setIsDeleteDialogOpen(true)}>

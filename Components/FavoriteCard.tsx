@@ -5,6 +5,7 @@ import { Text, Card, Avatar, IconButton, useTheme } from "react-native-paper";
 import { Entry } from "../types/Entry";
 import { getMoodColor } from "../utils/moodHelper";
 import { ICON_SIZE } from "../constants/icons";
+import { EntryStorage } from "../constants/EntryStorage";
 
 const FavoriteCard = (props: Entry & { onPress: Function }) => {
   const moodColor = !!props.mood ? getMoodColor(props.mood) : "";
@@ -13,13 +14,13 @@ const FavoriteCard = (props: Entry & { onPress: Function }) => {
   return (
     <Card style={styles.container} onPress={() => props.onPress()}>
       <Card.Content>
-        <Text variant="bodyMedium" numberOfLines={2}>
+        <Text variant="bodyMedium" numberOfLines={2} style={{ height: 40 }}>
           {props.content}
         </Text>
       </Card.Content>
       <View style={styles.actions}>
         <View style={styles.row}>
-          {props.isCrypto && <Avatar.Icon size={ICON_SIZE} icon="ethereum" />}
+          {props.storage === EntryStorage.BLOCKCHAIN && <Avatar.Icon size={ICON_SIZE} icon="ethereum" />}
           {props.mood && <IconButton icon="heart" containerColor={moodColor} size={12} />}
         </View>
         <IconButton icon="pin" size={12} containerColor={theme.colors.primaryContainer} />

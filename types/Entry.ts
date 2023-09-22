@@ -1,3 +1,4 @@
+import { EntryStorage } from "../constants/EntryStorage";
 import { MoodEnum } from "../constants/moods";
 
 export type Entry = {
@@ -6,7 +7,7 @@ export type Entry = {
   imagesUrl?: string[];
   tag?: string;
   mood?: MoodEnum;
-  isCrypto?: boolean;
+  storage?: EntryStorage;
   isPinned?: boolean;
   date: Date;
 };

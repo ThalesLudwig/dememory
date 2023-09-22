@@ -12,11 +12,13 @@ import { ICON_SIZE } from "../constants/icons";
 import NewEntry from "../pages/NewEntry";
 import Header from "./Header";
 import ViewEntry from "../pages/ViewEntry";
+import EditEntry from "../pages/EditEntry";
 
 export type RootStackParamList = {
   Home: undefined;
   NewEntry: undefined;
   ViewEntry: { id: string };
+  EditEntry: { id: string };
   Search: undefined;
   Favorites: undefined;
   Settings: undefined;
@@ -61,6 +63,7 @@ function HomeStack() {
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="NewEntry" component={NewEntry} />
       <Stack.Screen name="ViewEntry" component={ViewEntry} initialParams={{ id: "" }} />
+      <Stack.Screen name="EditEntry" component={EditEntry} initialParams={{ id: "" }} />
     </Stack.Navigator>
   );
 }
@@ -78,6 +81,7 @@ function FavoritesStack() {
     <Stack.Navigator initialRouteName="Home" screenOptions={{ header: (props) => <Header {...props} /> }}>
       <Tab.Screen name="Favorites" component={Favorites} options={getRouteIcon("Favorites")} />
       <Stack.Screen name="ViewEntry" component={ViewEntry} initialParams={{ id: "" }} />
+      <Stack.Screen name="EditEntry" component={EditEntry} initialParams={{ id: "" }} />
     </Stack.Navigator>
   );
 }
