@@ -1,17 +1,18 @@
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, View, Image, ScrollView, Pressable } from "react-native";
-import { Button, Chip, Surface, Text } from "react-native-paper";
+import { Button, Chip, Dialog, Portal, Surface, Text } from "react-native-paper";
 import { format } from "date-fns";
 import { useDispatch } from "react-redux";
 import ImageView from "react-native-image-viewing";
+import { useNavigation } from "@react-navigation/native";
 
 import { RootStackParamList } from "../Components/Router";
 import { useSelector } from "react-redux";
 import { RootState } from "../config/store";
 import { Entry } from "../types/Entry";
 import { getMoodColor, getMoodName } from "../utils/moodHelper";
-import { updateEntry } from "../config/entriesSlice";
+import { removeEntry, updateEntry } from "../config/entriesSlice";
 
 type Props = NativeStackScreenProps<RootStackParamList, "ViewEntry">;
 
@@ -23,10 +24,12 @@ const initialState: Entry = {
 
 export const ViewEntry = ({ route }: Props) => {
   const dispatch = useDispatch();
+  const { goBack } = useNavigation<any>();
   const entries = useSelector((state: RootState) => state.entries.value);
   const [entry, setEntry] = useState<Entry>(entries.find((entry) => entry.id === route.params.id) || initialState);
   const moodColor = getMoodColor(entry.mood || 1);
   const [isImageOpen, setIsImageOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   useEffect(() => {
     const stateEntry = entries.find((entry) => entry.id === route.params.id);
@@ -35,6 +38,12 @@ export const ViewEntry = ({ route }: Props) => {
 
   const toogleFavorites = () => {
     dispatch(updateEntry({ ...entry, isPinned: !entry.isPinned }));
+  };
+
+  const deleteEntry = () => {
+    dispatch(removeEntry(entry.id));
+    setIsDeleteDialogOpen(false);
+    goBack();
   };
 
   return (
@@ -67,7 +76,7 @@ export const ViewEntry = ({ route }: Props) => {
           <Button icon="pencil" mode="contained" onPress={() => {}}>
             EDIT ENTRY
           </Button>
-          <Button icon="delete" mode="elevated" onPress={() => {}}>
+          <Button icon="delete" mode="elevated" onPress={() => setIsDeleteDialogOpen(true)}>
             DELETE
           </Button>
         </View>
@@ -78,6 +87,25 @@ export const ViewEntry = ({ route }: Props) => {
         visible={isImageOpen}
         onRequestClose={() => setIsImageOpen(false)}
       />
+      <Portal>
+        <Dialog visible={isDeleteDialogOpen} onDismiss={() => setIsDeleteDialogOpen(false)}>
+          <Dialog.Icon icon="alert" />
+          <Dialog.Title style={{ textAlign: "center" }}>Delete this entry?</Dialog.Title>
+          <Dialog.Content>
+            <Text variant="bodyMedium">
+              Are you sure you want to permanently delete this entry? This action cannot be undone.
+            </Text>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button mode="outlined" onPress={() => setIsDeleteDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button mode="contained" onPress={deleteEntry}>
+              Delete
+            </Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
     </SafeAreaView>
   );
 };
