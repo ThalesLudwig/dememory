@@ -31,4 +31,9 @@ export const styles = StyleSheet.create({
     justifyContent: "flex-end",
     gap: 20,
   },
+  tagRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+  },
 });

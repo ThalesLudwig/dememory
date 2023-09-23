@@ -1,6 +1,6 @@
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-navigation";
-import { Button, Chip, Searchbar, Snackbar, Text, TextInput } from "react-native-paper";
+import { Button, Chip, Snackbar, Text, TextInput } from "react-native-paper";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
@@ -27,6 +27,8 @@ export default function Search() {
   const [toInput, setToInput] = useState("");
   const [entryStorages, setEntryStorages] = useState<EntryStorage[]>([]);
   const [selectedMoods, setSelectedMoods] = useState<MoodEnum[]>([]);
+  const [tags, setTags] = useState<string[]>([]);
+  const [tagInput, setTagInput] = useState("");
 
   const onSearch = () => {};
 
@@ -45,6 +47,8 @@ export default function Search() {
     setToInput("");
     setSelectedMoods([]);
     setEntryStorages([]);
+    setTagInput("");
+    setTags([]);
   };
 
   const onDateFieldBlur = (text: string, onValidate: Function) => {
@@ -69,6 +73,17 @@ export default function Search() {
     } else {
       setEntryStorages([...entryStorages, key]);
     }
+  };
+
+  const submitTag = () => {
+    setTags([...tags, tagInput]);
+    setTagInput("");
+  };
+
+  const deleteTag = (index: number) => {
+    const tempTags = [...tags];
+    tempTags.splice(index, 1);
+    setTags(tempTags);
   };
 
   return (
@@ -96,19 +111,36 @@ export default function Search() {
               </Chip>
             ))}
           </View>
+
+          <Text variant="titleMedium">Tags:</Text>
+          <TextInput
+            mode="outlined"
+            right={<TextInput.Icon icon="send" onPress={() => submitTag()} />}
+            label="#"
+            value={tagInput}
+            onChangeText={(text) => setTagInput(text)}
+            returnKeyType="done"
+            onSubmitEditing={submitTag}
+          />
+          <View style={styles.tagRow}>
+            {tags.map((tag, i) => (
+              <Chip key={i} mode="outlined" onClose={() => deleteTag(i)}>
+                {tag}
+              </Chip>
+            ))}
+          </View>
+
           <Text variant="titleMedium">Stored on:</Text>
           <View style={styles.chips}>
             <Chip
               onPress={() => onSelectStorage(EntryStorage.LOCAL)}
               selected={entryStorages.includes(EntryStorage.LOCAL)}
-              mode="outlined"
             >
               Local Device
             </Chip>
             <Chip
               onPress={() => onSelectStorage(EntryStorage.BLOCKCHAIN)}
               selected={entryStorages.includes(EntryStorage.BLOCKCHAIN)}
-              mode="outlined"
             >
               Blockchain
             </Chip>
