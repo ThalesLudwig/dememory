@@ -102,19 +102,22 @@ export default function Home() {
           getItemLayout={(_, i) => ({ length: 49, offset: 49 * i, index: i })}
           horizontal
         />
-        <View style={styles.entryList}>
-          {todaysEntries.map((item) => (
+        <FlatList
+          data={todaysEntries}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.entryList}
+          renderItem={({ item }) => (
             <EntryCard key={item.id} {...item} onPress={() => navigate("ViewEntry", { id: item.id })} />
-          ))}
-          {todaysEntries.length === 0 && (
+          )}
+          ListEmptyComponent={
             <EmptyState
               title="No entries found."
               description="There are no entries registered for this day. Your journal awaits, start by creating a new entry."
               buttonLabel="Create New"
               onClick={() => navigate("NewEntry")}
             />
-          )}
-        </View>
+          }
+        />
       </ScrollView>
     </SafeAreaView>
   );
