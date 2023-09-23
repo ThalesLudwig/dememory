@@ -10,7 +10,6 @@ import ImageView from "react-native-image-viewing";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useSelector } from "react-redux";
 
-import { EntryStorage } from "../constants/EntryStorage";
 import { getMoodColor, getMoodsArray } from "../utils/moodHelper";
 import { MoodEnum } from "../constants/moods";
 import { Entry } from "../types/Entry";
@@ -18,6 +17,7 @@ import { updateEntry } from "../config/entriesSlice";
 import { RootStackParamList } from "../Components/Router";
 import { RootState } from "../config/store";
 import { styles } from "../styles/editEntryStyles";
+import { storageButtons } from "../constants/storage";
 
 type Props = NativeStackScreenProps<RootStackParamList, "EditEntry">;
 
@@ -42,20 +42,6 @@ export default function EditEntry({ route }: Props) {
   const [openedImageIndex, setOpenedImageIndex] = useState(0);
   const [tags, setTags] = useState<string[]>(entry.tags || []);
   const [tagInput, setTagInput] = useState("");
-
-  const storageButtons = [
-    {
-      value: EntryStorage.LOCAL.toString(),
-      label: "Local Device",
-      icon: "cellphone",
-    },
-    {
-      value: EntryStorage.BLOCKCHAIN.toString(),
-      label: "Blockchain",
-      icon: "ethereum",
-      disabled: true,
-    },
-  ];
 
   const submitForm = () => {
     const editedEntry: Entry = {
@@ -105,7 +91,7 @@ export default function EditEntry({ route }: Props) {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <KeyboardAvoidingView style={styles.body} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-          <Text variant="titleMedium">Save entry on:</Text>
+          <Text variant="titleMedium">Entry saved on:</Text>
           <SegmentedButtons value={entryStorage} onValueChange={setEntryStorage} buttons={storageButtons} />
           <Text variant="titleMedium">What are you thinking?</Text>
           <TextInput multiline numberOfLines={5} value={content} onChangeText={setContent} />

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Image, KeyboardAvoidingView, Platform, View, ScrollView, Pressable } from "react-native";
-import { Button, Chip, IconButton, SegmentedButtons, Surface, Text, TextInput } from "react-native-paper";
+import { Banner, Button, Chip, IconButton, SegmentedButtons, Surface, Text, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-navigation";
 import "react-native-get-random-values";
 import { useDispatch } from "react-redux";
@@ -15,6 +15,7 @@ import { MoodEnum } from "../constants/moods";
 import { Entry } from "../types/Entry";
 import { addEntry } from "../config/entriesSlice";
 import { styles } from "../styles/newEntryStyles";
+import { storageButtons } from "../constants/storage";
 
 export default function NewEntry() {
   const dispatch = useDispatch<any>();
@@ -28,20 +29,6 @@ export default function NewEntry() {
   const [openedImageIndex, setOpenedImageIndex] = useState(0);
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
-
-  const storageButtons = [
-    {
-      value: EntryStorage.LOCAL.toString(),
-      label: "Local Device",
-      icon: "cellphone",
-    },
-    {
-      value: EntryStorage.BLOCKCHAIN.toString(),
-      label: "Blockchain",
-      icon: "ethereum",
-      disabled: true,
-    },
-  ];
 
   const resetForm = () => {
     setEntryStorage(EntryStorage.LOCAL.toString());
@@ -99,6 +86,7 @@ export default function NewEntry() {
           <SegmentedButtons value={entryStorage} onValueChange={setEntryStorage} buttons={storageButtons} />
           <Text variant="titleMedium">What are you thinking?</Text>
           <TextInput multiline numberOfLines={5} value={content} onChangeText={setContent} />
+          {parseInt(entryStorage) === EntryStorage.BLOCKCHAIN && <Chip icon="alert">Your notes are encrypted.</Chip>}
           <Text variant="titleMedium">How are you feeling?</Text>
           <View style={styles.moods}>
             {getMoodsArray().map((mood) => (
@@ -153,6 +141,9 @@ export default function NewEntry() {
               </Surface>
             </Pressable>
           </View>
+          {parseInt(entryStorage) === EntryStorage.BLOCKCHAIN && images.length > 0 && (
+            <Chip icon="alert">Images will be saved on IPFS.</Chip>
+          )}
         </KeyboardAvoidingView>
         <Button
           icon="send"
