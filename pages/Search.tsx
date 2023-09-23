@@ -1,5 +1,6 @@
-import { KeyboardAvoidingView, Platform, StyleSheet, View } from "react-native";
+import { KeyboardAvoidingView, Platform, View } from "react-native";
 import { Text } from "react-native-paper";
+import { styles } from "../styles/searchStyles";
 
 export default function Search() {
   return (
@@ -10,14 +11,3 @@ export default function Search() {
     </KeyboardAvoidingView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fffbfe",
-  },
-  body: {
-    marginHorizontal: 15,
-    gap: 20,
-  },
-});

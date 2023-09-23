@@ -1,6 +1,6 @@
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, View, Image, ScrollView, Pressable } from "react-native";
+import { SafeAreaView, View, Image, ScrollView, Pressable } from "react-native";
 import { Button, Chip, Dialog, Portal, Surface, Text } from "react-native-paper";
 import { format } from "date-fns";
 import { useDispatch } from "react-redux";
@@ -13,6 +13,7 @@ import { RootState } from "../config/store";
 import { Entry } from "../types/Entry";
 import { getMoodColor, getMoodName } from "../utils/moodHelper";
 import { removeEntry, updateEntry } from "../config/entriesSlice";
+import { styles } from "../styles/viewEntryStyles";
 
 type Props = NativeStackScreenProps<RootStackParamList, "ViewEntry">;
 
@@ -128,44 +129,5 @@ export const ViewEntry = ({ route }: Props) => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fffbfe",
-  },
-  body: {
-    marginHorizontal: 15,
-    gap: 15,
-  },
-  chip: {
-    alignSelf: "flex-start",
-    height: 32,
-  },
-  images: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 10,
-  },
-  thumbnail: {
-    width: 100,
-    height: 100,
-    borderRadius: 10,
-  },
-  content: {
-    padding: 15,
-    borderRadius: 10,
-  },
-  buttons: {
-    padding: 15,
-    gap: 10,
-    marginTop: 15,
-  },
-  tagRow: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 10,
-  },
-});
 
 export default ViewEntry;

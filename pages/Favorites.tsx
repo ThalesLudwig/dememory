@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { SafeAreaView, StyleSheet, View, SectionList } from "react-native";
+import { SafeAreaView, View, SectionList } from "react-native";
 import { Chip } from "react-native-paper";
 import { format } from "date-fns";
 import { useNavigation } from "@react-navigation/native";
@@ -8,6 +8,7 @@ import { useFavoriteEntries } from "../hooks/useFavoriteEntries";
 import { Entry } from "../types/Entry";
 import EntryCard from "../Components/EntryCard";
 import EmptyState from "../Components/EmptyState";
+import { styles } from "../styles/favoritesStyles";
 
 export default function Favorites() {
   const favoriteEntries = useFavoriteEntries();
@@ -50,26 +51,3 @@ export default function Favorites() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fffbfe",
-  },
-  body: {
-    flex: 1,
-    marginHorizontal: 15,
-  },
-  item: {
-    backgroundColor: "#f9c2ff",
-    padding: 20,
-    marginVertical: 8,
-  },
-  title: {
-    fontSize: 16,
-  },
-  list: {
-    padding: 1,
-    gap: 20,
-  },
-});

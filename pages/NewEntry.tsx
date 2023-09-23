@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Image, KeyboardAvoidingView, Platform, StyleSheet, View, ScrollView, Pressable } from "react-native";
+import { Image, KeyboardAvoidingView, Platform, View, ScrollView, Pressable } from "react-native";
 import { Button, Chip, IconButton, SegmentedButtons, Surface, Text, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-navigation";
 import "react-native-get-random-values";
@@ -14,6 +14,7 @@ import { getMoodColor, getMoodsArray } from "../utils/moodHelper";
 import { MoodEnum } from "../constants/moods";
 import { Entry } from "../types/Entry";
 import { addEntry } from "../config/entriesSlice";
+import { styles } from "../styles/newEntryStyles";
 
 export default function NewEntry() {
   const dispatch = useDispatch<any>();
@@ -173,53 +174,3 @@ export default function NewEntry() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fffbfe",
-  },
-  body: {
-    marginHorizontal: 15,
-    gap: 15,
-  },
-  moods: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 10,
-  },
-  images: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 10,
-  },
-  submit: {
-    marginHorizontal: 15,
-    marginVertical: 25,
-  },
-  thumbnail: {
-    width: 100,
-    height: 100,
-    borderRadius: 10,
-  },
-  addImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    borderColor: "lightgrey",
-    borderWidth: 1,
-    borderStyle: "dashed",
-  },
-  deleteImage: {
-    position: "absolute",
-    bottom: 2,
-    right: 2,
-  },
-  tagRow: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 10,
-  },
-});

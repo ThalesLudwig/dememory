@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Image, KeyboardAvoidingView, Platform, StyleSheet, View, ScrollView, Pressable } from "react-native";
+import { Image, KeyboardAvoidingView, Platform, View, ScrollView, Pressable } from "react-native";
 import { Button, Chip, IconButton, SegmentedButtons, Surface, Text, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-navigation";
 import "react-native-get-random-values";
@@ -17,6 +17,7 @@ import { Entry } from "../types/Entry";
 import { updateEntry } from "../config/entriesSlice";
 import { RootStackParamList } from "../Components/Router";
 import { RootState } from "../config/store";
+import { styles } from "../styles/editEntryStyles";
 
 type Props = NativeStackScreenProps<RootStackParamList, "EditEntry">;
 
@@ -183,53 +184,3 @@ export default function EditEntry({ route }: Props) {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fffbfe",
-  },
-  body: {
-    marginHorizontal: 15,
-    gap: 15,
-  },
-  moods: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 10,
-  },
-  images: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 10,
-  },
-  submit: {
-    marginHorizontal: 15,
-    marginVertical: 25,
-  },
-  thumbnail: {
-    width: 100,
-    height: 100,
-    borderRadius: 10,
-  },
-  addImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    borderColor: "lightgrey",
-    borderWidth: 1,
-    borderStyle: "dashed",
-  },
-  deleteImage: {
-    position: "absolute",
-    bottom: 2,
-    right: 2,
-  },
-  tagRow: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 10,
-  },
-});

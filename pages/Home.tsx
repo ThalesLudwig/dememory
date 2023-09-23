@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { SafeAreaView, StyleSheet, View, FlatList, ScrollView } from "react-native";
+import { SafeAreaView, View, FlatList, ScrollView } from "react-native";
 import { Button, Chip, IconButton, Searchbar, Text } from "react-native-paper";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
@@ -17,6 +17,7 @@ import { RootState } from "../config/store";
 import { useCurrentDate } from "../hooks/useCurrentDate";
 import EmptyState from "../Components/EmptyState";
 import { useFavoriteEntries } from "../hooks/useFavoriteEntries";
+import { styles } from "../styles/homeStyles";
 
 export default function Home() {
   const { navigate } = useNavigation<any>();
@@ -122,31 +123,3 @@ export default function Home() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fffbfe",
-  },
-  body: {
-    marginHorizontal: 15,
-    gap: 20,
-  },
-  spaceBetween: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  slider: {
-    marginVertical: 20,
-    paddingHorizontal: 15,
-  },
-  entryList: {
-    marginHorizontal: 15,
-    gap: 20,
-    marginVertical: 20,
-  },
-  pinnedChip: {
-    marginHorizontal: 15,
-  },
-});
