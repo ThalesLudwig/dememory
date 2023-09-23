@@ -70,6 +70,14 @@ export const ViewEntry = ({ route }: Props) => {
           <Chip icon="heart" style={{ backgroundColor: moodColor, ...styles.chip }}>
             {getMoodName(entry.mood || 1)}
           </Chip>
+          {!!entry.tags && entry.tags.length > 0 && <Text variant="titleMedium">Tags:</Text>}
+          <View style={styles.tagRow}>
+            {entry.tags?.map((tag, i) => (
+              <Chip key={i} mode="outlined">
+                {tag}
+              </Chip>
+            ))}
+          </View>
           {!!entry.imagesUrl && entry.imagesUrl.length > 0 && (
             <>
               <Text variant="titleMedium">Photos:</Text>
@@ -152,6 +160,11 @@ const styles = StyleSheet.create({
     padding: 15,
     gap: 10,
     marginTop: 15,
+  },
+  tagRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
   },
 });
 

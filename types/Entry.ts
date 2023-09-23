@@ -5,7 +5,7 @@ export type Entry = {
   id: string;
   content: string;
   imagesUrl?: string[];
-  tag?: string;
+  tags?: string[];
   mood?: MoodEnum;
   storage?: EntryStorage;
   isPinned?: boolean;

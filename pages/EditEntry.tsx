@@ -39,6 +39,8 @@ export default function EditEntry({ route }: Props) {
   const [images, setImages] = useState<string[]>(entry.imagesUrl || []);
   const [isImageOpen, setIsImageOpen] = useState(false);
   const [openedImageIndex, setOpenedImageIndex] = useState(0);
+  const [tags, setTags] = useState<string[]>(entry.tags || []);
+  const [tagInput, setTagInput] = useState("");
 
   const storageButtons = [
     {
@@ -58,6 +60,7 @@ export default function EditEntry({ route }: Props) {
     const editedEntry: Entry = {
       ...entry,
       content,
+      tags,
       mood: selectedMood,
       imagesUrl: images,
     };
@@ -86,6 +89,17 @@ export default function EditEntry({ route }: Props) {
     setImages(tempImages);
   };
 
+  const submitTag = () => {
+    setTags([...tags, tagInput]);
+    setTagInput("");
+  };
+
+  const deleteTag = (index: number) => {
+    const tempTags = [...tags];
+    tempTags.splice(index, 1);
+    setTags(tempTags);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -104,6 +118,23 @@ export default function EditEntry({ route }: Props) {
                 selected={selectedMood === mood.key}
               >
                 {mood.name}
+              </Chip>
+            ))}
+          </View>
+          <Text variant="titleMedium">Tags:</Text>
+          <TextInput
+            mode="outlined"
+            right={<TextInput.Icon icon="send" onPress={() => submitTag()} />}
+            label="#"
+            value={tagInput}
+            onChangeText={(text) => setTagInput(text)}
+            returnKeyType="done"
+            onSubmitEditing={submitTag}
+          />
+          <View style={styles.tagRow}>
+            {tags.map((tag, i) => (
+              <Chip key={i} mode="outlined" onClose={() => deleteTag(i)}>
+                {tag}
               </Chip>
             ))}
           </View>
@@ -195,5 +226,10 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 2,
     right: 2,
+  },
+  tagRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
   },
 });

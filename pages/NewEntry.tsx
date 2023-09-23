@@ -18,12 +18,15 @@ import { addEntry } from "../config/entriesSlice";
 export default function NewEntry() {
   const dispatch = useDispatch<any>();
   const { navigate } = useNavigation<any>();
+
   const [entryStorage, setEntryStorage] = useState(EntryStorage.LOCAL.toString());
   const [content, setContent] = useState("");
   const [selectedMood, setSelectedMood] = useState(MoodEnum.NEUTRAL);
   const [images, setImages] = useState<string[]>([]);
   const [isImageOpen, setIsImageOpen] = useState(false);
   const [openedImageIndex, setOpenedImageIndex] = useState(0);
+  const [tags, setTags] = useState<string[]>([]);
+  const [tagInput, setTagInput] = useState("");
 
   const storageButtons = [
     {
@@ -44,10 +47,12 @@ export default function NewEntry() {
     setContent("");
     setSelectedMood(1);
     setImages([]);
+    setTags([]);
+    setTagInput("");
   };
 
   const submitForm = () => {
-    const entry: Entry = { id: uuidv4(), mood: selectedMood, content, date: new Date(), imagesUrl: images };
+    const entry: Entry = { id: uuidv4(), mood: selectedMood, content, date: new Date(), imagesUrl: images, tags };
     dispatch(addEntry(entry));
     resetForm();
     navigate("ViewEntry", { id: entry.id });
@@ -74,6 +79,17 @@ export default function NewEntry() {
     setImages(tempImages);
   };
 
+  const submitTag = () => {
+    setTags([...tags, tagInput]);
+    setTagInput("");
+  };
+
+  const deleteTag = (index: number) => {
+    const tempTags = [...tags];
+    tempTags.splice(index, 1);
+    setTags(tempTags);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -92,6 +108,23 @@ export default function NewEntry() {
                 selected={selectedMood === mood.key}
               >
                 {mood.name}
+              </Chip>
+            ))}
+          </View>
+          <Text variant="titleMedium">Tags:</Text>
+          <TextInput
+            mode="outlined"
+            right={<TextInput.Icon icon="send" onPress={() => submitTag()} />}
+            label="#"
+            value={tagInput}
+            onChangeText={(text) => setTagInput(text)}
+            returnKeyType="done"
+            onSubmitEditing={submitTag}
+          />
+          <View style={styles.tagRow}>
+            {tags.map((tag, i) => (
+              <Chip key={i} mode="outlined" onClose={() => deleteTag(i)}>
+                {tag}
               </Chip>
             ))}
           </View>
@@ -183,5 +216,10 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 2,
     right: 2,
+  },
+  tagRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
   },
 });
