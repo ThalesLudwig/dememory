@@ -42,11 +42,20 @@ export default function Home() {
     );
   }, [selectedDay, entries]);
 
+  const onSearch = () => {};
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.body}>
-          <Searchbar placeholder="Search" onChangeText={() => {}} value={""} />
+          <Searchbar
+            placeholder="Search"
+            onChangeText={() => {}}
+            value={""}
+            returnKeyType="done"
+            onSubmitEditing={onSearch}
+            onIconPress={onSearch}
+          />
           <View style={styles.spaceBetween}>
             <Text variant="titleMedium">Pinned</Text>
             <Button mode="text" onPress={() => navigate("FavoritesStack")}>
@@ -103,22 +112,19 @@ export default function Home() {
           getItemLayout={(_, i) => ({ length: 49, offset: 49 * i, index: i })}
           horizontal
         />
-        <FlatList
-          data={todaysEntries}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={styles.entryList}
-          renderItem={({ item }) => (
+        <View style={styles.entryList}>
+          {todaysEntries.map((item) => (
             <EntryCard key={item.id} {...item} onPress={() => navigate("ViewEntry", { id: item.id })} />
-          )}
-          ListEmptyComponent={
+          ))}
+          {todaysEntries.length === 0 && (
             <EmptyState
               title="No entries found."
               description="There are no entries registered for this day. Your journal awaits, start by creating a new entry."
               buttonLabel="Create New"
               onClick={() => navigate("NewEntry")}
             />
-          }
-        />
+          )}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

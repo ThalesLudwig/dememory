@@ -72,6 +72,8 @@ function SearchStack() {
   return (
     <Stack.Navigator initialRouteName="Home" screenOptions={{ header: (props) => <Header {...props} /> }}>
       <Tab.Screen name="Search" component={Search} options={getRouteIcon("Search")} />
+      <Stack.Screen name="ViewEntry" component={ViewEntry} initialParams={{ id: "" }} />
+      <Stack.Screen name="EditEntry" component={EditEntry} initialParams={{ id: "" }} />
     </Stack.Navigator>
   );
 }

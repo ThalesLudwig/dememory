@@ -22,7 +22,6 @@ const EntryCard = (props: Entry & { onPress: Function }) => {
         <Card.Cover style={styles.image} source={{ uri: props.imagesUrl[0] }} />
       )}
       {!!props.imagesUrl && props.imagesUrl.length > 1 && (
-        // <Card.Cover style={styles.image} source={{ uri: props.imagesUrl[0] }} />
         <View style={styles.images}>
           {props.imagesUrl.map((imageUrl, i) => (
             <Image key={i} source={{ uri: imageUrl }} style={styles.thumbnail} />
@@ -30,8 +29,7 @@ const EntryCard = (props: Entry & { onPress: Function }) => {
         </View>
       )}
       <Card.Actions style={styles.actions}>
-        <Chip icon="clock">{format(new Date(props.date), "MMM do, kk:mm")}</Chip>
-        {!!props.tag && <Chip icon="tag">{props.tag}</Chip>}
+        {/* <Chip icon="clock">{format(new Date(props.date), "MMM do, kk:mm")}</Chip> */}
         {!!props.mood && (
           <Chip icon="heart" style={{ backgroundColor: moodColor }}>
             {getMoodName(props.mood)}

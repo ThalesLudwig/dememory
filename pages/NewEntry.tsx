@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Image, KeyboardAvoidingView, Platform, View, ScrollView, Pressable } from "react-native";
-import { Banner, Button, Chip, IconButton, SegmentedButtons, Surface, Text, TextInput } from "react-native-paper";
+import { Button, Chip, IconButton, SegmentedButtons, Surface, Text, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-navigation";
 import "react-native-get-random-values";
 import { useDispatch } from "react-redux";

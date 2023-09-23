@@ -8,6 +8,7 @@ export const styles = StyleSheet.create({
   body: {
     flex: 1,
     marginHorizontal: 15,
+    gap: 15,
   },
   item: {
     backgroundColor: "#f9c2ff",

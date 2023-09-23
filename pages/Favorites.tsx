@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { SafeAreaView, View, SectionList } from "react-native";
-import { Chip } from "react-native-paper";
+import { Chip, Searchbar } from "react-native-paper";
 import { format } from "date-fns";
 import { useNavigation } from "@react-navigation/native";
 
@@ -28,9 +28,19 @@ export default function Favorites() {
     return list;
   }, [favoriteEntries]);
 
+  const onSearch = () => {};
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.body}>
+        <Searchbar
+          placeholder="Search Favorites"
+          onChangeText={() => {}}
+          value={""}
+          returnKeyType="done"
+          onSubmitEditing={onSearch}
+          onIconPress={onSearch}
+        />
         <SectionList
           sections={parsedEntries}
           keyExtractor={(item) => item.id}
