@@ -56,7 +56,7 @@ export default function Home() {
       <ScrollView>
         <View style={styles.body}>
           <Searchbar
-            placeholder="Search"
+            placeholder="Search by content"
             onChangeText={(text) => setSearchInput(text)}
             value={searchInput}
             returnKeyType="done"

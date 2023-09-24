@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { SafeAreaView, View, SectionList } from "react-native";
 import { Chip, Searchbar } from "react-native-paper";
 import { format } from "date-fns";
@@ -13,10 +13,18 @@ import { styles } from "../styles/favoritesStyles";
 export default function Favorites() {
   const favoriteEntries = useFavoriteEntries();
   const { navigate } = useNavigation<any>();
+  const [searchInput, setSearchInput] = useState("");
+
+  const filteredEntries = useMemo(() => {
+    if (!searchInput) return favoriteEntries;
+    return favoriteEntries.filter(
+      (entry) => entry.content.toLowerCase().includes(searchInput.toLowerCase()) || entry.tags?.includes(searchInput),
+    );
+  }, [favoriteEntries, searchInput]);
 
   const parsedEntries = useMemo(() => {
     const list: { title: string; data: Entry[] }[] = [];
-    favoriteEntries.forEach((entry) => {
+    filteredEntries.forEach((entry) => {
       const date = format(new Date(entry.date), "MMMM, yyyy");
       const index = list.findIndex((e) => e.title === date);
       if (index >= 0) {
@@ -26,7 +34,7 @@ export default function Favorites() {
       }
     });
     return list;
-  }, [favoriteEntries]);
+  }, [filteredEntries]);
 
   const onSearch = () => {};
 
@@ -34,9 +42,9 @@ export default function Favorites() {
     <SafeAreaView style={styles.container}>
       <View style={styles.body}>
         <Searchbar
-          placeholder="Search Favorites"
-          onChangeText={() => {}}
-          value={""}
+          placeholder="Search by content or tag"
+          onChangeText={(text) => setSearchInput(text)}
+          value={searchInput}
           returnKeyType="done"
           onSubmitEditing={onSearch}
           onIconPress={onSearch}
