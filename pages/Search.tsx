@@ -1,8 +1,7 @@
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-navigation";
 import { Button, Chip, Snackbar, Text, TextInput } from "react-native-paper";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useMemo, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { format } from "date-fns";
@@ -11,13 +10,11 @@ import { styles } from "../styles/searchStyles";
 import { getMoodColor, getMoodsArray } from "../utils/moodHelper";
 import { MoodEnum } from "../constants/moods";
 import { EntryStorage } from "../constants/EntryStorage";
-import { RootState } from "../config/store";
-import EntryCard from "../Components/EntryCard";
 import { validateDateStr } from "../utils/validateDateStr";
+import { SearchType } from "../types/Search";
 
 export default function Search() {
   const { navigate } = useNavigation<any>();
-  const { value: entries } = useSelector((state: RootState) => state.entries);
 
   const [isFromPickerVisible, setFromPickerVisibility] = useState(false);
   const [isToPickerVisible, setToPickerVisibility] = useState(false);
@@ -30,7 +27,22 @@ export default function Search() {
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
 
-  const onSearch = () => {};
+  const onSearch = () => {
+    const isDateFieldsValid = (!!fromInput && !validateDateStr(fromInput)) || (!!toInput && !validateDateStr(toInput));
+    if (isDateFieldsValid) {
+      setIsDateErrorSnackbarVisible(true);
+      return;
+    }
+    const params: SearchType = {
+      moods: selectedMoods,
+      storages: entryStorages,
+      tags,
+      content,
+      fromDate: fromInput,
+      toDate: toInput,
+    };
+    navigate("SearchResults", params);
+  };
 
   const confirmFromDate = (date: Date) => {
     setFromInput(format(new Date(date), "yyyy/MM/dd"));
@@ -86,6 +98,17 @@ export default function Search() {
     setTags(tempTags);
   };
 
+  const isSubmitDisabled = useMemo(() => {
+    return (
+      !content &&
+      !fromInput &&
+      !toInput &&
+      entryStorages.length === 0 &&
+      selectedMoods.length === 0 &&
+      tags.length === 0
+    );
+  }, [content, fromInput, toInput, entryStorages, selectedMoods, tags]);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -111,7 +134,21 @@ export default function Search() {
               </Chip>
             ))}
           </View>
-
+          <Text variant="titleMedium">Stored on:</Text>
+          <View style={styles.chips}>
+            <Chip
+              onPress={() => onSelectStorage(EntryStorage.LOCAL)}
+              selected={entryStorages.includes(EntryStorage.LOCAL)}
+            >
+              Local Device
+            </Chip>
+            <Chip
+              onPress={() => onSelectStorage(EntryStorage.BLOCKCHAIN)}
+              selected={entryStorages.includes(EntryStorage.BLOCKCHAIN)}
+            >
+              Blockchain
+            </Chip>
+          </View>
           <Text variant="titleMedium">Tags:</Text>
           <TextInput
             mode="outlined"
@@ -128,22 +165,6 @@ export default function Search() {
                 {tag}
               </Chip>
             ))}
-          </View>
-
-          <Text variant="titleMedium">Stored on:</Text>
-          <View style={styles.chips}>
-            <Chip
-              onPress={() => onSelectStorage(EntryStorage.LOCAL)}
-              selected={entryStorages.includes(EntryStorage.LOCAL)}
-            >
-              Local Device
-            </Chip>
-            <Chip
-              onPress={() => onSelectStorage(EntryStorage.BLOCKCHAIN)}
-              selected={entryStorages.includes(EntryStorage.BLOCKCHAIN)}
-            >
-              Blockchain
-            </Chip>
           </View>
           <Text variant="titleMedium">Date:</Text>
           <View style={styles.dates}>
@@ -182,15 +203,9 @@ export default function Search() {
           </View>
           <View style={styles.buttonsRow}>
             <Button onPress={() => clearFilters()}>CLEAR FILTERS</Button>
-            <Button mode="contained" onPress={() => onSearch()}>
+            <Button disabled={isSubmitDisabled} mode="contained" onPress={() => onSearch()}>
               SEARCH
             </Button>
-          </View>
-          {entries.length > 0 && <Text variant="titleLarge">Results</Text>}
-          <View style={styles.entryList}>
-            {entries.map((item) => (
-              <EntryCard key={item.id} {...item} onPress={() => navigate("ViewEntry", { id: item.id })} />
-            ))}
           </View>
         </KeyboardAvoidingView>
       </ScrollView>

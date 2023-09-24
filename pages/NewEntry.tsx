@@ -40,7 +40,15 @@ export default function NewEntry() {
   };
 
   const submitForm = () => {
-    const entry: Entry = { id: uuidv4(), mood: selectedMood, content, date: new Date(), imagesUrl: images, tags };
+    const entry: Entry = {
+      id: uuidv4(),
+      mood: selectedMood,
+      content,
+      date: new Date(),
+      imagesUrl: images,
+      tags,
+      storage: parseInt(entryStorage),
+    };
     dispatch(addEntry(entry));
     resetForm();
     navigate("ViewEntry", { id: entry.id });

@@ -13,6 +13,8 @@ import NewEntry from "../pages/NewEntry";
 import Header from "./Header";
 import ViewEntry from "../pages/ViewEntry";
 import EditEntry from "../pages/EditEntry";
+import SearchResults from "../pages/SearchResults";
+import { SearchType } from "../types/Search";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -22,6 +24,7 @@ export type RootStackParamList = {
   Search: undefined;
   Favorites: undefined;
   Settings: undefined;
+  SearchResults: SearchType;
 };
 
 export type RootTabParamList = {
@@ -61,9 +64,20 @@ function HomeStack() {
       screenOptions={{ header: (props) => <Header {...props} />, title: "Entries" }}
     >
       <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="NewEntry" component={NewEntry} />
-      <Stack.Screen name="ViewEntry" component={ViewEntry} initialParams={{ id: "" }} />
-      <Stack.Screen name="EditEntry" component={EditEntry} initialParams={{ id: "" }} />
+      <Stack.Screen options={{ headerTitle: "New Entry" }} name="NewEntry" component={NewEntry} />
+      <Stack.Screen
+        options={{ headerTitle: "View Entry" }}
+        name="ViewEntry"
+        component={ViewEntry}
+        initialParams={{ id: "" }}
+      />
+      <Stack.Screen
+        options={{ headerTitle: "Edit Entry" }}
+        name="EditEntry"
+        component={EditEntry}
+        initialParams={{ id: "" }}
+      />
+      <Stack.Screen options={{ headerTitle: "Search Results" }} name="SearchResults" component={SearchResults} />
     </Stack.Navigator>
   );
 }
@@ -72,8 +86,19 @@ function SearchStack() {
   return (
     <Stack.Navigator initialRouteName="Home" screenOptions={{ header: (props) => <Header {...props} /> }}>
       <Tab.Screen name="Search" component={Search} options={getRouteIcon("Search")} />
-      <Stack.Screen name="ViewEntry" component={ViewEntry} initialParams={{ id: "" }} />
-      <Stack.Screen name="EditEntry" component={EditEntry} initialParams={{ id: "" }} />
+      <Stack.Screen
+        options={{ headerTitle: "View Entry" }}
+        name="ViewEntry"
+        component={ViewEntry}
+        initialParams={{ id: "" }}
+      />
+      <Stack.Screen
+        options={{ headerTitle: "Edit Entry" }}
+        name="EditEntry"
+        component={EditEntry}
+        initialParams={{ id: "" }}
+      />
+      <Stack.Screen options={{ headerTitle: "Search Results" }} name="SearchResults" component={SearchResults} />
     </Stack.Navigator>
   );
 }
@@ -82,8 +107,18 @@ function FavoritesStack() {
   return (
     <Stack.Navigator initialRouteName="Home" screenOptions={{ header: (props) => <Header {...props} /> }}>
       <Tab.Screen name="Favorites" component={Favorites} options={getRouteIcon("Favorites")} />
-      <Stack.Screen name="ViewEntry" component={ViewEntry} initialParams={{ id: "" }} />
-      <Stack.Screen name="EditEntry" component={EditEntry} initialParams={{ id: "" }} />
+      <Stack.Screen
+        options={{ headerTitle: "View Entry" }}
+        name="ViewEntry"
+        component={ViewEntry}
+        initialParams={{ id: "" }}
+      />
+      <Stack.Screen
+        options={{ headerTitle: "Edit Entry" }}
+        name="EditEntry"
+        component={EditEntry}
+        initialParams={{ id: "" }}
+      />
     </Stack.Navigator>
   );
 }

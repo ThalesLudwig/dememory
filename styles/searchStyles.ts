@@ -14,10 +14,6 @@ export const styles = StyleSheet.create({
     flexWrap: "wrap",
     gap: 10,
   },
-  entryList: {
-    gap: 20,
-    marginBottom: 20,
-  },
   dates: {
     flexDirection: "row",
     flexWrap: "wrap",

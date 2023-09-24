@@ -18,16 +18,19 @@ import { useCurrentDate } from "../hooks/useCurrentDate";
 import EmptyState from "../Components/EmptyState";
 import { useFavoriteEntries } from "../hooks/useFavoriteEntries";
 import { styles } from "../styles/homeStyles";
+import { SearchType } from "../types/Search";
 
 export default function Home() {
   const { navigate } = useNavigation<any>();
   const { value: selectedDay } = useSelector((state: RootState) => state.date);
   const { value: entries } = useSelector((state: RootState) => state.entries);
   const daysInMonth = useMonthDays(new Date(selectedDay));
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const dispatch = useDispatch();
   const currentDate = useCurrentDate();
   const favoriteEntries = useFavoriteEntries();
+
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
 
   const confirmDate = (date: Date) => {
     dispatch(setDate(format(new Date(date), "yyyy-MM-dd")));
@@ -42,7 +45,11 @@ export default function Home() {
     );
   }, [selectedDay, entries]);
 
-  const onSearch = () => {};
+  const onSearch = () => {
+    const params: SearchType = { moods: [], storages: [], tags: [], content: searchInput };
+    setSearchInput("");
+    navigate("SearchResults", params);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -50,8 +57,8 @@ export default function Home() {
         <View style={styles.body}>
           <Searchbar
             placeholder="Search"
-            onChangeText={() => {}}
-            value={""}
+            onChangeText={(text) => setSearchInput(text)}
+            value={searchInput}
             returnKeyType="done"
             onSubmitEditing={onSearch}
             onIconPress={onSearch}
