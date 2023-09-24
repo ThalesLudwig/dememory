@@ -1,11 +1,13 @@
 import { ScrollView, View } from "react-native";
 import { styles } from "../styles/settingsStyles";
 import { SafeAreaView } from "react-navigation";
-import { Avatar, Button, Divider, List, Text } from "react-native-paper";
+import { Avatar, Button, Divider, List, Text, useTheme } from "react-native-paper";
 
 export default function Settings() {
+  const { colors } = useTheme();
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{ ...styles.container, backgroundColor: colors.background }}>
       <ScrollView>
         <View style={styles.body}>
           <View style={styles.avatar}>
@@ -21,7 +23,6 @@ export default function Settings() {
             <List.Subheader>Preferences</List.Subheader>
             <List.Item title="Theme" />
             <List.Item title="Languages" />
-            <List.Item title="Moods" />
           </List.Section>
           <Divider />
           <List.Section>

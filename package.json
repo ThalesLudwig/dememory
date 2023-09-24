@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@assembless/react-native-material-you": "^1.0.0-beta.4",
+    "@pchmn/expo-material3-theme": "^1.3.1",
     "@react-native-async-storage/async-storage": "^1.19.0",
     "@react-native-community/datetimepicker": "7.2.0",
     "@react-navigation/native": "^6.1.7",

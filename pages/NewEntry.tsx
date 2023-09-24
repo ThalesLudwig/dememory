@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Image, KeyboardAvoidingView, Platform, View, ScrollView, Pressable } from "react-native";
-import { Button, Chip, IconButton, SegmentedButtons, Surface, Text, TextInput } from "react-native-paper";
+import { Button, Chip, IconButton, SegmentedButtons, Surface, Text, TextInput, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-navigation";
 import "react-native-get-random-values";
 import { useDispatch } from "react-redux";
@@ -18,6 +18,7 @@ import { styles } from "../styles/newEntryStyles";
 import { storageButtons } from "../constants/storage";
 
 export default function NewEntry() {
+  const { colors, dark } = useTheme();
   const dispatch = useDispatch<any>();
   const { navigate } = useNavigation<any>();
 
@@ -87,7 +88,7 @@ export default function NewEntry() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{ ...styles.container, backgroundColor: colors.background }}>
       <ScrollView>
         <KeyboardAvoidingView style={styles.body} behavior={Platform.OS === "ios" ? "padding" : "height"}>
           <Text variant="titleMedium">Save entry on:</Text>
@@ -100,7 +101,7 @@ export default function NewEntry() {
             {getMoodsArray().map((mood) => (
               <Chip
                 key={mood.key}
-                style={{ backgroundColor: getMoodColor(mood.key) }}
+                style={{ backgroundColor: getMoodColor(mood.key, dark) }}
                 onPress={() => setSelectedMood(mood.key)}
                 selected={selectedMood === mood.key}
               >

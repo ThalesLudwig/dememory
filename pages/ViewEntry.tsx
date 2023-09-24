@@ -1,7 +1,7 @@
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
 import { SafeAreaView, View, Image, ScrollView, Pressable } from "react-native";
-import { Button, Chip, Dialog, Portal, SegmentedButtons, Surface, Text } from "react-native-paper";
+import { Button, Chip, Dialog, Portal, SegmentedButtons, Surface, Text, useTheme } from "react-native-paper";
 import { format } from "date-fns";
 import { useDispatch } from "react-redux";
 import ImageView from "react-native-image-viewing";
@@ -26,14 +26,17 @@ const initialState: Entry = {
 };
 
 export const ViewEntry = ({ route }: Props) => {
+  const { colors, dark } = useTheme();
   const dispatch = useDispatch();
   const { goBack, navigate } = useNavigation<any>();
   const entries = useSelector((state: RootState) => state.entries.value);
+
   const [entry, setEntry] = useState<Entry>(entries.find((entry) => entry.id === route.params.id) || initialState);
-  const moodColor = getMoodColor(entry.mood || 1);
   const [isImageOpen, setIsImageOpen] = useState(false);
   const [openedImageIndex, setOpenedImageIndex] = useState(0);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
+  const moodColor = getMoodColor(entry.mood || 1, dark);
 
   useEffect(() => {
     const stateEntry = entries.find((entry) => entry.id === route.params.id);
@@ -56,7 +59,7 @@ export const ViewEntry = ({ route }: Props) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{ ...styles.container, backgroundColor: colors.background }}>
       <ScrollView>
         <View style={styles.body}>
           <Text variant="titleLarge">Entry date</Text>

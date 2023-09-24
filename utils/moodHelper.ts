@@ -11,6 +11,17 @@ const COLORS = {
   NERVOUS: "#FAC898",
 };
 
+const COLORS_DARK = {
+  ANGRY: "#cc6560",
+  FANTASTIC: "#b39c70",
+  GREAT: "#82a0ab",
+  HAPPY: "#588265",
+  NEUTRAL: "#a3868a",
+  SAD: "#dba2b7",
+  STRESSED: "#9b7fd4",
+  NERVOUS: "#9c6b3d",
+};
+
 export const getMoodName = (mood: MoodEnum): string => {
   switch (mood) {
     case MoodEnum.ANGRY:
@@ -47,25 +58,25 @@ export const getMoodsArray = () => {
   return moods;
 };
 
-export const getMoodColor = (mood: MoodEnum) => {
+export const getMoodColor = (mood: MoodEnum, isDarkMode: boolean = false) => {
   switch (mood) {
     case MoodEnum.ANGRY:
-      return COLORS.ANGRY;
+      return (isDarkMode ? COLORS_DARK : COLORS).ANGRY;
     case MoodEnum.FANTASTIC:
-      return COLORS.FANTASTIC;
+      return (isDarkMode ? COLORS_DARK : COLORS).FANTASTIC;
     case MoodEnum.GREAT:
-      return COLORS.GREAT;
+      return (isDarkMode ? COLORS_DARK : COLORS).GREAT;
     case MoodEnum.HAPPY:
-      return COLORS.HAPPY;
+      return (isDarkMode ? COLORS_DARK : COLORS).HAPPY;
     case MoodEnum.NEUTRAL:
-      return COLORS.NEUTRAL;
+      return (isDarkMode ? COLORS_DARK : COLORS).NEUTRAL;
     case MoodEnum.SAD:
-      return COLORS.SAD;
+      return (isDarkMode ? COLORS_DARK : COLORS).SAD;
     case MoodEnum.STRESSED:
-      return COLORS.STRESSED;
+      return (isDarkMode ? COLORS_DARK : COLORS).STRESSED;
     case MoodEnum.NERVOUS:
-      return COLORS.NERVOUS;
+      return (isDarkMode ? COLORS_DARK : COLORS).NERVOUS;
     default:
-      return COLORS.NEUTRAL;
+      return (isDarkMode ? COLORS_DARK : COLORS).NEUTRAL;
   }
 };

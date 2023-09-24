@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { Text, Card, Chip, Avatar, IconButton } from "react-native-paper";
+import { Text, Card, Chip, Avatar, IconButton, useTheme } from "react-native-paper";
 import { format } from "date-fns";
 import { useDispatch } from "react-redux";
 
@@ -12,7 +12,8 @@ import { updateEntry } from "../config/entriesSlice";
 
 const EntryCard = (props: Entry & { onPress: Function }) => {
   const dispatch = useDispatch();
-  const moodColor = !!props.mood ? getMoodColor(props.mood) : "";
+  const { dark } = useTheme();
+  const moodColor = !!props.mood ? getMoodColor(props.mood, dark) : "";
 
   const toogleFavorites = () => {
     dispatch(updateEntry({ ...props, isPinned: !props.isPinned }));
@@ -55,6 +56,7 @@ const styles = StyleSheet.create({
   },
   actions: {
     marginTop: 10,
+    maxHeight: 50,
   },
   images: {
     marginVertical: 10,

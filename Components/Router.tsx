@@ -15,6 +15,7 @@ import ViewEntry from "../pages/ViewEntry";
 import EditEntry from "../pages/EditEntry";
 import SearchResults from "../pages/SearchResults";
 import { SearchType } from "../types/Search";
+import { MD3Theme, useTheme } from "react-native-paper";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -40,19 +41,24 @@ export type RootTabParamList = {
 const Tab = createMaterialBottomTabNavigator<RootTabParamList>();
 const Stack = createStackNavigator<RootStackParamList>();
 
-const getRouteIcon = (route: string) => ({
+const getIconColor = (theme: MD3Theme) => {
+  const { colors, dark } = theme;
+  return dark ? colors.inverseSurface : colors.scrim;
+};
+
+const getRouteIcon = (route: string, theme: MD3Theme) => ({
   tabBarIcon: ({ focused }: { focused: boolean }) => {
     switch (route) {
       case "Home":
-        return <Icon name="home" size={ICON_SIZE} focused={focused} />;
+        return <Icon name="home" size={ICON_SIZE} focused={focused} color={getIconColor(theme)} />;
       case "Search":
-        return <Icon name="search" size={ICON_SIZE} focused={focused} />;
+        return <Icon name="search" size={ICON_SIZE} focused={focused} color={getIconColor(theme)} />;
       case "Favorites":
-        return <Icon name="heart" size={ICON_SIZE} focused={focused} />;
+        return <Icon name="heart" size={ICON_SIZE} focused={focused} color={getIconColor(theme)} />;
       case "Settings":
-        return <Icon name="settings" size={ICON_SIZE} focused={focused} />;
+        return <Icon name="settings" size={ICON_SIZE} focused={focused} color={getIconColor(theme)} />;
       default:
-        return <Icon name="home" size={ICON_SIZE} focused={focused} />;
+        return <Icon name="home" size={ICON_SIZE} focused={focused} color={getIconColor(theme)} />;
     }
   },
 });
@@ -83,9 +89,11 @@ function HomeStack() {
 }
 
 function SearchStack() {
+  const theme = useTheme();
+
   return (
     <Stack.Navigator initialRouteName="Home" screenOptions={{ header: (props) => <Header {...props} /> }}>
-      <Tab.Screen name="Search" component={Search} options={getRouteIcon("Search")} />
+      <Tab.Screen name="Search" component={Search} options={getRouteIcon("Search", theme)} />
       <Stack.Screen
         options={{ headerTitle: "View Entry" }}
         name="ViewEntry"
@@ -104,9 +112,11 @@ function SearchStack() {
 }
 
 function FavoritesStack() {
+  const theme = useTheme();
+
   return (
     <Stack.Navigator initialRouteName="Home" screenOptions={{ header: (props) => <Header {...props} /> }}>
-      <Tab.Screen name="Favorites" component={Favorites} options={getRouteIcon("Favorites")} />
+      <Tab.Screen name="Favorites" component={Favorites} options={getRouteIcon("Favorites", theme)} />
       <Stack.Screen
         options={{ headerTitle: "View Entry" }}
         name="ViewEntry"
@@ -124,12 +134,14 @@ function FavoritesStack() {
 }
 
 export default function Router() {
+  const theme = useTheme();
+
   return (
     <Tab.Navigator labeled={false}>
-      <Tab.Screen name="HomeStack" component={HomeStack} options={getRouteIcon("Home")} />
-      <Tab.Screen name="SearchStack" component={SearchStack} options={getRouteIcon("Search")} />
-      <Tab.Screen name="FavoritesStack" component={FavoritesStack} options={getRouteIcon("Favorites")} />
-      <Tab.Screen name="Settings" component={Settings} options={getRouteIcon("Settings")} />
+      <Tab.Screen name="HomeStack" component={HomeStack} options={getRouteIcon("Home", theme)} />
+      <Tab.Screen name="SearchStack" component={SearchStack} options={getRouteIcon("Search", theme)} />
+      <Tab.Screen name="FavoritesStack" component={FavoritesStack} options={getRouteIcon("Favorites", theme)} />
+      <Tab.Screen name="Settings" component={Settings} options={getRouteIcon("Settings", theme)} />
     </Tab.Navigator>
   );
 }

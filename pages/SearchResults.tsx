@@ -6,6 +6,7 @@ import { useMemo } from "react";
 import { FlatList } from "react-native-gesture-handler";
 import { intersection } from "lodash";
 import { isWithinInterval } from "date-fns";
+import { useTheme } from "react-native-paper";
 
 import EntryCard from "../Components/EntryCard";
 import EmptyState from "../Components/EmptyState";
@@ -17,6 +18,7 @@ import { EntryStorage } from "../constants/EntryStorage";
 type Props = NativeStackScreenProps<RootStackParamList, "SearchResults">;
 
 export default function SearchResults({ route }: Props) {
+  const { colors } = useTheme();
   const { value: entries } = useSelector((state: RootState) => state.entries);
   const { navigate, goBack } = useNavigation<any>();
 
@@ -39,7 +41,7 @@ export default function SearchResults({ route }: Props) {
   }, [entries, route.params]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{ ...styles.container, backgroundColor: colors.background }}>
       <FlatList
         data={results}
         renderItem={({ item }) => <EntryCard {...item} onPress={() => navigate("ViewEntry", { id: item.id })} />}

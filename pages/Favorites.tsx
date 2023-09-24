@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { SafeAreaView, View, SectionList } from "react-native";
-import { Chip, Searchbar } from "react-native-paper";
+import { Chip, Searchbar, useTheme } from "react-native-paper";
 import { format } from "date-fns";
 import { useNavigation } from "@react-navigation/native";
 
@@ -11,6 +11,7 @@ import EmptyState from "../Components/EmptyState";
 import { styles } from "../styles/favoritesStyles";
 
 export default function Favorites() {
+  const { colors } = useTheme();
   const favoriteEntries = useFavoriteEntries();
   const { navigate } = useNavigation<any>();
   const [searchInput, setSearchInput] = useState("");
@@ -39,7 +40,7 @@ export default function Favorites() {
   const onSearch = () => {};
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{ ...styles.container, backgroundColor: colors.background }}>
       <View style={styles.body}>
         <Searchbar
           placeholder="Search by content or tag"

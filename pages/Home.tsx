@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { SafeAreaView, View, FlatList, ScrollView } from "react-native";
-import { Button, Chip, IconButton, Searchbar, Text } from "react-native-paper";
+import { Button, Chip, IconButton, Searchbar, Text, useTheme } from "react-native-paper";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -28,6 +28,7 @@ export default function Home() {
   const dispatch = useDispatch();
   const currentDate = useCurrentDate();
   const favoriteEntries = useFavoriteEntries();
+  const { colors } = useTheme();
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [searchInput, setSearchInput] = useState("");
@@ -52,7 +53,7 @@ export default function Home() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{ ...styles.container, backgroundColor: colors.background }}>
       <ScrollView>
         <View style={styles.body}>
           <Searchbar

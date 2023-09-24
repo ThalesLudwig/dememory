@@ -1,6 +1,6 @@
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-navigation";
-import { Button, Chip, Snackbar, Text, TextInput } from "react-native-paper";
+import { Button, Chip, Snackbar, Text, TextInput, useTheme } from "react-native-paper";
 import { useMemo, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -14,6 +14,7 @@ import { validateDateStr } from "../utils/validateDateStr";
 import { SearchType } from "../types/Search";
 
 export default function Search() {
+  const { colors, dark } = useTheme();
   const { navigate } = useNavigation<any>();
 
   const [isFromPickerVisible, setFromPickerVisibility] = useState(false);
@@ -110,7 +111,7 @@ export default function Search() {
   }, [content, fromInput, toInput, entryStorages, selectedMoods, tags]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{ ...styles.container, backgroundColor: colors.background }}>
       <ScrollView>
         <KeyboardAvoidingView style={styles.body} behavior={Platform.OS === "ios" ? "padding" : "height"}>
           <TextInput
@@ -126,7 +127,7 @@ export default function Search() {
             {getMoodsArray().map((mood) => (
               <Chip
                 key={mood.key}
-                style={{ backgroundColor: getMoodColor(mood.key) }}
+                style={{ backgroundColor: getMoodColor(mood.key, dark) }}
                 onPress={() => onSelectMood(mood.key)}
                 selected={selectedMoods.includes(mood.key)}
               >

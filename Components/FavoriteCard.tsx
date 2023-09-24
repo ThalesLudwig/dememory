@@ -8,8 +8,8 @@ import { ICON_SIZE } from "../constants/icons";
 import { EntryStorage } from "../constants/EntryStorage";
 
 const FavoriteCard = (props: Entry & { onPress: Function }) => {
-  const moodColor = !!props.mood ? getMoodColor(props.mood) : "";
   const theme = useTheme();
+  const moodColor = !!props.mood ? getMoodColor(props.mood, theme.dark) : "";
 
   return (
     <Card style={styles.container} onPress={() => props.onPress()}>
