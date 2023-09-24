@@ -88,7 +88,7 @@ export default function Search() {
   };
 
   const submitTag = () => {
-    setTags([...tags, tagInput]);
+    setTags([...tags, tagInput.trim()]);
     setTagInput("");
   };
 

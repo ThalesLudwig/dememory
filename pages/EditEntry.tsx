@@ -77,7 +77,7 @@ export default function EditEntry({ route }: Props) {
   };
 
   const submitTag = () => {
-    setTags([...tags, tagInput]);
+    setTags([...tags, tagInput.trim()]);
     setTagInput("");
   };
 
@@ -135,7 +135,6 @@ export default function EditEntry({ route }: Props) {
                 <IconButton
                   style={styles.deleteImage}
                   icon="delete"
-                  size={18}
                   mode="contained"
                   onPress={() => onDeleteImage(i)}
                 />

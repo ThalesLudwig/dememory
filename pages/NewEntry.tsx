@@ -76,7 +76,7 @@ export default function NewEntry() {
   };
 
   const submitTag = () => {
-    setTags([...tags, tagInput]);
+    setTags([...tags, tagInput.trim()]);
     setTagInput("");
   };
 
@@ -135,7 +135,6 @@ export default function NewEntry() {
                 <IconButton
                   style={styles.deleteImage}
                   icon="delete"
-                  size={18}
                   mode="contained"
                   onPress={() => onDeleteImage(i)}
                 />

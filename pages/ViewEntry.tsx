@@ -71,11 +71,16 @@ export const ViewEntry = ({ route }: Props) => {
           <Surface style={styles.content}>
             <Text variant="bodyLarge">{entry.content}</Text>
           </Surface>
-          <Button icon="pin" mode="contained-tonal" style={{ alignSelf: "flex-start" }} onPress={toogleFavorites}>
+          <Button
+            icon={entry.isPinned ? "heart" : "cards-heart-outline"}
+            mode="contained-tonal"
+            style={{ alignSelf: "flex-start" }}
+            onPress={toogleFavorites}
+          >
             {entry.isPinned ? "Remove from Favorites" : "Add to Favorites"}
           </Button>
           <Text variant="titleMedium">How were you feeling?</Text>
-          <Chip icon="heart" style={{ backgroundColor: moodColor, ...styles.chip }}>
+          <Chip icon="emoticon-happy-outline" style={{ backgroundColor: moodColor, ...styles.chip }}>
             {getMoodName(entry.mood || 1)}
           </Chip>
           {!!entry.tags && entry.tags.length > 0 && <Text variant="titleMedium">Tags:</Text>}

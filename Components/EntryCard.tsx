@@ -1,15 +1,22 @@
 import * as React from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { Text, Card, Chip, Avatar } from "react-native-paper";
+import { Text, Card, Chip, Avatar, IconButton } from "react-native-paper";
 import { format } from "date-fns";
+import { useDispatch } from "react-redux";
 
 import { ICON_SIZE } from "../constants/icons";
 import { Entry } from "../types/Entry";
 import { getMoodColor, getMoodName } from "../utils/moodHelper";
 import { EntryStorage } from "../constants/EntryStorage";
+import { updateEntry } from "../config/entriesSlice";
 
 const EntryCard = (props: Entry & { onPress: Function }) => {
+  const dispatch = useDispatch();
   const moodColor = !!props.mood ? getMoodColor(props.mood) : "";
+
+  const toogleFavorites = () => {
+    dispatch(updateEntry({ ...props, isPinned: !props.isPinned }));
+  };
 
   return (
     <Card onPress={() => props.onPress()} mode="contained">
@@ -31,12 +38,12 @@ const EntryCard = (props: Entry & { onPress: Function }) => {
       <Card.Actions style={styles.actions}>
         <Chip icon="clock">{format(new Date(props.date), "MMM do, kk:mm")}</Chip>
         {!!props.mood && (
-          <Chip icon="heart" style={{ backgroundColor: moodColor }}>
+          <Chip icon="emoticon-happy-outline" style={{ backgroundColor: moodColor }}>
             {getMoodName(props.mood)}
           </Chip>
         )}
         {props.storage === EntryStorage.BLOCKCHAIN && <Avatar.Icon size={ICON_SIZE} icon="ethereum" />}
-        {props.isPinned && <Avatar.Icon icon="pin" size={ICON_SIZE} />}
+        <IconButton icon={props.isPinned ? "heart" : "cards-heart-outline"} onPress={toogleFavorites} />
       </Card.Actions>
     </Card>
   );

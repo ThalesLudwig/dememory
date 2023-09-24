@@ -21,9 +21,9 @@ const FavoriteCard = (props: Entry & { onPress: Function }) => {
       <View style={styles.actions}>
         <View style={styles.row}>
           {props.storage === EntryStorage.BLOCKCHAIN && <Avatar.Icon size={ICON_SIZE} icon="ethereum" />}
-          {props.mood && <IconButton icon="heart" containerColor={moodColor} size={12} />}
+          {props.mood && <IconButton icon="emoticon-happy-outline" containerColor={moodColor} size={12} />}
         </View>
-        <IconButton icon="pin" size={12} containerColor={theme.colors.primaryContainer} />
+        <IconButton icon="heart" iconColor={theme.colors.primary} />
       </View>
     </Card>
   );
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: 10,
+    paddingVertical: 5,
     paddingHorizontal: 12,
   },
 });
