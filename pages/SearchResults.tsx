@@ -18,7 +18,7 @@ type Props = NativeStackScreenProps<RootStackParamList, "SearchResults">;
 
 export default function SearchResults({ route }: Props) {
   const { value: entries } = useSelector((state: RootState) => state.entries);
-  const { navigate } = useNavigation<any>();
+  const { navigate, goBack } = useNavigation<any>();
 
   const results = useMemo(() => {
     const { params } = route;
@@ -50,6 +50,8 @@ export default function SearchResults({ route }: Props) {
             <EmptyState
               title="No entries found."
               description="We couldn't find any entries registered. Make sure you applied the correct filters to match your entries."
+              buttonLabel="Try again"
+              onClick={() => goBack()}
             />
           </View>
         }
