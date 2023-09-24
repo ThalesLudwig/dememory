@@ -11,4 +11,8 @@ export const styles = StyleSheet.create({
     gap: 15,
     paddingBottom: 15,
   },
+  emptyState: {
+    marginTop: 100,
+    paddingHorizontal: 30,
+  },
 });

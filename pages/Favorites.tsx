@@ -58,10 +58,12 @@ export default function Favorites() {
           renderSectionHeader={({ section: { title } }) => <Chip icon="clock">{title}</Chip>}
           contentContainerStyle={styles.list}
           ListEmptyComponent={
-            <EmptyState
-              description="You don't have any favorites yet. Start pinning your entries and you'll see them here."
-              title="No entries found."
-            />
+            <View style={styles.emptyState}>
+              <EmptyState
+                description="You don't have any favorites yet. Start pinning your entries and you'll see them here."
+                title="No entries found."
+              />
+            </View>
           }
           stickySectionHeadersEnabled={false}
         />

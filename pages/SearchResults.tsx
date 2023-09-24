@@ -1,4 +1,4 @@
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -8,6 +8,7 @@ import { intersection } from "lodash";
 import { isWithinInterval } from "date-fns";
 
 import EntryCard from "../Components/EntryCard";
+import EmptyState from "../Components/EmptyState";
 import { styles } from "../styles/searchResultsStyles";
 import { RootState } from "../config/store";
 import { RootStackParamList } from "../Components/Router";
@@ -44,6 +45,14 @@ export default function SearchResults({ route }: Props) {
         renderItem={({ item }) => <EntryCard {...item} onPress={() => navigate("ViewEntry", { id: item.id })} />}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.body}
+        ListEmptyComponent={
+          <View style={styles.emptyState}>
+            <EmptyState
+              title="No entries found."
+              description="We couldn't find any entries registered. Make sure you applied the correct filters to match your entries."
+            />
+          </View>
+        }
       />
     </SafeAreaView>
   );
