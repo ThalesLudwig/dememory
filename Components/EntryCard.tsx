@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { Text, Card, Chip, Avatar, IconButton } from "react-native-paper";
+import { Text, Card, Chip, Avatar } from "react-native-paper";
 import { format } from "date-fns";
 
 import { ICON_SIZE } from "../constants/icons";
@@ -12,15 +12,15 @@ const EntryCard = (props: Entry & { onPress: Function }) => {
   const moodColor = !!props.mood ? getMoodColor(props.mood) : "";
 
   return (
-    <Card onPress={() => props.onPress()}>
+    <Card onPress={() => props.onPress()} mode="contained">
       <Card.Content>
+        {!!props.imagesUrl && props.imagesUrl.length === 1 && (
+          <Card.Cover style={styles.image} source={{ uri: props.imagesUrl[0] }} />
+        )}
         <Text variant="bodyMedium" numberOfLines={4}>
           {props.content}
         </Text>
       </Card.Content>
-      {!!props.imagesUrl && props.imagesUrl.length === 1 && (
-        <Card.Cover style={styles.image} source={{ uri: props.imagesUrl[0] }} />
-      )}
       {!!props.imagesUrl && props.imagesUrl.length > 1 && (
         <View style={styles.images}>
           {props.imagesUrl.map((imageUrl, i) => (
@@ -29,14 +29,14 @@ const EntryCard = (props: Entry & { onPress: Function }) => {
         </View>
       )}
       <Card.Actions style={styles.actions}>
-        {/* <Chip icon="clock">{format(new Date(props.date), "MMM do, kk:mm")}</Chip> */}
+        <Chip icon="clock">{format(new Date(props.date), "MMM do, kk:mm")}</Chip>
         {!!props.mood && (
           <Chip icon="heart" style={{ backgroundColor: moodColor }}>
             {getMoodName(props.mood)}
           </Chip>
         )}
         {props.storage === EntryStorage.BLOCKCHAIN && <Avatar.Icon size={ICON_SIZE} icon="ethereum" />}
-        {props.isPinned && <IconButton icon="pin" size={12} />}
+        {props.isPinned && <Avatar.Icon icon="pin" size={ICON_SIZE} />}
       </Card.Actions>
     </Card>
   );
@@ -44,8 +44,7 @@ const EntryCard = (props: Entry & { onPress: Function }) => {
 
 const styles = StyleSheet.create({
   image: {
-    marginVertical: 10,
-    marginHorizontal: 15,
+    marginBottom: 15,
   },
   actions: {
     marginTop: 10,

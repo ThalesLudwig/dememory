@@ -1,7 +1,7 @@
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
 import { SafeAreaView, View, Image, ScrollView, Pressable } from "react-native";
-import { Button, Chip, Dialog, Portal, Surface, Text } from "react-native-paper";
+import { Button, Chip, Dialog, Portal, SegmentedButtons, Surface, Text } from "react-native-paper";
 import { format } from "date-fns";
 import { useDispatch } from "react-redux";
 import ImageView from "react-native-image-viewing";
@@ -14,6 +14,7 @@ import { Entry } from "../types/Entry";
 import { getMoodColor, getMoodName } from "../utils/moodHelper";
 import { removeEntry, updateEntry } from "../config/entriesSlice";
 import { styles } from "../styles/viewEntryStyles";
+import { storageButtons } from "../constants/storage";
 
 type Props = NativeStackScreenProps<RootStackParamList, "ViewEntry">;
 
@@ -60,6 +61,12 @@ export const ViewEntry = ({ route }: Props) => {
         <View style={styles.body}>
           <Text variant="titleLarge">Entry date</Text>
           <Chip icon="clock">{format(new Date(entry.date), "PPPP - kk:mm")}</Chip>
+          <Text variant="titleMedium">Entry saved on:</Text>
+          <SegmentedButtons
+            value={entry.storage?.toString() || "0"}
+            onValueChange={() => {}}
+            buttons={storageButtons}
+          />
           <Text variant="titleMedium">What happened today?</Text>
           <Surface style={styles.content}>
             <Text variant="bodyLarge">{entry.content}</Text>

@@ -47,7 +47,7 @@ export default function Favorites() {
           renderItem={({ item }) => (
             <EntryCard key={item.id} {...item} onPress={() => navigate("ViewEntry", { id: item.id })} />
           )}
-          renderSectionHeader={({ section: { title } }) => <Chip>{title}</Chip>}
+          renderSectionHeader={({ section: { title } }) => <Chip icon="clock">{title}</Chip>}
           contentContainerStyle={styles.list}
           ListEmptyComponent={
             <EmptyState
