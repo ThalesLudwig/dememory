@@ -125,7 +125,7 @@ export default function Home() {
           ))}
           {todaysEntries.length === 0 && (
             <EmptyState
-              title="No entries found."
+              title="No entries here."
               description="There are no entries registered for this day. Your journal awaits, start by creating a new entry."
               buttonLabel="Create New"
               onClick={() => navigate("NewEntry")}
