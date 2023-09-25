@@ -17,7 +17,6 @@ export default function ThemeProvider({ children }: { children: ReactNode }) {
   if (Platform.OS === "android") {
     NavigationBar.setBackgroundColorAsync(isDarkMode ? theme.dark.surfaceContainerHigh : theme.light.surfaceContainer);
   }
-  console.log(selectedTheme);
   const paperTheme = useMemo(() => {
     const darkTheme = { ...MD3DarkTheme, colors: theme.dark };
     const lightTheme = { ...MD3LightTheme, colors: theme.light };

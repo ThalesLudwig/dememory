@@ -65,15 +65,15 @@ export default function Home() {
             onIconPress={onSearch}
           />
           <View style={styles.spaceBetween}>
-            <Text variant="titleMedium">Pinned</Text>
+            <Text variant="titleMedium">Recent Favorites</Text>
             <Button mode="text" onPress={() => navigate("FavoritesStack")}>
               View all
             </Button>
           </View>
         </View>
         {sortedFavorites.length === 0 && (
-          <Chip icon="pin" style={styles.pinnedChip}>
-            You haven't pinned any entries yet.
+          <Chip icon="heart" style={styles.pinnedChip}>
+            You don't have any favorites yet.
           </Chip>
         )}
         <FlatList
