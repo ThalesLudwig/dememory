@@ -4,10 +4,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import dateReducer from "./dateSlice";
 import entriesReducer from "./entriesSlice";
+import themeReducer from "./themeSlice";
 
 const rootReducer = combineReducers({
   date: dateReducer,
   entries: persistReducer({ key: "entries", storage: AsyncStorage }, entriesReducer),
+  theme: persistReducer({ key: "theme", storage: AsyncStorage }, themeReducer),
 });
 
 const store = configureStore({

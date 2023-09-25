@@ -17,4 +17,10 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  modal: {
+    padding: 20,
+    width: "80%",
+    alignSelf: "center",
+    borderRadius: 10,
+  },
 });

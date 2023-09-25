@@ -117,7 +117,7 @@ export default function Home() {
           style={{ flexGrow: 0 }}
           contentContainerStyle={styles.slider}
           initialScrollIndex={parseInt(currentDate("d"))}
-          getItemLayout={(_, i) => ({ length: 49, offset: 49 * i, index: i })}
+          getItemLayout={(_, i) => ({ length: 49, offset: 53 * i, index: i })}
           horizontal
         />
         <View style={styles.entryList}>
