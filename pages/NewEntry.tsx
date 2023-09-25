@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import * as ImagePicker from "expo-image-picker";
 import ImageView from "react-native-image-viewing";
+import { format } from "date-fns";
 
 import { EntryStorage } from "../constants/EntryStorage";
 import { getMoodColor, getMoodsArray } from "../utils/moodHelper";
@@ -91,6 +92,7 @@ export default function NewEntry() {
     <SafeAreaView style={{ ...styles.container, backgroundColor: colors.background }}>
       <ScrollView>
         <KeyboardAvoidingView style={styles.body} behavior={Platform.OS === "ios" ? "padding" : "height"}>
+          <Chip icon="clock">{format(new Date(), "PPPP - kk:mm")}</Chip>
           <Text variant="titleMedium">Save entry on:</Text>
           <SegmentedButtons value={entryStorage} onValueChange={setEntryStorage} buttons={storageButtons} />
           <Text variant="titleMedium">What are you thinking?</Text>

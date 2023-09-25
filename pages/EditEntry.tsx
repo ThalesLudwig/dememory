@@ -9,6 +9,7 @@ import * as ImagePicker from "expo-image-picker";
 import ImageView from "react-native-image-viewing";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useSelector } from "react-redux";
+import { format } from "date-fns";
 
 import { getMoodColor, getMoodsArray } from "../utils/moodHelper";
 import { MoodEnum } from "../constants/moods";
@@ -92,6 +93,7 @@ export default function EditEntry({ route }: Props) {
     <SafeAreaView style={{ ...styles.container, backgroundColor: colors.background }}>
       <ScrollView>
         <KeyboardAvoidingView style={styles.body} behavior={Platform.OS === "ios" ? "padding" : "height"}>
+          <Chip icon="clock">{format(new Date(entry.date), "PPPP - kk:mm")}</Chip>
           <Text variant="titleMedium">Entry saved on:</Text>
           <SegmentedButtons value={entryStorage} onValueChange={setEntryStorage} buttons={storageButtons} />
           <Text variant="titleMedium">What are you thinking?</Text>
