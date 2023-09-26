@@ -7,6 +7,7 @@ import { FlatList } from "react-native-gesture-handler";
 import { intersection } from "lodash";
 import { isWithinInterval } from "date-fns";
 import { useTheme } from "react-native-paper";
+import { useTranslation } from "react-i18next";
 
 import EntryCard from "../Components/EntryCard";
 import EmptyState from "../Components/EmptyState";
@@ -18,6 +19,7 @@ import { EntryStorage } from "../constants/EntryStorage";
 type Props = NativeStackScreenProps<RootStackParamList, "SearchResults">;
 
 export default function SearchResults({ route }: Props) {
+  const { t } = useTranslation("common");
   const { colors } = useTheme();
   const { value: entries } = useSelector((state: RootState) => state.entries);
   const { navigate, goBack } = useNavigation<any>();
@@ -50,9 +52,9 @@ export default function SearchResults({ route }: Props) {
         ListEmptyComponent={
           <View style={styles.emptyState}>
             <EmptyState
-              title="No entries found."
-              description="We couldn't find any entries registered. Make sure you applied the correct filters to match your entries."
-              buttonLabel="Try again"
+              title={t("common:search-results.titles.no-entries")}
+              description={t("common:search-results.descriptions.no-entries")}
+              buttonLabel={t("common:search-results.buttons.try-again")}
               onClick={() => goBack()}
             />
           </View>

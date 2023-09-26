@@ -59,7 +59,10 @@
   "search.titles.stored-on": "Stored on",
   "search.titles.tags": "Tags",
 
+  "search-results.buttons.try-again": "Try again",
   "search-results.titles.search-results": "Search Results",
+  "search-results.titles.no-entries": "No entries found.",
+  "search-results.descriptions.no-entries": "We couldn't find any entries registered. Make sure you applied the correct filters to match your entries.",
 
   "settings.buttons.buy-app": "Buy Dememory",
   "settings.buttons.close": "Close",

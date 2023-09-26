@@ -59,7 +59,10 @@
   "search.titles.stored-on": "Armazenado em",
   "search.titles.tags": "Tags",
 
+  "search-results.buttons.try-again": "Tentar novamente",
   "search-results.titles.search-results": "Resultados da Pesquisa",
+  "search-results.titles.no-entries": "Nenhum registro encontrado.",
+  "search-results.descriptions.no-entries": "Não conseguimos encontrar nenhum registro. Tenha certeza de que os filtros corretos foram aplicados.",
 
   "settings.buttons.buy-app": "Comprar Dememory",
   "settings.buttons.close": "Fechar",
