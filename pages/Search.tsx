@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 import { styles } from "../styles/searchStyles";
 import { getMoodColor, getMoodsArray } from "../utils/moodHelper";
@@ -16,6 +17,7 @@ import { SearchType } from "../types/Search";
 export default function Search() {
   const { colors, dark } = useTheme();
   const { navigate } = useNavigation<any>();
+  const { t } = useTranslation("common");
 
   const [isFromPickerVisible, setFromPickerVisibility] = useState(false);
   const [isToPickerVisible, setToPickerVisibility] = useState(false);
@@ -115,14 +117,14 @@ export default function Search() {
       <ScrollView>
         <KeyboardAvoidingView style={styles.body} behavior={Platform.OS === "ios" ? "padding" : "height"}>
           <TextInput
-            label="Content"
+            label={t("common:search.inputs.content")}
             onChangeText={(text) => setContent(text)}
             value={content}
             returnKeyType="done"
             onSubmitEditing={onSearch}
           />
 
-          <Text variant="titleMedium">Mood:</Text>
+          <Text variant="titleMedium">{t("common:search.titles.mood")}:</Text>
           <View style={styles.chips}>
             {getMoodsArray().map((mood) => (
               <Chip
@@ -135,22 +137,22 @@ export default function Search() {
               </Chip>
             ))}
           </View>
-          <Text variant="titleMedium">Stored on:</Text>
+          <Text variant="titleMedium">{t("common:search.titles.stored-on")}:</Text>
           <View style={styles.chips}>
             <Chip
               onPress={() => onSelectStorage(EntryStorage.LOCAL)}
               selected={entryStorages.includes(EntryStorage.LOCAL)}
             >
-              Local Device
+              {t("common:search.descriptions.local-device")}
             </Chip>
             <Chip
               onPress={() => onSelectStorage(EntryStorage.BLOCKCHAIN)}
               selected={entryStorages.includes(EntryStorage.BLOCKCHAIN)}
             >
-              Blockchain
+              {t("common:search.descriptions.blockchain")}
             </Chip>
           </View>
-          <Text variant="titleMedium">Tags:</Text>
+          <Text variant="titleMedium">{t("common:search.titles.tags")}:</Text>
           <TextInput
             mode="outlined"
             right={<TextInput.Icon icon="send" onPress={() => submitTag()} />}
@@ -167,12 +169,12 @@ export default function Search() {
               </Chip>
             ))}
           </View>
-          <Text variant="titleMedium">Date:</Text>
+          <Text variant="titleMedium">{t("common:search.titles.date")}:</Text>
           <View style={styles.dates}>
             <TextInput
               mode="outlined"
               right={<TextInput.Icon icon="calendar" onPress={() => setFromPickerVisibility(true)} />}
-              label="From"
+              label={t("common:search.inputs.from")}
               placeholder="YYYY/MM/DD"
               value={fromInput}
               style={styles.dateInput}
@@ -188,7 +190,7 @@ export default function Search() {
             <TextInput
               mode="outlined"
               right={<TextInput.Icon icon="calendar" onPress={() => setToPickerVisibility(true)} />}
-              label="To"
+              label={t("common:search.inputs.to")}
               placeholder="YYYY/MM/DD"
               value={toInput}
               style={styles.dateInput}
@@ -203,9 +205,9 @@ export default function Search() {
             />
           </View>
           <View style={styles.buttonsRow}>
-            <Button onPress={() => clearFilters()}>CLEAR FILTERS</Button>
+            <Button onPress={() => clearFilters()}>{t("common:search.buttons.clear-filters").toUpperCase()}</Button>
             <Button disabled={isSubmitDisabled} mode="contained" onPress={() => onSearch()}>
-              SEARCH
+              {t("common:search.buttons.search").toUpperCase()}
             </Button>
           </View>
         </KeyboardAvoidingView>

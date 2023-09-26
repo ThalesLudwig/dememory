@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 import { MoodEnum } from "../constants/moods";
 
 const COLORS = {
@@ -23,25 +25,27 @@ const COLORS_DARK = {
 };
 
 export const getMoodName = (mood: MoodEnum): string => {
+  const { t } = useTranslation("common");
+
   switch (mood) {
     case MoodEnum.ANGRY:
-      return "Angry";
+      return t("common:moods.angry");
     case MoodEnum.FANTASTIC:
-      return "Fantastic";
+      return t("common:moods.fantastic");
     case MoodEnum.GREAT:
-      return "Great";
+      return t("common:moods.great");
     case MoodEnum.HAPPY:
-      return "Happy";
+      return t("common:moods.happy");
     case MoodEnum.NEUTRAL:
-      return "Neutral";
+      return t("common:moods.neutral");
     case MoodEnum.SAD:
-      return "Sad";
+      return t("common:moods.sad");
     case MoodEnum.STRESSED:
-      return "Stressed";
+      return t("common:moods.stressed");
     case MoodEnum.NERVOUS:
-      return "Nervous";
+      return t("common:moods.nervous");
     default:
-      return "Neutral";
+      return t("common:moods.neutral");
   }
 };
 

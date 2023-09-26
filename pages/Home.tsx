@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 import { ICON_SIZE } from "../constants/icons";
 import MonthDayButton from "../Components/MonthDayButton";
@@ -19,7 +20,6 @@ import EmptyState from "../Components/EmptyState";
 import { useFavoriteEntries } from "../hooks/useFavoriteEntries";
 import { styles } from "../styles/homeStyles";
 import { SearchType } from "../types/Search";
-import { useTranslation } from "react-i18next";
 
 export default function Home() {
   const { t } = useTranslation("common");
