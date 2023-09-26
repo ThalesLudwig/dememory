@@ -3,6 +3,7 @@ import { SafeAreaView, View, SectionList } from "react-native";
 import { Chip, Searchbar, useTheme } from "react-native-paper";
 import { format } from "date-fns";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 import { useFavoriteEntries } from "../hooks/useFavoriteEntries";
 import { Entry } from "../types/Entry";
@@ -11,6 +12,7 @@ import EmptyState from "../Components/EmptyState";
 import { styles } from "../styles/favoritesStyles";
 
 export default function Favorites() {
+  const { t } = useTranslation("common");
   const { colors } = useTheme();
   const favoriteEntries = useFavoriteEntries();
   const { navigate } = useNavigation<any>();
@@ -43,7 +45,7 @@ export default function Favorites() {
     <SafeAreaView style={{ ...styles.container, backgroundColor: colors.background }}>
       <View style={styles.body}>
         <Searchbar
-          placeholder="Search by content or tag"
+          placeholder={t("common:favorites.inputs.search")}
           onChangeText={(text) => setSearchInput(text)}
           value={searchInput}
           returnKeyType="done"
@@ -61,8 +63,8 @@ export default function Favorites() {
           ListEmptyComponent={
             <View style={styles.emptyState}>
               <EmptyState
-                description="You don't have any favorites yet. Start pinning your entries and you'll see them here."
-                title="No entries found."
+                description={t("common:favorites.descriptions.no-entries")}
+                title={t("common:favorites.titles.no-entries")}
               />
             </View>
           }

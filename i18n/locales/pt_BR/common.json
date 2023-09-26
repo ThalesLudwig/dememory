@@ -1,4 +1,9 @@
 {
+  "favorites.descriptions.no-entries": "Você não tem favoritos ainda. Comece fixando seus registros e você os verá aqui.",
+  "favorites.inputs.search": "Pesquisar por conteúdo ou tag",
+  "favorites.titles.favorites": "Favoritos",
+  "favorites.titles.no-entries": "Nenhum registro encontrado.",
+
   "home.buttons.create-new": "Criar Registro",
   "home.buttons.new-entry": "Novo Registro",
   "home.buttons.view-all": "Ver tudo",

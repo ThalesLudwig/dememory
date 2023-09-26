@@ -1,4 +1,9 @@
 {
+  "favorites.descriptions.no-entries": "You don't have any favorites yet. Start pinning your entries and you'll see them here.",
+  "favorites.inputs.search": "Search by content or tag",
+  "favorites.titles.favorites": "Favorites",
+  "favorites.titles.no-entries": "No entries found.",
+
   "home.buttons.create-new": "Create New",
   "home.buttons.new-entry": "New Entry",
   "home.buttons.view-all": "View all",

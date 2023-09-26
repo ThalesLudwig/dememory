@@ -68,11 +68,8 @@ function HomeStack() {
   const { t } = useTranslation("common");
 
   return (
-    <Stack.Navigator
-      initialRouteName="Home"
-      screenOptions={{ header: (props) => <Header {...props} />, title: t("common:home.titles.header") }}
-    >
-      <Stack.Screen name="Home" component={Home} />
+    <Stack.Navigator initialRouteName="Home" screenOptions={{ header: (props) => <Header {...props} /> }}>
+      <Stack.Screen name="Home" component={Home} options={{ title: t("common:home.titles.header") }} />
       <Stack.Screen options={{ headerTitle: "New Entry" }} name="NewEntry" component={NewEntry} />
       <Stack.Screen
         options={{ headerTitle: "View Entry" }}
@@ -93,10 +90,15 @@ function HomeStack() {
 
 function SearchStack() {
   const theme = useTheme();
+  const { t } = useTranslation("common");
 
   return (
-    <Stack.Navigator initialRouteName="Home" screenOptions={{ header: (props) => <Header {...props} /> }}>
-      <Tab.Screen name="Search" component={Search} options={getRouteIcon("Search", theme)} />
+    <Stack.Navigator initialRouteName="Search" screenOptions={{ header: (props) => <Header {...props} /> }}>
+      <Tab.Screen
+        name="Search"
+        component={Search}
+        options={{ ...getRouteIcon("Search", theme), title: t("common:search.titles.search") }}
+      />
       <Stack.Screen
         options={{ headerTitle: "View Entry" }}
         name="ViewEntry"
@@ -116,10 +118,15 @@ function SearchStack() {
 
 function FavoritesStack() {
   const theme = useTheme();
+  const { t } = useTranslation("common");
 
   return (
-    <Stack.Navigator initialRouteName="Home" screenOptions={{ header: (props) => <Header {...props} /> }}>
-      <Tab.Screen name="Favorites" component={Favorites} options={getRouteIcon("Favorites", theme)} />
+    <Stack.Navigator initialRouteName="Favorites" screenOptions={{ header: (props) => <Header {...props} /> }}>
+      <Tab.Screen
+        name="Favorites"
+        component={Favorites}
+        options={{ ...getRouteIcon("Favorites", theme), title: t("common:favorites.titles.favorites") }}
+      />
       <Stack.Screen
         options={{ headerTitle: "View Entry" }}
         name="ViewEntry"
