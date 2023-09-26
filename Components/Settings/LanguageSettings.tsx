@@ -30,13 +30,13 @@ const LanguageSettings = ({ isModalVisible, setIsModalVisible }: LanguageSetting
       onDismiss={() => setIsModalVisible(false)}
     >
       <List.Item
-        title="English"
+        title="English (US)"
         onPress={() => updateLanguage("en_US")}
         titleStyle={{ fontWeight: language === "en_US" ? "800" : "400" }}
       />
       <Divider />
       <List.Item
-        title="Portuguese"
+        title="Português (BR)"
         onPress={() => updateLanguage("pt_BR")}
         titleStyle={{ fontWeight: language === "pt_BR" ? "800" : "400" }}
       />
