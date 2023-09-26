@@ -68,7 +68,7 @@ export const ViewEntry = ({ route }: Props) => {
           <SegmentedButtons
             value={entry.storage?.toString() || "0"}
             onValueChange={() => {}}
-            buttons={storageButtons}
+            buttons={storageButtons()}
           />
           <Text variant="titleMedium">What happened today?</Text>
           <Surface style={styles.content}>

@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 import * as ImagePicker from "expo-image-picker";
 import ImageView from "react-native-image-viewing";
 import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 import { EntryStorage } from "../constants/EntryStorage";
 import { getMoodColor, getMoodsArray } from "../utils/moodHelper";
@@ -22,6 +23,7 @@ export default function NewEntry() {
   const { colors, dark } = useTheme();
   const dispatch = useDispatch<any>();
   const { navigate } = useNavigation<any>();
+  const { t } = useTranslation("common");
 
   const [entryStorage, setEntryStorage] = useState(EntryStorage.LOCAL.toString());
   const [content, setContent] = useState("");
@@ -93,12 +95,14 @@ export default function NewEntry() {
       <ScrollView>
         <KeyboardAvoidingView style={styles.body} behavior={Platform.OS === "ios" ? "padding" : "height"}>
           <Chip icon="clock">{format(new Date(), "PPPP - kk:mm")}</Chip>
-          <Text variant="titleMedium">Save entry on:</Text>
-          <SegmentedButtons value={entryStorage} onValueChange={setEntryStorage} buttons={storageButtons} />
-          <Text variant="titleMedium">What are you thinking?</Text>
+          <Text variant="titleMedium">{t("common:new-entry.titles.save-on")}:</Text>
+          <SegmentedButtons value={entryStorage} onValueChange={setEntryStorage} buttons={storageButtons()} />
+          <Text variant="titleMedium">{t("common:new-entry.titles.thinking")}</Text>
           <TextInput multiline numberOfLines={5} value={content} onChangeText={setContent} />
-          {parseInt(entryStorage) === EntryStorage.BLOCKCHAIN && <Chip icon="alert">Your notes are encrypted.</Chip>}
-          <Text variant="titleMedium">How are you feeling?</Text>
+          {parseInt(entryStorage) === EntryStorage.BLOCKCHAIN && (
+            <Chip icon="alert">{t("common:new-entry.descriptions.notes-encrypted")}</Chip>
+          )}
+          <Text variant="titleMedium">{t("common:new-entry.titles.feeling")}</Text>
           <View style={styles.moods}>
             {getMoodsArray().map((mood) => (
               <Chip
@@ -111,7 +115,7 @@ export default function NewEntry() {
               </Chip>
             ))}
           </View>
-          <Text variant="titleMedium">Tags:</Text>
+          <Text variant="titleMedium">{t("common:new-entry.titles.tags")}:</Text>
           <TextInput
             mode="outlined"
             right={<TextInput.Icon icon="send" onPress={() => submitTag()} />}
@@ -128,7 +132,7 @@ export default function NewEntry() {
               </Chip>
             ))}
           </View>
-          <Text variant="titleMedium">Photos:</Text>
+          <Text variant="titleMedium">{t("common:new-entry.titles.photos")}:</Text>
           <View style={styles.images}>
             {images.map((imageUrl, i) => (
               <View key={i}>
@@ -152,7 +156,7 @@ export default function NewEntry() {
             </Pressable>
           </View>
           {parseInt(entryStorage) === EntryStorage.BLOCKCHAIN && images.length > 0 && (
-            <Chip icon="alert">Images will be saved on IPFS.</Chip>
+            <Chip icon="alert">{t("common:new-entry.descriptions.images-ipfs")}</Chip>
           )}
         </KeyboardAvoidingView>
         <Button
@@ -163,7 +167,7 @@ export default function NewEntry() {
           onPress={submitForm}
           disabled={!content.trim()}
         >
-          SUBMIT
+          {t("common:new-entry.buttons.submit").toUpperCase()}
         </Button>
       </ScrollView>
       <ImageView

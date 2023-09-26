@@ -1,4 +1,6 @@
 {
+  "blockchain": "Blockchain",
+
   "edit-entry.titles.edit-entry": "Edit Entry",
 
   "favorites.descriptions.no-entries": "You don't have any favorites yet. Start pinning your entries and you'll see them here.",
@@ -16,6 +18,8 @@
   "home.titles.no-favorites": "You don't have any favorites yet.",
   "home.titles.recent-favorites": "Recent Favorites",
 
+  "local-device": "Local Device",
+
   "moods.angry": "Angry",
   "moods.fantastic": "Fantastic",
   "moods.great": "Great",
@@ -25,7 +29,15 @@
   "moods.nervous": "Nervous",
   "moods.neutral": "Neutral",
 
+  "new-entry.buttons.submit": "Submit",
+  "new-entry.descriptions.images-ipfs": "Images will be saved on IPFS.",
+  "new-entry.descriptions.notes-encrypted": "Your notes are encrypted.",
+  "new-entry.titles.feeling": "How are you feeling?",
   "new-entry.titles.new-entry": "New Entry",
+  "new-entry.titles.photos": "Photos",
+  "new-entry.titles.save-on": "Save entry on",
+  "new-entry.titles.tags": "Tags",
+  "new-entry.titles.thinking": "What are you thinking?",
 
   "search.buttons.clear-filters": "Clear Filters",
   "search.buttons.search": "Search",

@@ -95,7 +95,7 @@ export default function EditEntry({ route }: Props) {
         <KeyboardAvoidingView style={styles.body} behavior={Platform.OS === "ios" ? "padding" : "height"}>
           <Chip icon="clock">{format(new Date(entry.date), "PPPP - kk:mm")}</Chip>
           <Text variant="titleMedium">Entry saved on:</Text>
-          <SegmentedButtons value={entryStorage} onValueChange={setEntryStorage} buttons={storageButtons} />
+          <SegmentedButtons value={entryStorage} onValueChange={setEntryStorage} buttons={storageButtons()} />
           <Text variant="titleMedium">What are you thinking?</Text>
           <TextInput multiline numberOfLines={5} value={content} onChangeText={setContent} />
           <Text variant="titleMedium">How are you feeling?</Text>

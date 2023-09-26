@@ -1,4 +1,6 @@
 {
+  "blockchain": "Blockchain",
+
   "edit-entry.titles.edit-entry": "Editar Registro",
 
   "favorites.descriptions.no-entries": "Você não tem favoritos ainda. Comece fixando seus registros e você os verá aqui.",
@@ -16,6 +18,8 @@
   "home.titles.recent-favorites": "Favoritos Recentes",
   "home.titles.no-favorites": "Você não tem favoritos ainda.",
 
+  "local-device": "Dispositivo Local",
+
   "moods.angry": "Irritado",
   "moods.fantastic": "Incrível",
   "moods.great": "Ótimo",
@@ -25,7 +29,15 @@
   "moods.nervous": "Nervoso",
   "moods.neutral": "Neutro",
 
+  "new-entry.buttons.submit": "Registrar",
+  "new-entry.descriptions.images-ipfs": "Imagens serão salvas no IPFS.",
+  "new-entry.descriptions.notes-encrypted": "Seus registros são encriptados.",
+  "new-entry.titles.feeling": "Como está se sentindo?",
   "new-entry.titles.new-entry": "Novo Registro",
+  "new-entry.titles.photos": "Fotos",
+  "new-entry.titles.save-on": "Salvar registro em:",
+  "new-entry.titles.tags": "Tags",
+  "new-entry.titles.thinking": "No que está pensando?",
 
   "search.buttons.clear-filters": "Limpar Filtros",
   "search.buttons.search": "Pesquisar",

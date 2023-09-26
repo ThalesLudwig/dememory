@@ -1,15 +1,21 @@
+import { useTranslation } from "react-i18next";
+
 import { EntryStorage } from "./EntryStorage";
 
-export const storageButtons = [
-  {
-    value: EntryStorage.LOCAL.toString(),
-    label: "Local Device",
-    icon: "cellphone",
-  },
-  {
-    value: EntryStorage.BLOCKCHAIN.toString(),
-    label: "Blockchain",
-    icon: "ethereum",
-    disabled: true,
-  },
-];
+export const storageButtons = () => {
+  const { t } = useTranslation("common");
+
+  return [
+    {
+      value: EntryStorage.LOCAL.toString(),
+      label: t("common:local-device"),
+      icon: "cellphone",
+    },
+    {
+      value: EntryStorage.BLOCKCHAIN.toString(),
+      label: t("common:blockchain"),
+      icon: "ethereum",
+      disabled: true,
+    },
+  ];
+};
