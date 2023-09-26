@@ -1,3 +1,27 @@
 {
-  "home.buttons.view-all": "Ver tudo"
+  "home.buttons.create-new": "Criar Registro",
+  "home.buttons.new-entry": "Novo Registro",
+  "home.buttons.view-all": "Ver tudo",
+  "home.descriptions.no-entries": "Não há nenhum registro para este dia. Seu diário o aguarda, comece criando um novo registro.",
+  "home.inputs.search": "Pesquisar por conteúdo",
+  "home.titles.header": "Registros",
+  "home.titles.no-entries-here": "Nenhum registro aqui.",
+  "home.titles.recent-favorites": "Favoritos Recentes",
+  "home.titles.no-favorites": "Você não tem favoritos ainda.",
+
+  "settings.buttons.buy-app": "Comprar Dememory",
+  "settings.buttons.close": "Fechar",
+  "settings.buttons.logout": "Sair",
+  "settings.descriptions.option-unavailable": "Opção premium não disponível.",
+  "settings.menus.theme": "Tema",
+  "settings.menus.languages": "Idiomas",
+  "settings.menus.date-format": "Formato de data",
+  "settings.menus.app-lock": "Trava de aplicativo",
+  "settings.menus.therapy-share": "Compartilhar com Terapeuta",
+  "settings.menus.save-backup": "Salvar Backup Local",
+  "settings.menus.reset-entries": "Apagar Registros",
+  "settings.titles.entries": "Registros",
+  "settings.titles.preferences": "Preferências",
+  "settings.titles.security": "Segurança",
+  "settings.titles.local-user": "Usuário Local"
 }

@@ -59,7 +59,7 @@ export default function Home() {
       <ScrollView>
         <View style={styles.body}>
           <Searchbar
-            placeholder="Search by content"
+            placeholder={t("common:home.inputs.search")}
             onChangeText={(text) => setSearchInput(text)}
             value={searchInput}
             returnKeyType="done"
@@ -67,7 +67,7 @@ export default function Home() {
             onIconPress={onSearch}
           />
           <View style={styles.spaceBetween}>
-            <Text variant="titleMedium">Recent Favorites</Text>
+            <Text variant="titleMedium">{t("common:home.titles.recent-favorites")}</Text>
             <Button mode="text" onPress={() => navigate("FavoritesStack")}>
               {t("common:home.buttons.view-all")}
             </Button>
@@ -75,7 +75,7 @@ export default function Home() {
         </View>
         {sortedFavorites.length === 0 && (
           <Chip icon="heart" style={styles.pinnedChip}>
-            You don't have any favorites yet.
+            {t("common:home.titles.no-favorites")}
           </Chip>
         )}
         <FlatList
@@ -93,7 +93,7 @@ export default function Home() {
             <Text variant="titleMedium">{currentDate("dd/MM/yyyy")}</Text>
             <View style={styles.spaceBetween}>
               <Button mode="contained" onPress={() => navigate("NewEntry")}>
-                NEW ENTRY
+                {t("common:home.buttons.new-entry").toUpperCase()}
               </Button>
               <IconButton
                 icon="calendar"
@@ -128,9 +128,9 @@ export default function Home() {
           ))}
           {todaysEntries.length === 0 && (
             <EmptyState
-              title="No entries here."
-              description="There are no entries registered for this day. Your journal awaits, start by creating a new entry."
-              buttonLabel="Create New"
+              title={t("common:home.titles.no-entries-here")}
+              description={t("home.descriptions.no-entries")}
+              buttonLabel={t("common:home.buttons.create-new")}
               onClick={() => navigate("NewEntry")}
             />
           )}

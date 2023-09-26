@@ -1,3 +1,27 @@
 {
-  "home.buttons.view-all": "View all"
+  "home.buttons.create-new": "Create New",
+  "home.buttons.new-entry": "New Entry",
+  "home.buttons.view-all": "View all",
+  "home.descriptions.no-entries": "There are no entries registered for this day. Your journal awaits, start by creating a new entry.",
+  "home.inputs.search": "Search by content",
+  "home.titles.header": "Entries",
+  "home.titles.no-entries-here": "No entries here.",
+  "home.titles.no-favorites": "You don't have any favorites yet.",
+  "home.titles.recent-favorites": "Recent Favorites",
+
+  "settings.buttons.buy-app": "Buy Dememory",
+  "settings.buttons.close": "Close",
+  "settings.buttons.logout": "Logout",
+  "settings.descriptions.option-unavailable": "Premium option unavailable.",
+  "settings.menus.theme": "Theme",
+  "settings.menus.languages": "Languages",
+  "settings.menus.date-format": "Date format",
+  "settings.menus.app-lock": "App Lock",
+  "settings.menus.therapy-share": "Therapy Share",
+  "settings.menus.save-backup": "Save Local Backup",
+  "settings.menus.reset-entries": "Reset Entries",
+  "settings.titles.entries": "Entries",
+  "settings.titles.preferences": "Preferences",
+  "settings.titles.security": "Security",
+  "settings.titles.local-user": "Local User"
 }

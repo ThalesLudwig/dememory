@@ -3,6 +3,8 @@ import "react-native-gesture-handler";
 import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
 import { createStackNavigator } from "@react-navigation/stack";
 import Icon from "@expo/vector-icons/Feather";
+import { MD3Theme, useTheme } from "react-native-paper";
+import { useTranslation } from "react-i18next";
 
 import Home from "../pages/Home";
 import Settings from "../pages/Settings";
@@ -15,7 +17,6 @@ import ViewEntry from "../pages/ViewEntry";
 import EditEntry from "../pages/EditEntry";
 import SearchResults from "../pages/SearchResults";
 import { SearchType } from "../types/Search";
-import { MD3Theme, useTheme } from "react-native-paper";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -64,10 +65,12 @@ const getRouteIcon = (route: string, theme: MD3Theme) => ({
 });
 
 function HomeStack() {
+  const { t } = useTranslation("common");
+
   return (
     <Stack.Navigator
       initialRouteName="Home"
-      screenOptions={{ header: (props) => <Header {...props} />, title: "Entries" }}
+      screenOptions={{ header: (props) => <Header {...props} />, title: t("common:home.titles.header") }}
     >
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen options={{ headerTitle: "New Entry" }} name="NewEntry" component={NewEntry} />
