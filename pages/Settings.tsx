@@ -28,7 +28,7 @@ export default function Settings() {
             <Text style={styles.wallet} variant="titleMedium">
               {t("common:settings.titles.local-user").toUpperCase()}
             </Text>
-            <Button mode="text">{t("common:settings.buttons.logout")}</Button>
+            <Button mode="text">{t("common:settings.buttons.login")}</Button>
           </View>
           <Divider />
           <List.Section>

@@ -11,6 +11,7 @@
 
   "settings.buttons.buy-app": "Buy Dememory",
   "settings.buttons.close": "Close",
+  "settings.buttons.login": "Login",
   "settings.buttons.logout": "Logout",
   "settings.descriptions.option-unavailable": "Premium option unavailable.",
   "settings.menus.theme": "Theme",
