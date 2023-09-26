@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { List, Modal, useTheme } from "react-native-paper";
+import { Divider, List, Modal, useTheme } from "react-native-paper";
 import { useSelector, useDispatch } from "react-redux";
 
 import { RootState } from "../../config/store";
@@ -26,11 +26,13 @@ const ThemeSettings = ({ isThemeVisible, setIsThemeVisible }: ThemeSettingsProps
         onPress={() => dispatch(setTheme("light"))}
         titleStyle={{ fontWeight: selectedTheme === "light" ? "800" : "400" }}
       />
+      <Divider />
       <List.Item
         title="Dark"
         onPress={() => dispatch(setTheme("dark"))}
         titleStyle={{ fontWeight: selectedTheme === "dark" ? "800" : "400" }}
       />
+      <Divider />
       <List.Item
         title="Automatic (system)"
         onPress={() => dispatch(setTheme("device"))}

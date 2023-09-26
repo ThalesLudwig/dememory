@@ -8,6 +8,8 @@ import Router from "./Components/Router";
 import ThemeProvider from "./Components/ThemeProvider";
 import store, { persistor } from "./config/store";
 
+import "./i18n";
+
 export default function App() {
   const colorScheme = useColorScheme();
 

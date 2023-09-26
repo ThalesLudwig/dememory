@@ -19,8 +19,10 @@ import EmptyState from "../Components/EmptyState";
 import { useFavoriteEntries } from "../hooks/useFavoriteEntries";
 import { styles } from "../styles/homeStyles";
 import { SearchType } from "../types/Search";
+import { useTranslation } from "react-i18next";
 
 export default function Home() {
+  const { t } = useTranslation("common");
   const { navigate } = useNavigation<any>();
   const { value: selectedDay } = useSelector((state: RootState) => state.date);
   const { value: entries } = useSelector((state: RootState) => state.entries);
@@ -67,7 +69,7 @@ export default function Home() {
           <View style={styles.spaceBetween}>
             <Text variant="titleMedium">Recent Favorites</Text>
             <Button mode="text" onPress={() => navigate("FavoritesStack")}>
-              View all
+              {t("common:home.buttons.view-all")}
             </Button>
           </View>
         </View>

@@ -6,11 +6,13 @@ import { useState } from "react";
 import { styles } from "../styles/settingsStyles";
 import ThemeSettings from "../Components/Settings/ThemeSettings";
 import ResetSettings from "../Components/Settings/ResetSettings";
+import LanguageSettings from "../Components/Settings/LanguageSettings";
 
 export default function Settings() {
   const { colors } = useTheme();
 
   const [isThemeVisible, setIsThemeVisible] = useState(false);
+  const [isLanguagesVisible, setIsLanguagesVisible] = useState(false);
   const [isResetDialogVisible, setIsResetDialogVisible] = useState(false);
   const [isResetSnackbarVisible, setIsResetSnackbarVisible] = useState(false);
 
@@ -29,7 +31,7 @@ export default function Settings() {
           <List.Section>
             <List.Subheader>Preferences</List.Subheader>
             <List.Item title="Theme" onPress={() => setIsThemeVisible(true)} />
-            <List.Item title="Languages" />
+            <List.Item title="Languages" onPress={() => setIsLanguagesVisible(true)} />
           </List.Section>
           <Divider />
           <List.Section>
@@ -48,6 +50,7 @@ export default function Settings() {
       </ScrollView>
       <Portal>
         <ThemeSettings isThemeVisible={isThemeVisible} setIsThemeVisible={setIsThemeVisible} />
+        <LanguageSettings isModalVisible={isLanguagesVisible} setIsModalVisible={setIsLanguagesVisible} />
         <ResetSettings
           isResetDialogVisible={isResetDialogVisible}
           isResetSnackbarVisible={isResetSnackbarVisible}
