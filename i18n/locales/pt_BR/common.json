@@ -1,5 +1,7 @@
 {
   "blockchain": "Blockchain",
+  "buttons.add-favorites": "Adicionar aos Favoritos",
+  "buttons.remove-favorites": "Remover dos Favoritos",
 
   "edit-entry.titles.edit-entry": "Editar Registro",
 
@@ -20,6 +22,11 @@
 
   "local-device": "Dispositivo Local",
 
+  "modals.delete-entry.title": "Deletar este registro?",
+  "modals.delete-entry.description": "Tem certeza que quer permanentemente deletar este registro? Esta ação não pode ser desfeita.",
+  "modals.delete-entry.buttons.yes": "Deletar",
+  "modals.delete-entry.buttons.no": "Cancelar",
+
   "moods.angry": "Irritado",
   "moods.fantastic": "Incrível",
   "moods.great": "Ótimo",
@@ -35,7 +42,7 @@
   "new-entry.titles.feeling": "Como está se sentindo?",
   "new-entry.titles.new-entry": "Novo Registro",
   "new-entry.titles.photos": "Fotos",
-  "new-entry.titles.save-on": "Salvar registro em:",
+  "new-entry.titles.save-on": "Salvar registro em",
   "new-entry.titles.tags": "Tags",
   "new-entry.titles.thinking": "No que está pensando?",
 
@@ -71,5 +78,13 @@
   "settings.titles.security": "Segurança",
   "settings.titles.local-user": "Usuário Local",
 
+  "view-entry.buttons.edit": "Editar Registro",
+  "view-entry.buttons.delete": "Deletar",
+  "view-entry.titles.date": "Data do registro",
+  "view-entry.titles.feeling": "Como estava se sentindo?",
+  "view-entry.titles.photos": "Fotos",
+  "view-entry.titles.save-on": "Registro salvo em",
+  "view-entry.titles.tags": "Tags",
+  "view-entry.titles.thinking": "No que estava pensando?",
   "view-entry.titles.view-entry": "Visualizar Registro"
 }

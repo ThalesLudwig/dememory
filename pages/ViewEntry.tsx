@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import { useDispatch } from "react-redux";
 import ImageView from "react-native-image-viewing";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 import { RootStackParamList } from "../Components/Router";
 import { useSelector } from "react-redux";
@@ -26,6 +27,7 @@ const initialState: Entry = {
 };
 
 export const ViewEntry = ({ route }: Props) => {
+  const { t } = useTranslation("common");
   const { colors, dark } = useTheme();
   const dispatch = useDispatch();
   const { goBack, navigate } = useNavigation<any>();
@@ -62,15 +64,15 @@ export const ViewEntry = ({ route }: Props) => {
     <SafeAreaView style={{ ...styles.container, backgroundColor: colors.background }}>
       <ScrollView>
         <View style={styles.body}>
-          <Text variant="titleLarge">Entry date</Text>
+          <Text variant="titleLarge">{t("common:view-entry.titles.date")}</Text>
           <Chip icon="clock">{format(new Date(entry.date), "PPPP - kk:mm")}</Chip>
-          <Text variant="titleMedium">Entry saved on:</Text>
+          <Text variant="titleMedium">{t("common:view-entry.titles.save-on")}:</Text>
           <SegmentedButtons
             value={entry.storage?.toString() || "0"}
             onValueChange={() => {}}
             buttons={storageButtons()}
           />
-          <Text variant="titleMedium">What happened today?</Text>
+          <Text variant="titleMedium">{t("common:view-entry.titles.thinking")}</Text>
           <Surface style={styles.content}>
             <Text variant="bodyLarge">{entry.content}</Text>
           </Surface>
@@ -80,13 +82,15 @@ export const ViewEntry = ({ route }: Props) => {
             style={{ alignSelf: "flex-start" }}
             onPress={toogleFavorites}
           >
-            {entry.isPinned ? "Remove from Favorites" : "Add to Favorites"}
+            {entry.isPinned ? t("common:buttons.remove-favorites") : t("common:buttons.add-favorites")}
           </Button>
-          <Text variant="titleMedium">How were you feeling?</Text>
+          <Text variant="titleMedium">{t("common:view-entry.titles.feeling")}</Text>
           <Chip icon="emoticon-happy-outline" style={{ backgroundColor: moodColor, ...styles.chip }}>
             {getMoodName(entry.mood || 1)}
           </Chip>
-          {!!entry.tags && entry.tags.length > 0 && <Text variant="titleMedium">Tags:</Text>}
+          {!!entry.tags && entry.tags.length > 0 && (
+            <Text variant="titleMedium">{t("common:view-entry.titles.tags")}:</Text>
+          )}
           <View style={styles.tagRow}>
             {entry.tags?.map((tag, i) => (
               <Chip key={i} mode="outlined">
@@ -96,7 +100,7 @@ export const ViewEntry = ({ route }: Props) => {
           </View>
           {!!entry.imagesUrl && entry.imagesUrl.length > 0 && (
             <>
-              <Text variant="titleMedium">Photos:</Text>
+              <Text variant="titleMedium">{t("common:view-entry.titles.photos")}:</Text>
               <View style={styles.images}>
                 {entry.imagesUrl.map((imageUrl, i) => (
                   <Pressable onPress={() => onPressImage(i)} key={i}>
@@ -109,10 +113,10 @@ export const ViewEntry = ({ route }: Props) => {
         </View>
         <View style={styles.buttons}>
           <Button icon="pencil" mode="contained" onPress={() => navigate("EditEntry", { id: entry.id })}>
-            EDIT ENTRY
+            {t("common:view-entry.buttons.edit").toUpperCase()}
           </Button>
           <Button icon="delete" mode="elevated" onPress={() => setIsDeleteDialogOpen(true)}>
-            DELETE
+            {t("common:view-entry.buttons.delete").toUpperCase()}
           </Button>
         </View>
       </ScrollView>
@@ -125,18 +129,16 @@ export const ViewEntry = ({ route }: Props) => {
       <Portal>
         <Dialog visible={isDeleteDialogOpen} onDismiss={() => setIsDeleteDialogOpen(false)}>
           <Dialog.Icon icon="alert" />
-          <Dialog.Title style={{ textAlign: "center" }}>Delete this entry?</Dialog.Title>
+          <Dialog.Title style={{ textAlign: "center" }}>{t("common:modals.delete-entry.title")}</Dialog.Title>
           <Dialog.Content>
-            <Text variant="bodyMedium">
-              Are you sure you want to permanently delete this entry? This action cannot be undone.
-            </Text>
+            <Text variant="bodyMedium">{t("common:modals.delete-entry.description")}</Text>
           </Dialog.Content>
           <Dialog.Actions>
             <Button mode="outlined" onPress={() => setIsDeleteDialogOpen(false)}>
-              Cancel
+              {t("common:modals.delete-entry.buttons.no").toUpperCase()}
             </Button>
             <Button mode="contained" onPress={deleteEntry}>
-              Delete
+              {t("common:modals.delete-entry.buttons.yes").toUpperCase()}
             </Button>
           </Dialog.Actions>
         </Dialog>

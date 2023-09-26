@@ -1,5 +1,7 @@
 {
   "blockchain": "Blockchain",
+  "buttons.add-favorites": "Add to Favorites",
+  "buttons.remove-favorites": "Remove from Favorites",
 
   "edit-entry.titles.edit-entry": "Edit Entry",
 
@@ -19,6 +21,11 @@
   "home.titles.recent-favorites": "Recent Favorites",
 
   "local-device": "Local Device",
+
+  "modals.delete-entry.title": "Delete this entry?",
+  "modals.delete-entry.description": "Are you sure you want to permanently delete this entry? This action cannot be undone.",
+  "modals.delete-entry.buttons.yes": "Delete",
+  "modals.delete-entry.buttons.no": "Cancel",
 
   "moods.angry": "Angry",
   "moods.fantastic": "Fantastic",
@@ -71,5 +78,13 @@
   "settings.titles.security": "Security",
   "settings.titles.local-user": "Local User",
 
+  "view-entry.buttons.edit": "Edit Entry",
+  "view-entry.buttons.delete": "Delete",
+  "view-entry.titles.date": "Entry date",
+  "view-entry.titles.feeling": "How were you feeling?",
+  "view-entry.titles.photos": "Photos",
+  "view-entry.titles.save-on": "Entry saved on",
+  "view-entry.titles.tags": "Tags",
+  "view-entry.titles.thinking": "What were you thinking?",
   "view-entry.titles.view-entry": "View Entry"
 }

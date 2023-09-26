@@ -10,6 +10,7 @@ import ImageView from "react-native-image-viewing";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useSelector } from "react-redux";
 import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 import { getMoodColor, getMoodsArray } from "../utils/moodHelper";
 import { MoodEnum } from "../constants/moods";
@@ -30,6 +31,7 @@ const initialState: Entry = {
 };
 
 export default function EditEntry({ route }: Props) {
+  const { t } = useTranslation("common");
   const { colors, dark } = useTheme();
   const dispatch = useDispatch<any>();
   const { navigate } = useNavigation<any>();
@@ -94,11 +96,11 @@ export default function EditEntry({ route }: Props) {
       <ScrollView>
         <KeyboardAvoidingView style={styles.body} behavior={Platform.OS === "ios" ? "padding" : "height"}>
           <Chip icon="clock">{format(new Date(entry.date), "PPPP - kk:mm")}</Chip>
-          <Text variant="titleMedium">Entry saved on:</Text>
+          <Text variant="titleMedium">{t("common:view-entry.titles.save-on")}:</Text>
           <SegmentedButtons value={entryStorage} onValueChange={setEntryStorage} buttons={storageButtons()} />
-          <Text variant="titleMedium">What are you thinking?</Text>
+          <Text variant="titleMedium">{t("common:view-entry.titles.thinking")}</Text>
           <TextInput multiline numberOfLines={5} value={content} onChangeText={setContent} />
-          <Text variant="titleMedium">How are you feeling?</Text>
+          <Text variant="titleMedium">{t("common:view-entry.titles.feeling")}</Text>
           <View style={styles.moods}>
             {getMoodsArray().map((mood) => (
               <Chip
@@ -111,7 +113,7 @@ export default function EditEntry({ route }: Props) {
               </Chip>
             ))}
           </View>
-          <Text variant="titleMedium">Tags:</Text>
+          <Text variant="titleMedium">{t("common:view-entry.titles.tags")}:</Text>
           <TextInput
             mode="outlined"
             right={<TextInput.Icon icon="send" onPress={() => submitTag()} />}
@@ -128,7 +130,7 @@ export default function EditEntry({ route }: Props) {
               </Chip>
             ))}
           </View>
-          <Text variant="titleMedium">Photos:</Text>
+          <Text variant="titleMedium">{t("common:view-entry.titles.photos")}:</Text>
           <View style={styles.images}>
             {images.map((imageUrl, i) => (
               <View key={i}>
@@ -160,7 +162,7 @@ export default function EditEntry({ route }: Props) {
           onPress={submitForm}
           disabled={!content.trim()}
         >
-          UPDATE ENTRY
+          {t("common:view-entry.buttons.edit").toUpperCase()}
         </Button>
       </ScrollView>
       <ImageView
