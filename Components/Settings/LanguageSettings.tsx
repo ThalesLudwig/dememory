@@ -1,7 +1,9 @@
 import { StyleSheet } from "react-native";
 import { Divider, List, Modal, useTheme } from "react-native-paper";
-
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+
+import { setLocale } from "../../config/localeSlice";
 
 type LanguageSettingsProps = {
   isModalVisible: boolean;
@@ -10,12 +12,14 @@ type LanguageSettingsProps = {
 
 const LanguageSettings = ({ isModalVisible, setIsModalVisible }: LanguageSettingsProps) => {
   const { colors } = useTheme();
+  const dispatch = useDispatch();
   const {
     i18n: { changeLanguage, language },
   } = useTranslation();
 
   const updateLanguage = (language: string) => {
     changeLanguage(language);
+    dispatch(setLocale(language));
     setIsModalVisible(false);
   };
 

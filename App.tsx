@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import Router from "./Components/Router";
 import ThemeProvider from "./Components/ThemeProvider";
 import store, { persistor } from "./config/store";
+import LocaleProvider from "./Components/LocaleProvider";
 
 import "./i18n";
 
@@ -17,10 +18,12 @@ export default function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <ThemeProvider>
-          <NavigationContainer theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-            <StatusBar style="auto" />
-            <Router />
-          </NavigationContainer>
+          <LocaleProvider>
+            <NavigationContainer theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+              <StatusBar style="auto" />
+              <Router />
+            </NavigationContainer>
+          </LocaleProvider>
         </ThemeProvider>
       </PersistGate>
     </Provider>
