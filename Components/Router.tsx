@@ -70,20 +70,28 @@ function HomeStack() {
   return (
     <Stack.Navigator initialRouteName="Home" screenOptions={{ header: (props) => <Header {...props} /> }}>
       <Stack.Screen name="Home" component={Home} options={{ title: t("common:home.titles.header") }} />
-      <Stack.Screen options={{ headerTitle: "New Entry" }} name="NewEntry" component={NewEntry} />
       <Stack.Screen
-        options={{ headerTitle: "View Entry" }}
+        options={{ headerTitle: t("common:new-entry.titles.new-entry") }}
+        name="NewEntry"
+        component={NewEntry}
+      />
+      <Stack.Screen
+        options={{ headerTitle: t("common:view-entry.titles.view-entry") }}
         name="ViewEntry"
         component={ViewEntry}
         initialParams={{ id: "" }}
       />
       <Stack.Screen
-        options={{ headerTitle: "Edit Entry" }}
+        options={{ headerTitle: t("common:edit-entry.titles.edit-entry") }}
         name="EditEntry"
         component={EditEntry}
         initialParams={{ id: "" }}
       />
-      <Stack.Screen options={{ headerTitle: "Search Results" }} name="SearchResults" component={SearchResults} />
+      <Stack.Screen
+        options={{ headerTitle: t("common:search-results.titles.search-results") }}
+        name="SearchResults"
+        component={SearchResults}
+      />
     </Stack.Navigator>
   );
 }
@@ -100,18 +108,22 @@ function SearchStack() {
         options={{ ...getRouteIcon("Search", theme), title: t("common:search.titles.search") }}
       />
       <Stack.Screen
-        options={{ headerTitle: "View Entry" }}
+        options={{ headerTitle: t("common:view-entry.titles.view-entry") }}
         name="ViewEntry"
         component={ViewEntry}
         initialParams={{ id: "" }}
       />
       <Stack.Screen
-        options={{ headerTitle: "Edit Entry" }}
+        options={{ headerTitle: t("common:edit-entry.titles.edit-entry") }}
         name="EditEntry"
         component={EditEntry}
         initialParams={{ id: "" }}
       />
-      <Stack.Screen options={{ headerTitle: "Search Results" }} name="SearchResults" component={SearchResults} />
+      <Stack.Screen
+        options={{ headerTitle: t("common:search-results.titles.search-results") }}
+        name="SearchResults"
+        component={SearchResults}
+      />
     </Stack.Navigator>
   );
 }
@@ -128,13 +140,13 @@ function FavoritesStack() {
         options={{ ...getRouteIcon("Favorites", theme), title: t("common:favorites.titles.favorites") }}
       />
       <Stack.Screen
-        options={{ headerTitle: "View Entry" }}
+        options={{ headerTitle: t("common:view-entry.titles.view-entry") }}
         name="ViewEntry"
         component={ViewEntry}
         initialParams={{ id: "" }}
       />
       <Stack.Screen
-        options={{ headerTitle: "Edit Entry" }}
+        options={{ headerTitle: t("common:edit-entry.titles.edit-entry") }}
         name="EditEntry"
         component={EditEntry}
         initialParams={{ id: "" }}

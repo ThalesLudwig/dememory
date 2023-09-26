@@ -1,4 +1,6 @@
 {
+  "edit-entry.titles.edit-entry": "Editar Registro",
+
   "favorites.descriptions.no-entries": "Você não tem favoritos ainda. Comece fixando seus registros e você os verá aqui.",
   "favorites.inputs.search": "Pesquisar por conteúdo ou tag",
   "favorites.titles.favorites": "Favoritos",
@@ -23,6 +25,8 @@
   "moods.nervous": "Nervoso",
   "moods.neutral": "Neutro",
 
+  "new-entry.titles.new-entry": "Novo Registro",
+
   "search.buttons.clear-filters": "Limpar Filtros",
   "search.buttons.search": "Pesquisar",
   "search.descriptions.blockchain": "Blockchain",
@@ -35,6 +39,8 @@
   "search.titles.search": "Pesquisa",
   "search.titles.stored-on": "Armazenado em",
   "search.titles.tags": "Tags",
+
+  "search-results.titles.search-results": "Resultados da Pesquisa",
 
   "settings.buttons.buy-app": "Comprar Dememory",
   "settings.buttons.close": "Fechar",
@@ -51,5 +57,7 @@
   "settings.titles.entries": "Registros",
   "settings.titles.preferences": "Preferências",
   "settings.titles.security": "Segurança",
-  "settings.titles.local-user": "Usuário Local"
+  "settings.titles.local-user": "Usuário Local",
+
+  "view-entry.titles.view-entry": "Visualizar Registro"
 }

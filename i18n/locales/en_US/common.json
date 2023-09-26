@@ -1,4 +1,6 @@
 {
+  "edit-entry.titles.edit-entry": "Edit Entry",
+
   "favorites.descriptions.no-entries": "You don't have any favorites yet. Start pinning your entries and you'll see them here.",
   "favorites.inputs.search": "Search by content or tag",
   "favorites.titles.favorites": "Favorites",
@@ -23,6 +25,8 @@
   "moods.nervous": "Nervous",
   "moods.neutral": "Neutral",
 
+  "new-entry.titles.new-entry": "New Entry",
+
   "search.buttons.clear-filters": "Clear Filters",
   "search.buttons.search": "Search",
   "search.descriptions.blockchain": "Blockchain",
@@ -35,6 +39,8 @@
   "search.titles.search": "Search",
   "search.titles.stored-on": "Stored on",
   "search.titles.tags": "Tags",
+
+  "search-results.titles.search-results": "Search Results",
 
   "settings.buttons.buy-app": "Buy Dememory",
   "settings.buttons.close": "Close",
@@ -51,5 +57,7 @@
   "settings.titles.entries": "Entries",
   "settings.titles.preferences": "Preferences",
   "settings.titles.security": "Security",
-  "settings.titles.local-user": "Local User"
+  "settings.titles.local-user": "Local User",
+
+  "view-entry.titles.view-entry": "View Entry"
 }
