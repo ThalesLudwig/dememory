@@ -3,6 +3,7 @@ import { SafeAreaView } from "react-navigation";
 import { Avatar, Button, Divider, List, Portal, Snackbar, Text, useTheme } from "react-native-paper";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigation } from "@react-navigation/native";
 
 import { styles } from "../styles/settingsStyles";
 import ThemeSettings from "../Components/Settings/ThemeSettings";
@@ -12,6 +13,7 @@ import LanguageSettings from "../Components/Settings/LanguageSettings";
 export default function Settings() {
   const { colors } = useTheme();
   const { t } = useTranslation("common");
+  const { navigate } = useNavigation<any>();
 
   const [isThemeVisible, setIsThemeVisible] = useState(false);
   const [isLanguagesVisible, setIsLanguagesVisible] = useState(false);
@@ -28,7 +30,9 @@ export default function Settings() {
             <Text style={styles.wallet} variant="titleMedium">
               {t("common:settings.titles.local-user").toUpperCase()}
             </Text>
-            <Button mode="text">{t("common:settings.buttons.login")}</Button>
+            <Button mode="text" onPress={() => navigate("Login")}>
+              {t("common:settings.buttons.login")}
+            </Button>
           </View>
           <Divider />
           <List.Section>

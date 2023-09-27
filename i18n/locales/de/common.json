@@ -22,6 +22,13 @@
 
   "local-device": "Lokales Gerät",
 
+  "login.buttons.metamask": "Mit MetaMask anmelden",
+  "login.buttons.local": "Auf lokalem Gerät verwenden",
+  "login.descriptions.or": "Oder",
+  "login.snackbar.not-available": "Nicht verfügbar.",
+  "login.subtitle": "Für immer gespeichert, wirklich dein.",
+  "login.title": "Mehr als nur ein Tagebuch, deine Erinnerung.",
+
   "modals.delete-entry.title": "Diesen Eintrag löschen?",
   "modals.delete-entry.description": "Sind Sie sicher, dass Sie diesen Eintrag dauerhaft löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
   "modals.delete-entry.buttons.yes": "Löschen",

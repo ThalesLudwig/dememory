@@ -22,6 +22,13 @@
 
   "local-device": "Appareil local",
 
+  "login.buttons.metamask": "Se connecter avec MetaMask",
+  "login.buttons.local": "Utiliser sur l'appareil local",
+  "login.descriptions.or": "Ou",
+  "login.snackbar.not-available": "Non disponible.",
+  "login.subtitle": "Stocké pour toujours, vraiment à vous.",
+  "login.title": "Plus qu'un simple journal, votre mémoire.",
+
   "modals.delete-entry.title": "Supprimer cette entrée ?",
   "modals.delete-entry.description": "Êtes-vous sûr de vouloir supprimer définitivement cette entrée ? Cette action est irréversible.",
   "modals.delete-entry.buttons.yes": "Supprimer",

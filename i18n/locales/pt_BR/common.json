@@ -22,6 +22,13 @@
 
   "local-device": "Dispositivo Local",
 
+  "login.buttons.metamask": "Entrar com metamask",
+  "login.buttons.local": "Usar no dispositivo local",
+  "login.descriptions.or": "Ou",
+  "login.snackbar.not-available": "Não disponível.",
+  "login.subtitle": "Armazenada para sempre, inteiramente sua.",
+  "login.title": "Mais do que só um diário, sua memória.",
+
   "modals.delete-entry.title": "Deletar este registro?",
   "modals.delete-entry.description": "Tem certeza que quer permanentemente deletar este registro? Esta ação não pode ser desfeita.",
   "modals.delete-entry.buttons.yes": "Deletar",

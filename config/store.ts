@@ -6,12 +6,14 @@ import dateReducer from "./dateSlice";
 import entriesReducer from "./entriesSlice";
 import themeReducer from "./themeSlice";
 import localeReducer from "./localeSlice";
+import profileReducer from "./profileSlice";
 
 const rootReducer = combineReducers({
   date: dateReducer,
   entries: persistReducer({ key: "entries", storage: AsyncStorage }, entriesReducer),
   theme: persistReducer({ key: "theme", storage: AsyncStorage }, themeReducer),
   locale: persistReducer({ key: "locale", storage: AsyncStorage }, localeReducer),
+  profile: persistReducer({ key: "profile", storage: AsyncStorage }, profileReducer),
 });
 
 const store = configureStore({

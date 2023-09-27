@@ -22,6 +22,13 @@
 
   "local-device": "Dispositivo locale",
 
+  "login.buttons.metamask": "Accedi con MetaMask",
+  "login.buttons.local": "Usa sul dispositivo locale",
+  "login.descriptions.or": "O",
+  "login.snackbar.not-available": "Non disponibile.",
+  "login.subtitle": "Archiviato per sempre, davvero tuo.",
+  "login.title": "Più di un semplice diario, la tua memoria.",
+
   "modals.delete-entry.title": "Eliminare questa registrazione?",
   "modals.delete-entry.description": "Sei sicuro di voler eliminare definitivamente questa registrazione? Questa azione non può essere annullata.",
   "modals.delete-entry.buttons.yes": "Elimina",
