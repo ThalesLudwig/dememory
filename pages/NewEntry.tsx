@@ -18,12 +18,14 @@ import { Entry } from "../types/Entry";
 import { addEntry } from "../config/entriesSlice";
 import { styles } from "../styles/newEntryStyles";
 import { storageButtons } from "../constants/storage";
+import { useDateLocale } from "../hooks/useDateLocale";
 
 export default function NewEntry() {
   const { colors, dark } = useTheme();
   const dispatch = useDispatch<any>();
   const { navigate } = useNavigation<any>();
   const { t } = useTranslation("common");
+  const locale = useDateLocale();
 
   const [entryStorage, setEntryStorage] = useState(EntryStorage.LOCAL.toString());
   const [content, setContent] = useState("");
@@ -94,7 +96,7 @@ export default function NewEntry() {
     <SafeAreaView style={{ ...styles.container, backgroundColor: colors.background }}>
       <ScrollView>
         <KeyboardAvoidingView style={styles.body} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-          <Chip icon="clock">{format(new Date(), "PPPP - kk:mm")}</Chip>
+          <Chip icon="clock">{format(new Date(), "PPPP - kk:mm", { locale })}</Chip>
           <Text variant="titleMedium">{t("common:new-entry.titles.save-on")}:</Text>
           <SegmentedButtons value={entryStorage} onValueChange={setEntryStorage} buttons={storageButtons()} />
           <Text variant="titleMedium">{t("common:new-entry.titles.thinking")}</Text>

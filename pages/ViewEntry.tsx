@@ -16,6 +16,7 @@ import { getMoodColor, getMoodName } from "../utils/moodHelper";
 import { removeEntry, updateEntry } from "../config/entriesSlice";
 import { styles } from "../styles/viewEntryStyles";
 import { storageButtons } from "../constants/storage";
+import { useDateLocale } from "../hooks/useDateLocale";
 
 type Props = NativeStackScreenProps<RootStackParamList, "ViewEntry">;
 
@@ -32,6 +33,7 @@ export const ViewEntry = ({ route }: Props) => {
   const dispatch = useDispatch();
   const { goBack, navigate } = useNavigation<any>();
   const entries = useSelector((state: RootState) => state.entries.value);
+  const locale = useDateLocale();
 
   const [entry, setEntry] = useState<Entry>(entries.find((entry) => entry.id === route.params.id) || initialState);
   const [isImageOpen, setIsImageOpen] = useState(false);
@@ -65,7 +67,7 @@ export const ViewEntry = ({ route }: Props) => {
       <ScrollView>
         <View style={styles.body}>
           <Text variant="titleLarge">{t("common:view-entry.titles.date")}</Text>
-          <Chip icon="clock">{format(new Date(entry.date), "PPPP - kk:mm")}</Chip>
+          <Chip icon="clock">{format(new Date(entry.date), "PPPP - kk:mm", { locale })}</Chip>
           <Text variant="titleMedium">{t("common:view-entry.titles.save-on")}:</Text>
           <SegmentedButtons
             value={entry.storage?.toString() || "0"}

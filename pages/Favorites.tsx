@@ -10,12 +10,14 @@ import { Entry } from "../types/Entry";
 import EntryCard from "../Components/EntryCard";
 import EmptyState from "../Components/EmptyState";
 import { styles } from "../styles/favoritesStyles";
+import { useDateLocale } from "../hooks/useDateLocale";
 
 export default function Favorites() {
   const { t } = useTranslation("common");
   const { colors } = useTheme();
   const favoriteEntries = useFavoriteEntries();
   const { navigate } = useNavigation<any>();
+  const locale = useDateLocale();
   const [searchInput, setSearchInput] = useState("");
 
   const filteredEntries = useMemo(() => {
@@ -28,7 +30,7 @@ export default function Favorites() {
   const parsedEntries = useMemo(() => {
     const list: { title: string; data: Entry[] }[] = [];
     filteredEntries.forEach((entry) => {
-      const date = format(new Date(entry.date), "MMMM, yyyy");
+      const date = format(new Date(entry.date), "MMMM, yyyy", { locale });
       const index = list.findIndex((e) => e.title === date);
       if (index >= 0) {
         list[index] = { title: list[index].title, data: [...list[index].data, entry] };

@@ -20,6 +20,7 @@ import { RootStackParamList } from "../Components/Router";
 import { RootState } from "../config/store";
 import { styles } from "../styles/editEntryStyles";
 import { storageButtons } from "../constants/storage";
+import { useDateLocale } from "../hooks/useDateLocale";
 
 type Props = NativeStackScreenProps<RootStackParamList, "EditEntry">;
 
@@ -37,6 +38,7 @@ export default function EditEntry({ route }: Props) {
   const { navigate } = useNavigation<any>();
   const entries = useSelector((state: RootState) => state.entries.value);
   const entry = entries.find((entry) => entry.id === route.params.id) || initialState;
+  const locale = useDateLocale();
 
   const [entryStorage, setEntryStorage] = useState<string>(entry.storage?.toString() || "0");
   const [content, setContent] = useState(entry.content);
@@ -95,7 +97,7 @@ export default function EditEntry({ route }: Props) {
     <SafeAreaView style={{ ...styles.container, backgroundColor: colors.background }}>
       <ScrollView>
         <KeyboardAvoidingView style={styles.body} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-          <Chip icon="clock">{format(new Date(entry.date), "PPPP - kk:mm")}</Chip>
+          <Chip icon="clock">{format(new Date(entry.date), "PPPP - kk:mm", { locale })}</Chip>
           <Text variant="titleMedium">{t("common:view-entry.titles.save-on")}:</Text>
           <SegmentedButtons value={entryStorage} onValueChange={setEntryStorage} buttons={storageButtons()} />
           <Text variant="titleMedium">{t("common:view-entry.titles.thinking")}</Text>

@@ -59,6 +59,7 @@
   "search.buttons.clear-filters": "Limpar Filtros",
   "search.buttons.search": "Pesquisar",
   "search.descriptions.blockchain": "Blockchain",
+  "search.descriptions.invalid-date": "Data inválida.",
   "search.descriptions.local-device": "Dispositivo Local",
   "search.inputs.content": "Conteúdo",
   "search.inputs.from": "De",

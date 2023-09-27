@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import { Locales } from "../types/Locales";
+
 type LocaleState = {
-  value: string;
+  value: Locales;
 };
 
 const initialState: LocaleState = { value: "" };

@@ -9,10 +9,12 @@ import { Entry } from "../types/Entry";
 import { getMoodColor, getMoodName } from "../utils/moodHelper";
 import { EntryStorage } from "../constants/EntryStorage";
 import { updateEntry } from "../config/entriesSlice";
+import { useDateLocale } from "../hooks/useDateLocale";
 
 const EntryCard = (props: Entry & { onPress: Function }) => {
   const dispatch = useDispatch();
   const { dark } = useTheme();
+  const locale = useDateLocale();
   const moodColor = !!props.mood ? getMoodColor(props.mood, dark) : "";
 
   const toogleFavorites = () => {
@@ -37,7 +39,7 @@ const EntryCard = (props: Entry & { onPress: Function }) => {
         </View>
       )}
       <Card.Actions style={styles.actions}>
-        <Chip icon="clock">{format(new Date(props.date), "MMM do, kk:mm")}</Chip>
+        <Chip icon="clock">{format(new Date(props.date), "MMM do, kk:mm", { locale })}</Chip>
         {!!props.mood && (
           <Chip icon="emoticon-happy-outline" style={{ backgroundColor: moodColor }}>
             {getMoodName(props.mood)}

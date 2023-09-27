@@ -90,7 +90,7 @@ export default function Home() {
         />
         <View style={styles.body}>
           <View style={styles.spaceBetween}>
-            <Text variant="titleMedium">{currentDate("dd/MM/yyyy")}</Text>
+            <Text variant="titleMedium">{currentDate("P")}</Text>
             <View style={styles.spaceBetween}>
               <Button mode="contained" onPress={() => navigate("NewEntry")}>
                 {t("common:home.buttons.new-entry").toUpperCase()}

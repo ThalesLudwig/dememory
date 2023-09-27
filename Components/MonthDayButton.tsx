@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { useDispatch } from "react-redux";
-import { Surface, Text, MD3Colors, MD3DarkTheme, useTheme } from "react-native-paper";
+import { Surface, Text, useTheme } from "react-native-paper";
 import * as Haptics from "expo-haptics";
 import { format } from "date-fns";
 

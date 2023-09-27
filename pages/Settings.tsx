@@ -35,10 +35,6 @@ export default function Settings() {
             <List.Subheader>{t("common:settings.titles.preferences")}</List.Subheader>
             <List.Item title={t("common:settings.menus.theme")} onPress={() => setIsThemeVisible(true)} />
             <List.Item title={t("common:settings.menus.languages")} onPress={() => setIsLanguagesVisible(true)} />
-            <List.Item
-              title={t("common:settings.menus.date-format")}
-              onPress={() => setIsUnavailableSnackbarVisible(true)}
-            />
           </List.Section>
           <Divider />
           <List.Section>

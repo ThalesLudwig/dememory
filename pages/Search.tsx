@@ -184,6 +184,7 @@ export default function Search() {
             <DateTimePickerModal
               isVisible={isFromPickerVisible}
               mode="date"
+              display="inline"
               onConfirm={confirmFromDate}
               onCancel={() => setFromPickerVisibility(false)}
             />
@@ -200,6 +201,7 @@ export default function Search() {
             <DateTimePickerModal
               isVisible={isToPickerVisible}
               mode="date"
+              display="inline"
               onConfirm={confirmToDate}
               onCancel={() => setToPickerVisibility(false)}
             />
@@ -213,7 +215,7 @@ export default function Search() {
         </KeyboardAvoidingView>
       </ScrollView>
       <Snackbar visible={isDateErrorSnackbarVisible} onDismiss={() => setIsDateErrorSnackbarVisible(false)}>
-        Invalid date.
+        {t("common:search.descriptions.invalid-date")}
       </Snackbar>
     </SafeAreaView>
   );
