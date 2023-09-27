@@ -1,9 +1,12 @@
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import { EntryStorage } from "./EntryStorage";
+import { RootState } from "../config/store";
 
 export const storageButtons = () => {
   const { t } = useTranslation("common");
+  const { wallet } = useSelector((state: RootState) => state.profile);
 
   return [
     {
@@ -15,7 +18,7 @@ export const storageButtons = () => {
       value: EntryStorage.BLOCKCHAIN.toString(),
       label: t("common:blockchain"),
       icon: "ethereum",
-      disabled: true,
+      disabled: !wallet,
     },
   ];
 };

@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { ThemeType } from "../types/Theme";
-
 type ProfileState = {
   showLoginPage: boolean;
+  wallet?: string;
 };
 
 const initialState: ProfileState = { showLoginPage: true };
@@ -15,9 +14,12 @@ const ProfileSlice = createSlice({
     setShowLoginPage(state, { payload }) {
       state.showLoginPage = payload;
     },
+    setWallet(state, { payload }) {
+      state.wallet = payload;
+    },
   },
 });
 
-export const { setShowLoginPage } = ProfileSlice.actions;
+export const { setShowLoginPage, setWallet } = ProfileSlice.actions;
 
 export default ProfileSlice.reducer;

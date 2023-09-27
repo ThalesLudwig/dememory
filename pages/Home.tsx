@@ -107,6 +107,7 @@ export default function Home() {
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
           mode="date"
+          display="inline"
           onConfirm={confirmDate}
           onCancel={() => setDatePickerVisibility(false)}
         />

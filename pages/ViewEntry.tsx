@@ -17,6 +17,7 @@ import { removeEntry, updateEntry } from "../config/entriesSlice";
 import { styles } from "../styles/viewEntryStyles";
 import { storageButtons } from "../constants/storage";
 import { useDateLocale } from "../hooks/useDateLocale";
+import { EntryStorage } from "../constants/EntryStorage";
 
 type Props = NativeStackScreenProps<RootStackParamList, "ViewEntry">;
 
@@ -113,14 +114,16 @@ export const ViewEntry = ({ route }: Props) => {
             </>
           )}
         </View>
-        <View style={styles.buttons}>
-          <Button icon="pencil" mode="contained" onPress={() => navigate("EditEntry", { id: entry.id })}>
-            {t("common:view-entry.buttons.edit").toUpperCase()}
-          </Button>
-          <Button icon="delete" mode="elevated" onPress={() => setIsDeleteDialogOpen(true)}>
-            {t("common:view-entry.buttons.delete").toUpperCase()}
-          </Button>
-        </View>
+        {entry.storage === EntryStorage.LOCAL && (
+          <View style={styles.buttons}>
+            <Button icon="pencil" mode="contained" onPress={() => navigate("EditEntry", { id: entry.id })}>
+              {t("common:view-entry.buttons.edit").toUpperCase()}
+            </Button>
+            <Button icon="delete" mode="elevated" onPress={() => setIsDeleteDialogOpen(true)}>
+              {t("common:view-entry.buttons.delete").toUpperCase()}
+            </Button>
+          </View>
+        )}
       </ScrollView>
       <ImageView
         images={[{ uri: entry.imagesUrl?.[openedImageIndex] }]}
