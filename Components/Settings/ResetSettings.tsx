@@ -1,5 +1,6 @@
 import { Button, Dialog, Snackbar, Text } from "react-native-paper";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { resetState } from "../../config/entriesSlice";
 
@@ -17,6 +18,7 @@ const ResetSettings = ({
   setIsResetSnackbarVisible,
 }: ResetSettingsProps) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation("common");
 
   const resetEntries = () => {
     dispatch(resetState());
@@ -28,19 +30,16 @@ const ResetSettings = ({
     <>
       <Dialog visible={isResetDialogVisible} onDismiss={() => setIsResetDialogVisible(false)}>
         <Dialog.Icon icon="alert" />
-        <Dialog.Title style={{ textAlign: "center" }}>Reset all entries?</Dialog.Title>
+        <Dialog.Title style={{ textAlign: "center" }}>{t("common:modals.reset.title")}</Dialog.Title>
         <Dialog.Content>
-          <Text variant="bodyMedium">
-            Are you sure you want to permanently delete all local entries from this device? Entries saved on the
-            Blockchain cannot be deleted. This action cannot be undone.
-          </Text>
+          <Text variant="bodyMedium">{t("common:modals.reset.descriptions")}</Text>
         </Dialog.Content>
         <Dialog.Actions>
           <Button mode="outlined" onPress={() => setIsResetDialogVisible(false)}>
-            CANCEL
+            {t("common:modals.reset.buttons.no").toUpperCase()}
           </Button>
           <Button mode="contained" onPress={() => resetEntries()}>
-            RESET EVERYTHING
+            {t("common:modals.reset.buttons.yes").toUpperCase()}
           </Button>
         </Dialog.Actions>
       </Dialog>
@@ -52,7 +51,7 @@ const ResetSettings = ({
           onPress: () => setIsResetSnackbarVisible(false),
         }}
       >
-        Local entries successfully removed.
+        {t("common:modals.reset.confirmation")}
       </Snackbar>
     </>
   );

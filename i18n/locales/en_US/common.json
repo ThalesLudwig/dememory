@@ -27,6 +27,16 @@
   "modals.delete-entry.buttons.yes": "Delete",
   "modals.delete-entry.buttons.no": "Cancel",
 
+  "modals.reset.title": "Reset all entries?",
+  "modals.reset.descriptions": "Are you sure you want to permanently delete all local entries from this device? Entries saved on the Blockchain cannot be deleted. This action cannot be undone.",
+  "modals.reset.buttons.yes": "Reset Everything",
+  "modals.reset.buttons.no": "Cancel",
+  "modals.reset.confirmation": "Local entries successfully removed.",
+
+  "modals.theme.light": "Light",
+  "modals.theme.dark": "Dark",
+  "modals.theme.system": "Automatic (system)",
+
   "moods.angry": "Angry",
   "moods.fantastic": "Fantastic",
   "moods.great": "Great",
