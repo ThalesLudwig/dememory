@@ -64,6 +64,12 @@ const LanguageSettings = ({ isModalVisible, setIsModalVisible }: LanguageSetting
         onPress={() => updateLanguage("pt_BR")}
         titleStyle={{ fontWeight: language === "pt_BR" ? "800" : "400" }}
       />
+      <Divider />
+      <List.Item
+        title="日本語"
+        onPress={() => updateLanguage("ja")}
+        titleStyle={{ fontWeight: language === "ja" ? "800" : "400" }}
+      />
     </Modal>
   );
 };

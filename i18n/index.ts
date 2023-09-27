@@ -7,6 +7,7 @@ import commonEs from "./locales/es/common.json";
 import commonDe from "./locales/de/common.json";
 import commonFr from "./locales/fr/common.json";
 import commonIt from "./locales/it/common.json";
+import commonJa from "./locales/ja/common.json";
 
 export const defaultNS = "common";
 
@@ -31,6 +32,9 @@ export default i18next.use(initReactI18next).init({
     },
     it: {
       common: commonIt,
+    },
+    ja: {
+      common: commonJa,
     },
     pt_BR: {
       common: commonPtBR,
