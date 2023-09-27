@@ -76,6 +76,7 @@ export default function Settings() {
         <Snackbar
           visible={isUnavailableSnackbarVisible}
           onDismiss={() => setIsUnavailableSnackbarVisible(false)}
+          wrapperStyle={{ bottom: 80 }}
           action={{ label: t("common:settings.buttons.close"), onPress: () => setIsUnavailableSnackbarVisible(false) }}
         >
           {t("common:settings.descriptions.option-unavailable")}
