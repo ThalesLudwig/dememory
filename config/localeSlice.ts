@@ -4,7 +4,7 @@ type LocaleState = {
   value: string;
 };
 
-const initialState: LocaleState = { value: "en_US" };
+const initialState: LocaleState = { value: "" };
 
 const LocaleSlice = createSlice({
   name: "locale",
