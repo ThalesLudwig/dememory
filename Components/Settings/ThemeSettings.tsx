@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import { RootState } from "../../config/store";
 import { setTheme } from "../../config/themeSlice";
+import { ThemeType } from "../../types/Theme";
 
 type ThemeSettingsProps = {
   isThemeVisible: boolean;
@@ -17,6 +18,11 @@ const ThemeSettings = ({ isThemeVisible, setIsThemeVisible }: ThemeSettingsProps
   const dispatch = useDispatch();
   const { value: selectedTheme } = useSelector((state: RootState) => state.theme);
 
+  const changeTheme = (theme: ThemeType) => {
+    dispatch(setTheme(theme));
+    setIsThemeVisible(false);
+  };
+
   return (
     <Modal
       contentContainerStyle={{ ...styles.modal, backgroundColor: colors.background }}
@@ -25,19 +31,19 @@ const ThemeSettings = ({ isThemeVisible, setIsThemeVisible }: ThemeSettingsProps
     >
       <List.Item
         title={t("common:modals.theme.light")}
-        onPress={() => dispatch(setTheme("light"))}
+        onPress={() => changeTheme("light")}
         titleStyle={{ fontWeight: selectedTheme === "light" ? "800" : "400" }}
       />
       <Divider />
       <List.Item
         title={t("common:modals.theme.dark")}
-        onPress={() => dispatch(setTheme("dark"))}
+        onPress={() => changeTheme("dark")}
         titleStyle={{ fontWeight: selectedTheme === "dark" ? "800" : "400" }}
       />
       <Divider />
       <List.Item
         title={t("common:modals.theme.system")}
-        onPress={() => dispatch(setTheme("device"))}
+        onPress={() => changeTheme("device")}
         titleStyle={{ fontWeight: selectedTheme === "device" ? "800" : "400" }}
       />
     </Modal>

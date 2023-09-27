@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import { ThemeType } from "../types/Theme";
+
 type ThemeState = {
-  value: "light" | "dark" | "device";
+  value: ThemeType;
 };
 
 const initialState: ThemeState = { value: "device" };
