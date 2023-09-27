@@ -97,6 +97,7 @@ function HomeStack() {
         name="SearchResults"
         component={SearchResults}
       />
+      <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }
@@ -129,6 +130,7 @@ function SearchStack() {
         name="SearchResults"
         component={SearchResults}
       />
+      <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }
@@ -156,6 +158,7 @@ function FavoritesStack() {
         component={EditEntry}
         initialParams={{ id: "" }}
       />
+      <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }
