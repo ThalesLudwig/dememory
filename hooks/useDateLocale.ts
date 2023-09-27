@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { enUS, ptBR } from "date-fns/locale";
+import { enUS, ptBR, es, fr, de, it } from "date-fns/locale";
 import { useMemo } from "react";
 
 import { RootState } from "../config/store";
@@ -9,8 +9,16 @@ export const useDateLocale = () => {
 
   const dateLocale = useMemo(() => {
     switch (locale) {
+      case "de":
+        return de;
       case "en_US":
         return enUS;
+      case "es":
+        return es;
+      case "fr":
+        return fr;
+      case "it":
+        return it;
       case "pt_BR":
         return ptBR;
       default:
