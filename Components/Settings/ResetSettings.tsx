@@ -46,6 +46,7 @@ const ResetSettings = ({
       <Snackbar
         visible={isResetSnackbarVisible}
         onDismiss={() => setIsResetSnackbarVisible(false)}
+        wrapperStyle={{ bottom: 80 }}
         action={{
           label: "Close",
           onPress: () => setIsResetSnackbarVisible(false),
