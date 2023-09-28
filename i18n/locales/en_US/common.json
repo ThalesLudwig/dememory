@@ -63,6 +63,13 @@
   "new-entry.titles.tags": "Tags",
   "new-entry.titles.thinking": "What are you thinking?",
 
+  "profile.descriptions.therapy-share": "We will use this for therapy sharing.",
+  "profile.buttons.update": "Update Profile",
+  "profile.inputs.email": "Email",
+  "profile.inputs.name": "User name",
+  "profile.snackbar.updated": "Profile updated",
+  "profile.titles.profile": "Profile",
+
   "search.buttons.clear-filters": "Clear Filters",
   "search.buttons.search": "Search",
   "search.descriptions.blockchain": "Blockchain",
@@ -108,5 +115,7 @@
   "view-entry.titles.save-on": "Entry saved on",
   "view-entry.titles.tags": "Tags",
   "view-entry.titles.thinking": "What were you thinking?",
-  "view-entry.titles.view-entry": "View Entry"
+  "view-entry.titles.view-entry": "View Entry",
+
+  "wallet": "Wallet"
 }

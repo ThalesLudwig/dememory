@@ -63,6 +63,13 @@
   "new-entry.titles.tags": "Tags",
   "new-entry.titles.thinking": "À quoi pensez-vous ?",
 
+  "profile.descriptions.therapy-share": "Nous l'utiliserons pour partager la thérapie.",
+  "profile.buttons.update": "Mettre à jour le profil",
+  "profile.inputs.email": "E-mail",
+  "profile.inputs.name": "Nom d'utilisateur",
+  "profile.snackbar.updated": "Profil mis à jour",
+  "profile.titles.profile": "Profil",
+
   "search.buttons.clear-filters": "Effacer les filtres",
   "search.buttons.search": "Rechercher",
   "search.descriptions.blockchain": "Blockchain",
@@ -108,5 +115,7 @@
   "view-entry.titles.save-on": "Enregistré sur",
   "view-entry.titles.tags": "Tags",
   "view-entry.titles.thinking": "À quoi pensiez-vous ?",
-  "view-entry.titles.view-entry": "Voir l'entrée"
+  "view-entry.titles.view-entry": "Voir l'entrée",
+
+  "wallet": "Portefeuille"
 }

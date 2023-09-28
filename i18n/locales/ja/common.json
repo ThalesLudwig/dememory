@@ -63,6 +63,13 @@
   "new-entry.titles.tags": "タグ",
   "new-entry.titles.thinking": "何について考えていますか？",
 
+  "profile.descriptions.therapy-share": "これをセラピー共有に使用します。",
+  "profile.buttons.update": "プロフィールを更新",
+  "profile.inputs.email": "メール",
+  "profile.inputs.name": "ユーザー名",
+  "profile.snackbar.updated": "プロフィールが更新されました",
+  "profile.titles.profile": "プロフィール",
+
   "search.buttons.clear-filters": "フィルターをクリア",
   "search.buttons.search": "検索",
   "search.descriptions.blockchain": "ブロックチェーン",
@@ -108,5 +115,7 @@
   "view-entry.titles.save-on": "保存先",
   "view-entry.titles.tags": "タグ",
   "view-entry.titles.thinking": "何について考えていましたか？",
-  "view-entry.titles.view-entry": "エントリーを表示"
+  "view-entry.titles.view-entry": "エントリーを表示",
+
+  "wallet": "財布"
 }

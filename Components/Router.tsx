@@ -20,6 +20,7 @@ import SearchResults from "../pages/SearchResults";
 import { SearchType } from "../types/Search";
 import Login from "../pages/Login";
 import { RootState } from "../config/store";
+import Profile from "../pages/Profile";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -31,6 +32,7 @@ export type RootStackParamList = {
   Settings: undefined;
   SearchResults: SearchType;
   Login: undefined;
+  Profile: undefined;
 };
 
 export type RootTabParamList = {
@@ -97,7 +99,7 @@ function HomeStack() {
         name="SearchResults"
         component={SearchResults}
       />
-      <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
+      <Stack.Screen name="Profile" component={Profile} />
     </Stack.Navigator>
   );
 }
@@ -130,7 +132,7 @@ function SearchStack() {
         name="SearchResults"
         component={SearchResults}
       />
-      <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
+      <Stack.Screen name="Profile" component={Profile} />
     </Stack.Navigator>
   );
 }
@@ -158,16 +160,23 @@ function FavoritesStack() {
         component={EditEntry}
         initialParams={{ id: "" }}
       />
-      <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
+      <Stack.Screen name="Profile" component={Profile} />
     </Stack.Navigator>
   );
 }
 
 function SettingsStack() {
+  const { t } = useTranslation("common");
+
   return (
-    <Stack.Navigator initialRouteName="Settings" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Settings" component={Settings} />
-      <Stack.Screen name="Login" component={Login} />
+    <Stack.Navigator initialRouteName="Settings">
+      <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
+      <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{ header: (props) => <Header {...props} />, headerTitle: t("common:profile.titles.profile") }}
+      />
     </Stack.Navigator>
   );
 }

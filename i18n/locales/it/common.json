@@ -63,6 +63,13 @@
   "new-entry.titles.tags": "Tag",
   "new-entry.titles.thinking": "A cosa stai pensando?",
 
+  "profile.descriptions.therapy-share": "Lo useremo per la condivisione della terapia.",
+  "profile.buttons.update": "Aggiorna Profilo",
+  "profile.inputs.email": "Email",
+  "profile.inputs.name": "Nome utente",
+  "profile.snackbar.updated": "Profilo aggiornato",
+  "profile.titles.profile": "Profilo",
+
   "search.buttons.clear-filters": "Cancella filtri",
   "search.buttons.search": "Cerca",
   "search.descriptions.blockchain": "Blockchain",
@@ -108,5 +115,7 @@
   "view-entry.titles.save-on": "Registrazione salvata su",
   "view-entry.titles.tags": "Tag",
   "view-entry.titles.thinking": "A cosa stavi pensando?",
-  "view-entry.titles.view-entry": "Visualizza registrazione"
+  "view-entry.titles.view-entry": "Visualizza registrazione",
+
+  "wallet": "Portafoglio"
 }

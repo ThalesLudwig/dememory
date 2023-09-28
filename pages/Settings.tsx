@@ -1,19 +1,22 @@
-import { ScrollView, View } from "react-native";
+import { Pressable, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-navigation";
 import { Avatar, Button, Divider, List, Portal, Snackbar, Text, useTheme } from "react-native-paper";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 
 import { styles } from "../styles/settingsStyles";
 import ThemeSettings from "../Components/Settings/ThemeSettings";
 import ResetSettings from "../Components/Settings/ResetSettings";
 import LanguageSettings from "../Components/Settings/LanguageSettings";
+import { RootState } from "../config/store";
 
 export default function Settings() {
   const { colors } = useTheme();
   const { t } = useTranslation("common");
   const { navigate } = useNavigation<any>();
+  const { name: username } = useSelector((state: RootState) => state.profile);
 
   const [isThemeVisible, setIsThemeVisible] = useState(false);
   const [isLanguagesVisible, setIsLanguagesVisible] = useState(false);
@@ -26,10 +29,12 @@ export default function Settings() {
       <ScrollView>
         <View style={styles.body}>
           <View style={styles.avatar}>
-            <Avatar.Icon icon="account-outline" size={70} />
-            <Text style={styles.wallet} variant="titleMedium">
-              {t("common:settings.titles.local-user").toUpperCase()}
-            </Text>
+            <Pressable style={styles.avatar} onPress={() => navigate("Profile")}>
+              <Avatar.Icon icon="account-outline" size={70} />
+              <Text style={styles.wallet} variant="titleMedium">
+                {username || t("common:settings.titles.local-user").toUpperCase()}
+              </Text>
+            </Pressable>
             <Button mode="text" onPress={() => navigate("Login")}>
               {t("common:settings.buttons.login")}
             </Button>
