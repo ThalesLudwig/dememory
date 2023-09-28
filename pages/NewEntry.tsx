@@ -3,9 +3,8 @@ import { useNavigation } from "@react-navigation/native";
 import { Image, KeyboardAvoidingView, Platform, View, ScrollView, Pressable } from "react-native";
 import { Button, Chip, IconButton, SegmentedButtons, Surface, Text, TextInput, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-navigation";
-import "react-native-get-random-values";
 import { useDispatch } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
+import uuid from "react-native-uuid";
 import * as ImagePicker from "expo-image-picker";
 import ImageView from "react-native-image-viewing";
 import { format } from "date-fns";
@@ -47,7 +46,7 @@ export default function NewEntry() {
 
   const submitForm = () => {
     const entry: Entry = {
-      id: uuidv4(),
+      id: uuid.v4().toString(),
       mood: selectedMood,
       content,
       date: new Date(),

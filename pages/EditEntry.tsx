@@ -3,7 +3,6 @@ import { useNavigation } from "@react-navigation/native";
 import { Image, KeyboardAvoidingView, Platform, View, ScrollView, Pressable } from "react-native";
 import { Button, Chip, IconButton, SegmentedButtons, Surface, Text, TextInput, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-navigation";
-import "react-native-get-random-values";
 import { useDispatch } from "react-redux";
 import * as ImagePicker from "expo-image-picker";
 import ImageView from "react-native-image-viewing";

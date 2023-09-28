@@ -26,6 +26,20 @@ export default function Login() {
     }
   };
 
+  const onLogin = async () => {
+    // const MMSDK = await new MetaMaskSDK({
+    //   openDeeplink: (link) => {
+    //     Linking.openURL(link);
+    //   },
+    //   timer: BackgroundTimer, // Keep the dapp alive once it goes to background.
+    //   dappMetadata: { name: "Dememory" },
+    // });
+    // await MMSDK.init();
+    // const ethereum = MMSDK.getProvider();
+    // const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+    // console.log(accounts);
+  };
+
   return (
     <View style={{ ...styles.container, backgroundColor: colors.background }}>
       <ImageBackground source={require("../assets/login.jpeg")} style={styles.image}>
@@ -37,7 +51,7 @@ export default function Login() {
         </Text>
       </ImageBackground>
       <View style={styles.body}>
-        <Button mode="contained" onPress={() => setIsUnavailableSnackbarVisible(true)}>
+        <Button mode="contained" onPress={onLogin}>
           {t("common:login.buttons.metamask").toUpperCase()}
         </Button>
         <View style={styles.dividerRow}>
