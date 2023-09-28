@@ -8,7 +8,7 @@
   "favorites.descriptions.no-entries": "お気に入りはまだありません。エントリーをマークしてください。ここに表示されます。",
   "favorites.inputs.search": "コンテンツまたはタグで検索",
   "favorites.titles.favorites": "お気に入り",
-  "favorites.titles.no-entries": "エントリーが見つかりませんでした。",
+  "favorites.titles.no-entries": "お気に入りのエントリはありません。",
 
   "home.buttons.create-new": "新しいエントリーを作成",
   "home.buttons.new-entry": "新しいエントリー",
