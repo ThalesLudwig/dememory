@@ -101,6 +101,7 @@
 
   "view-entry.buttons.edit": "エントリーを編集",
   "view-entry.buttons.delete": "削除",
+  "view-entry.buttons.view-chain": "エクスプローラーで見る",
   "view-entry.titles.date": "エントリーの日付",
   "view-entry.titles.feeling": "どのように感じていましたか？",
   "view-entry.titles.photos": "写真",

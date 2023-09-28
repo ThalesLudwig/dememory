@@ -101,6 +101,7 @@
 
   "view-entry.buttons.edit": "Edit Entry",
   "view-entry.buttons.delete": "Delete",
+  "view-entry.buttons.view-chain": "View on Explorer",
   "view-entry.titles.date": "Entry date",
   "view-entry.titles.feeling": "How were you feeling?",
   "view-entry.titles.photos": "Photos",

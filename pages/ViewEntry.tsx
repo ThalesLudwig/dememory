@@ -75,6 +75,14 @@ export const ViewEntry = ({ route }: Props) => {
             onValueChange={() => {}}
             buttons={storageButtons()}
           />
+          {entry.storage === EntryStorage.BLOCKCHAIN && (
+            <>
+              <Text variant="titleMedium">Tnx Hash</Text>
+              <Chip style={styles.tnxHash} closeIcon="content-copy" onClose={() => {}} onPress={() => {}}>
+                0x000...1234
+              </Chip>
+            </>
+          )}
           <Text variant="titleMedium">{t("common:view-entry.titles.thinking")}</Text>
           <Surface style={styles.content}>
             <Text variant="bodyLarge">{entry.content}</Text>
@@ -114,6 +122,13 @@ export const ViewEntry = ({ route }: Props) => {
             </>
           )}
         </View>
+        {entry.storage === EntryStorage.BLOCKCHAIN && (
+          <View style={styles.buttons}>
+            <Button icon="ethereum" mode="contained" onPress={() => {}}>
+              {t("common:view-entry.buttons.view-chain").toUpperCase()}
+            </Button>
+          </View>
+        )}
         {entry.storage === EntryStorage.LOCAL && (
           <View style={styles.buttons}>
             <Button icon="pencil" mode="contained" onPress={() => navigate("EditEntry", { id: entry.id })}>

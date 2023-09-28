@@ -101,6 +101,7 @@
 
   "view-entry.buttons.edit": "Modifier l'entrée",
   "view-entry.buttons.delete": "Supprimer",
+  "view-entry.buttons.view-chain": "Afficher dans l'explorateur",
   "view-entry.titles.date": "Date de l'entrée",
   "view-entry.titles.feeling": "Comment vous sentiez-vous ?",
   "view-entry.titles.photos": "Photos",

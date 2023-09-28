@@ -36,4 +36,8 @@ export const styles = StyleSheet.create({
     flexWrap: "wrap",
     gap: 10,
   },
+  tnxHash: {
+    flexDirection: "row",
+    alignSelf: "flex-start",
+  },
 });

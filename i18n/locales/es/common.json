@@ -101,6 +101,7 @@
 
   "view-entry.buttons.edit": "Editar registro",
   "view-entry.buttons.delete": "Eliminar",
+  "view-entry.buttons.view-chain": "Ver en el explorador",
   "view-entry.titles.date": "Fecha del registro",
   "view-entry.titles.feeling": "¿Cómo te sentías?",
   "view-entry.titles.photos": "Fotos",
