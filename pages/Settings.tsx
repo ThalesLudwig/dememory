@@ -46,6 +46,7 @@ export default function Settings() {
     setIsLoading(true);
     await provider?.disconnect();
     dispatch(setWallet(""));
+    setIsLogoutDialogVisible(false);
     setIsLoading(false);
   };
 
