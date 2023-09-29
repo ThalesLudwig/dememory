@@ -27,17 +27,7 @@ export default function Login() {
   };
 
   const onLogin = async () => {
-    // const MMSDK = await new MetaMaskSDK({
-    //   openDeeplink: (link) => {
-    //     Linking.openURL(link);
-    //   },
-    //   timer: BackgroundTimer, // Keep the dapp alive once it goes to background.
-    //   dappMetadata: { name: "Dememory" },
-    // });
-    // await MMSDK.init();
-    // const ethereum = MMSDK.getProvider();
-    // const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-    // console.log(accounts);
+    setIsUnavailableSnackbarVisible(true);
   };
 
   return (
