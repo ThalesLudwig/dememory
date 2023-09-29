@@ -34,6 +34,11 @@
   "modals.delete-entry.buttons.yes": "Löschen",
   "modals.delete-entry.buttons.no": "Abbrechen",
 
+  "modals.logout.title": "Möchten Sie sich wirklich abmelden?",
+  "modals.logout.descriptions": "Diese Aktion wird Ihre aktuelle Brieftasche trennen. Ihr Benutzername und Ihre E-Mail werden nicht entfernt.",
+  "modals.logout.buttons.yes": "Abmelden",
+  "modals.logout.buttons.no": "Abbrechen",
+
   "modals.reset.title": "Alle Einträge löschen?",
   "modals.reset.descriptions": "Sind Sie sicher, dass Sie alle lokalen Einträge auf diesem Gerät dauerhaft löschen möchten? In der Blockchain gespeicherte Einträge können nicht gelöscht werden. Diese Aktion kann nicht rückgängig gemacht werden.",
   "modals.reset.buttons.yes": "Alles löschen",

@@ -154,12 +154,8 @@ export const ViewEntry = ({ route }: Props) => {
             <Text variant="bodyMedium">{t("common:modals.delete-entry.description")}</Text>
           </Dialog.Content>
           <Dialog.Actions>
-            <Button mode="outlined" onPress={() => setIsDeleteDialogOpen(false)}>
-              {t("common:modals.delete-entry.buttons.no").toUpperCase()}
-            </Button>
-            <Button mode="contained" onPress={deleteEntry}>
-              {t("common:modals.delete-entry.buttons.yes").toUpperCase()}
-            </Button>
+            <Button onPress={() => setIsDeleteDialogOpen(false)}>{t("common:modals.delete-entry.buttons.no")}</Button>
+            <Button onPress={deleteEntry}>{t("common:modals.delete-entry.buttons.yes")}</Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>

@@ -34,6 +34,11 @@
   "modals.delete-entry.buttons.yes": "削除",
   "modals.delete-entry.buttons.no": "キャンセル",
 
+  "modals.logout.title": "ログアウトしますか？",
+  "modals.logout.descriptions": "この操作は現在のウォレットを切断します。ユーザー名とメールアドレスは削除されません。",
+  "modals.logout.buttons.yes": "ログアウト",
+  "modals.logout.buttons.no": "キャンセル",
+
   "modals.reset.title": "すべてのエントリーを削除しますか？",
   "modals.reset.descriptions": "このデバイスのすべてのローカルエントリーを永久に削除してもよろしいですか？ブロックチェーンに保存されたエントリーは削除できません。この操作は取り消すことはできません。",
   "modals.reset.buttons.yes": "すべて削除",

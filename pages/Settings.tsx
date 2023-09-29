@@ -1,28 +1,53 @@
 import { Pressable, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-navigation";
-import { Avatar, Button, Divider, List, Portal, Snackbar, Text, useTheme } from "react-native-paper";
+import {
+  ActivityIndicator,
+  Avatar,
+  Button,
+  Dialog,
+  Divider,
+  List,
+  Portal,
+  Snackbar,
+  Text,
+  useTheme,
+} from "react-native-paper";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useWalletConnectModal } from "@walletconnect/modal-react-native";
 
 import { styles } from "../styles/settingsStyles";
 import ThemeSettings from "../Components/Settings/ThemeSettings";
 import ResetSettings from "../Components/Settings/ResetSettings";
 import LanguageSettings from "../Components/Settings/LanguageSettings";
 import { RootState } from "../config/store";
+import { walletShortener } from "../utils/walletShortener";
+import { setWallet } from "../config/profileSlice";
 
 export default function Settings() {
   const { colors } = useTheme();
   const { t } = useTranslation("common");
   const { navigate } = useNavigation<any>();
-  const { name: username } = useSelector((state: RootState) => state.profile);
+  const dispatch = useDispatch();
+  const { name: username, wallet } = useSelector((state: RootState) => state.profile);
+  const { isOpen, open, close, provider, isConnected, address } = useWalletConnectModal();
 
+  const [isLoading, setIsLoading] = useState(false);
   const [isThemeVisible, setIsThemeVisible] = useState(false);
   const [isLanguagesVisible, setIsLanguagesVisible] = useState(false);
   const [isResetDialogVisible, setIsResetDialogVisible] = useState(false);
   const [isResetSnackbarVisible, setIsResetSnackbarVisible] = useState(false);
   const [isUnavailableSnackbarVisible, setIsUnavailableSnackbarVisible] = useState(false);
+  const [isLogoutDialogVisible, setIsLogoutDialogVisible] = useState(false);
+
+  const logout = async () => {
+    setIsLoading(true);
+    await provider?.disconnect();
+    dispatch(setWallet(""));
+    setIsLoading(false);
+  };
 
   return (
     <SafeAreaView style={{ ...styles.container, backgroundColor: colors.background }}>
@@ -32,12 +57,22 @@ export default function Settings() {
             <Pressable style={styles.avatar} onPress={() => navigate("Profile")}>
               <Avatar.Icon icon="account-outline" size={70} />
               <Text style={styles.wallet} variant="titleMedium">
-                {username || t("common:settings.titles.local-user").toUpperCase()}
+                {username ||
+                  walletShortener(wallet).toUpperCase() ||
+                  t("common:settings.titles.local-user").toUpperCase()}
               </Text>
             </Pressable>
-            <Button mode="text" onPress={() => navigate("Login")}>
-              {t("common:settings.buttons.login")}
-            </Button>
+            {!!wallet && !isLoading && (
+              <Button mode="text" onPress={() => setIsLogoutDialogVisible(true)}>
+                {t("common:settings.buttons.logout")}
+              </Button>
+            )}
+            {!wallet && !isLoading && (
+              <Button mode="text" onPress={() => navigate("Login")}>
+                {t("common:settings.buttons.login")}
+              </Button>
+            )}
+            {!!isLoading && <ActivityIndicator />}
           </View>
           <Divider />
           <List.Section>
@@ -86,6 +121,16 @@ export default function Settings() {
         >
           {t("common:settings.descriptions.option-unavailable")}
         </Snackbar>
+        <Dialog visible={isLogoutDialogVisible} onDismiss={() => setIsLogoutDialogVisible(false)}>
+          <Dialog.Title>{t("common:modals.logout.title")}</Dialog.Title>
+          <Dialog.Content>
+            <Text variant="bodyMedium">{t("common:modals.logout.descriptions")}</Text>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={() => setIsLogoutDialogVisible(false)}>{t("common:modals.logout.buttons.no")}</Button>
+            <Button onPress={logout}>{t("common:modals.logout.buttons.yes")}</Button>
+          </Dialog.Actions>
+        </Dialog>
       </Portal>
     </SafeAreaView>
   );

@@ -35,12 +35,8 @@ const ResetSettings = ({
           <Text variant="bodyMedium">{t("common:modals.reset.descriptions")}</Text>
         </Dialog.Content>
         <Dialog.Actions>
-          <Button mode="outlined" onPress={() => setIsResetDialogVisible(false)}>
-            {t("common:modals.reset.buttons.no").toUpperCase()}
-          </Button>
-          <Button mode="contained" onPress={() => resetEntries()}>
-            {t("common:modals.reset.buttons.yes").toUpperCase()}
-          </Button>
+          <Button onPress={() => setIsResetDialogVisible(false)}>{t("common:modals.reset.buttons.no")}</Button>
+          <Button onPress={() => resetEntries()}>{t("common:modals.reset.buttons.yes")}</Button>
         </Dialog.Actions>
       </Dialog>
       <Snackbar

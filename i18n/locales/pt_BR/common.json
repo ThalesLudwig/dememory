@@ -34,6 +34,11 @@
   "modals.delete-entry.buttons.yes": "Deletar",
   "modals.delete-entry.buttons.no": "Cancelar",
 
+  "modals.logout.title": "Tem certeza que quer sair?",
+  "modals.logout.descriptions": "Esta ação irá desconetar sua carteira atual. Seu nome de usuário e email não serão removidos.",
+  "modals.logout.buttons.yes": "Sair",
+  "modals.logout.buttons.no": "Cancelar",
+
   "modals.reset.title": "Apagar todos os registros?",
   "modals.reset.descriptions": "Tem certeza que quer permanentemente apagar todos os registros locais deste dispositivo? Registros salvos na Blockchain não podem ser apagados. Esta ação não pode ser desfeita.",
   "modals.reset.buttons.yes": "Apagar tudo",

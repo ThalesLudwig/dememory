@@ -34,6 +34,11 @@
   "modals.delete-entry.buttons.yes": "Elimina",
   "modals.delete-entry.buttons.no": "Annulla",
 
+  "modals.logout.title": "Sei sicuro di voler effettuare il logout?",
+  "modals.logout.descriptions": "Questa azione disconnetterà il tuo portafoglio attuale. Il tuo nome utente e l'email non saranno rimossi.",
+  "modals.logout.buttons.yes": "Logout",
+  "modals.logout.buttons.no": "Annulla",
+
   "modals.reset.title": "Cancellare tutte le registrazioni?",
   "modals.reset.descriptions": "Sei sicuro di voler cancellare definitivamente tutte le registrazioni locali su questo dispositivo? Le registrazioni salvate nella blockchain non possono essere cancellate. Questa azione non può essere annullata.",
   "modals.reset.buttons.yes": "Cancella tutto",

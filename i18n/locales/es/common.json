@@ -34,6 +34,11 @@
   "modals.delete-entry.buttons.yes": "Eliminar",
   "modals.delete-entry.buttons.no": "Cancelar",
 
+  "modals.logout.title": "¿Estás seguro de que deseas cerrar sesión?",
+  "modals.logout.descriptions": "Esta acción desconectará tu billetera actual. Tu nombre de usuario y correo electrónico no serán eliminados.",
+  "modals.logout.buttons.yes": "Cerrar sesión",
+  "modals.logout.buttons.no": "Cancelar",
+
   "modals.reset.title": "¿Borrar todos los registros?",
   "modals.reset.descriptions": "¿Estás seguro de que quieres borrar permanentemente todos los registros locales de este dispositivo? Los registros guardados en la Blockchain no se pueden borrar. Esta acción no se puede deshacer.",
   "modals.reset.buttons.yes": "Borrar todo",
