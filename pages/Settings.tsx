@@ -46,9 +46,9 @@ export default function Settings() {
 
   const logout = async () => {
     setIsLoading(true);
+    setIsLogoutDialogVisible(false);
     await provider?.disconnect();
     dispatch(setWallet(""));
-    setIsLogoutDialogVisible(false);
     setIsLoading(false);
   };
 
