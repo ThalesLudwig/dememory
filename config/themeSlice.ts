@@ -4,9 +4,10 @@ import { ThemeType } from "../types/Theme";
 
 type ThemeState = {
   value: ThemeType;
+  color: string;
 };
 
-const initialState: ThemeState = { value: "device" };
+const initialState: ThemeState = { value: "device", color: "purple" };
 
 const ThemeSlice = createSlice({
   name: "theme",
@@ -15,9 +16,12 @@ const ThemeSlice = createSlice({
     setTheme(state, { payload }) {
       state.value = payload;
     },
+    setColor(state, { payload }) {
+      state.color = payload;
+    },
   },
 });
 
-export const { setTheme } = ThemeSlice.actions;
+export const { setTheme, setColor } = ThemeSlice.actions;
 
 export default ThemeSlice.reducer;

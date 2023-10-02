@@ -25,6 +25,7 @@ import LanguageSettings from "../Components/Settings/LanguageSettings";
 import { RootState } from "../config/store";
 import { walletShortener } from "../utils/walletShortener";
 import { setWallet } from "../config/profileSlice";
+import ColorsSettings from "../Components/Settings/ColorsSettings";
 
 export default function Settings() {
   const { colors } = useTheme();
@@ -32,10 +33,11 @@ export default function Settings() {
   const { navigate } = useNavigation<any>();
   const dispatch = useDispatch();
   const { name: username, wallet } = useSelector((state: RootState) => state.profile);
-  const { isOpen, open, close, provider, isConnected, address } = useWalletConnectModal();
+  const { provider } = useWalletConnectModal();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isThemeVisible, setIsThemeVisible] = useState(false);
+  const [isColorsVisible, setIsColorsVisible] = useState(false);
   const [isLanguagesVisible, setIsLanguagesVisible] = useState(false);
   const [isResetDialogVisible, setIsResetDialogVisible] = useState(false);
   const [isResetSnackbarVisible, setIsResetSnackbarVisible] = useState(false);
@@ -79,6 +81,7 @@ export default function Settings() {
           <List.Section>
             <List.Subheader>{t("common:settings.titles.preferences")}</List.Subheader>
             <List.Item title={t("common:settings.menus.theme")} onPress={() => setIsThemeVisible(true)} />
+            <List.Item title={t("common:settings.menus.colors")} onPress={() => setIsColorsVisible(true)} />
             <List.Item title={t("common:settings.menus.languages")} onPress={() => setIsLanguagesVisible(true)} />
           </List.Section>
           <Divider />
@@ -107,6 +110,7 @@ export default function Settings() {
       </ScrollView>
       <Portal>
         <ThemeSettings isThemeVisible={isThemeVisible} setIsThemeVisible={setIsThemeVisible} />
+        <ColorsSettings isVisible={isColorsVisible} setIsVisible={setIsColorsVisible} />
         <LanguageSettings isModalVisible={isLanguagesVisible} setIsModalVisible={setIsLanguagesVisible} />
         <ResetSettings
           isResetDialogVisible={isResetDialogVisible}

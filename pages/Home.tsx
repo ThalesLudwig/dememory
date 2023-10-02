@@ -119,8 +119,8 @@ export default function Home() {
           extraData={selectedDay}
           style={{ flexGrow: 0 }}
           contentContainerStyle={styles.slider}
-          initialScrollIndex={parseInt(currentDate("d"))}
-          getItemLayout={(_, i) => ({ length: 55, offset: 58 * i, index: i })}
+          initialScrollIndex={parseInt(currentDate("d")) - 1}
+          getItemLayout={(_, i) => ({ length: 55, offset: 61 * i, index: i })}
           horizontal
         />
         <View style={styles.entryList}>

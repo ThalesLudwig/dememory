@@ -6,20 +6,49 @@ import { useMaterial3Theme } from "@pchmn/expo-material3-theme";
 import { useSelector } from "react-redux";
 
 import { RootState } from "../config/store";
+import blue from "../themes/blue";
+import green from "../themes/green";
+import pink from "../themes/pink";
+import purple from "../themes/purple";
+import red from "../themes/red";
+import yellow from "../themes/yellow";
 
 export default function ThemeProvider({ children }: { children: ReactNode }) {
-  const { value: selectedTheme } = useSelector((state: RootState) => state.theme);
+  const { value: selectedTheme, color: selectedColor } = useSelector((state: RootState) => state.theme);
+  const { theme: materialTheme } = useMaterial3Theme();
   const colorScheme = useColorScheme();
-  const { theme } = useMaterial3Theme();
-
   const isDarkMode = useMemo(() => colorScheme === "dark", [colorScheme]);
 
   if (Platform.OS === "android") {
-    NavigationBar.setBackgroundColorAsync(isDarkMode ? theme.dark.surfaceContainerHigh : theme.light.surfaceContainer);
+    NavigationBar.setBackgroundColorAsync(
+      isDarkMode ? materialTheme.dark.surfaceContainerHigh : materialTheme.light.surfaceContainer,
+    );
   }
+
+  const palette = useMemo(() => {
+    switch (selectedColor) {
+      case "device":
+        return materialTheme;
+      case "blue":
+        return blue;
+      case "green":
+        return green;
+      case "pink":
+        return pink;
+      case "purple":
+        return purple;
+      case "red":
+        return red;
+      case "yellow":
+        return yellow;
+      default:
+        return materialTheme;
+    }
+  }, [selectedColor]);
+
   const paperTheme = useMemo(() => {
-    const darkTheme = { ...MD3DarkTheme, colors: theme.dark };
-    const lightTheme = { ...MD3LightTheme, colors: theme.light };
+    const darkTheme = { ...MD3DarkTheme, colors: palette.dark };
+    const lightTheme = { ...MD3LightTheme, colors: palette.light };
     switch (selectedTheme) {
       case "dark":
         return darkTheme;
@@ -30,7 +59,7 @@ export default function ThemeProvider({ children }: { children: ReactNode }) {
       default:
         return isDarkMode ? darkTheme : lightTheme;
     }
-  }, [colorScheme, theme, selectedTheme]);
+  }, [colorScheme, materialTheme, selectedTheme, selectedColor]);
 
   return <PaperProvider theme={paperTheme}>{children}</PaperProvider>;
 }
