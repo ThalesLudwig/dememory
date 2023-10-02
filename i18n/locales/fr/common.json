@@ -72,6 +72,7 @@
   "profile.buttons.update": "Mettre à jour le profil",
   "profile.inputs.email": "E-mail",
   "profile.inputs.name": "Nom d'utilisateur",
+  "profile.snackbar.copy": "Adresse copiée",
   "profile.snackbar.updated": "Profil mis à jour",
   "profile.titles.profile": "Profil",
 

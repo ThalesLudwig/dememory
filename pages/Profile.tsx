@@ -3,12 +3,13 @@ import { SafeAreaView } from "react-navigation";
 import { Avatar, Button, Chip, Divider, Portal, Snackbar, TextInput, useTheme } from "react-native-paper";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import * as Clipboard from "expo-clipboard";
 
 import { styles } from "../styles/profileStyles";
 import { RootState } from "../config/store";
-import { useDispatch } from "react-redux";
 import { setEmail, setName } from "../config/profileSlice";
+import { walletShortener } from "../utils/walletShortener";
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -19,6 +20,13 @@ export default function Profile() {
   const [nameInput, setNameInput] = useState(name);
   const [emailInput, setEmailInput] = useState(email);
   const [isConfirmSnackbarVisible, setIsConfirmSnackbarVisible] = useState(false);
+  const [isCopySnackbarVisible, setIsCopySnackbarVisible] = useState(false);
+
+  const copyToClipboard = async () => {
+    if (!wallet) return;
+    await Clipboard.setStringAsync(wallet);
+    setIsCopySnackbarVisible(true);
+  };
 
   const onSubmit = () => {
     dispatch(setName(nameInput));
@@ -36,11 +44,10 @@ export default function Profile() {
           <Chip icon="alert">{t("common:profile.descriptions.therapy-share")}</Chip>
           <Divider />
           <TextInput
+            disabled
             label={t("common:wallet")}
-            value={wallet}
-            onChangeText={() => {}}
-            disabled={!wallet}
-            right={<TextInput.Icon icon="content-copy" onPress={() => console.log("foo")} />}
+            value={walletShortener(wallet).toUpperCase()}
+            right={<TextInput.Icon icon="content-copy" onPress={copyToClipboard} />}
           />
           <Button mode="contained" onPress={onSubmit}>
             {t("common:profile.buttons.update").toUpperCase()}
@@ -55,6 +62,14 @@ export default function Profile() {
           action={{ label: t("common:settings.buttons.close"), onPress: () => setIsConfirmSnackbarVisible(false) }}
         >
           {t("common:profile.snackbar.updated")}
+        </Snackbar>
+        <Snackbar
+          visible={isCopySnackbarVisible}
+          onDismiss={() => setIsCopySnackbarVisible(false)}
+          wrapperStyle={{ bottom: 80 }}
+          action={{ label: t("common:settings.buttons.close"), onPress: () => setIsCopySnackbarVisible(false) }}
+        >
+          {t("common:profile.snackbar.copy")}
         </Snackbar>
       </Portal>
     </SafeAreaView>
