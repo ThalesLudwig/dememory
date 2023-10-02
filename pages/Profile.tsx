@@ -1,6 +1,6 @@
 import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-navigation";
-import { Button, Chip, Divider, Portal, Snackbar, TextInput, useTheme } from "react-native-paper";
+import { Avatar, Button, Chip, Divider, Portal, Snackbar, TextInput, useTheme } from "react-native-paper";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";

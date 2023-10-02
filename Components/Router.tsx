@@ -99,7 +99,7 @@ function HomeStack() {
         name="SearchResults"
         component={SearchResults}
       />
-      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Profile" component={Profile} options={{ headerTitle: t("common:profile.titles.profile") }} />
     </Stack.Navigator>
   );
 }
@@ -132,7 +132,7 @@ function SearchStack() {
         name="SearchResults"
         component={SearchResults}
       />
-      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Profile" component={Profile} options={{ headerTitle: t("common:profile.titles.profile") }} />
     </Stack.Navigator>
   );
 }
@@ -160,7 +160,7 @@ function FavoritesStack() {
         component={EditEntry}
         initialParams={{ id: "" }}
       />
-      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Profile" component={Profile} options={{ headerTitle: t("common:profile.titles.profile") }} />
     </Stack.Navigator>
   );
 }
