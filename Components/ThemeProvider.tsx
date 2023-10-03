@@ -1,5 +1,5 @@
-import { ReactNode, useMemo } from "react";
-import { Platform, useColorScheme } from "react-native";
+import { ReactNode, useEffect, useMemo } from "react";
+import { Platform } from "react-native";
 import { PaperProvider, MD3DarkTheme, MD3LightTheme } from "react-native-paper";
 import * as NavigationBar from "expo-navigation-bar";
 import { useMaterial3Theme } from "@pchmn/expo-material3-theme";
@@ -16,14 +16,8 @@ import yellow from "../themes/yellow";
 export default function ThemeProvider({ children }: { children: ReactNode }) {
   const { value: selectedTheme, color: selectedColor } = useSelector((state: RootState) => state.theme);
   const { theme: materialTheme } = useMaterial3Theme();
-  const colorScheme = useColorScheme();
-  const isDarkMode = useMemo(() => colorScheme === "dark", [colorScheme]);
 
-  if (Platform.OS === "android") {
-    NavigationBar.setBackgroundColorAsync(
-      isDarkMode ? materialTheme.dark.surfaceContainerHigh : materialTheme.light.surfaceContainer,
-    );
-  }
+  const isDarkMode = useMemo(() => selectedTheme === "dark", [selectedTheme]);
 
   const palette = useMemo(() => {
     switch (selectedColor) {
@@ -46,6 +40,14 @@ export default function ThemeProvider({ children }: { children: ReactNode }) {
     }
   }, [selectedColor]);
 
+  useEffect(() => {
+    if (Platform.OS === "android") {
+      NavigationBar.setBackgroundColorAsync(
+        isDarkMode ? palette.dark.elevation.level2 : palette.light.elevation.level2,
+      );
+    }
+  }, [isDarkMode, palette]);
+
   const paperTheme = useMemo(() => {
     const darkTheme = { ...MD3DarkTheme, colors: palette.dark };
     const lightTheme = { ...MD3LightTheme, colors: palette.light };
@@ -59,7 +61,7 @@ export default function ThemeProvider({ children }: { children: ReactNode }) {
       default:
         return isDarkMode ? darkTheme : lightTheme;
     }
-  }, [colorScheme, materialTheme, selectedTheme, selectedColor]);
+  }, [materialTheme, selectedTheme, selectedColor]);
 
   return <PaperProvider theme={paperTheme}>{children}</PaperProvider>;
 }
