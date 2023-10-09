@@ -22,7 +22,7 @@
 
   "local-device": "Dispositivo Local",
 
-  "login.buttons.metamask": "Entrar com metamask",
+  "login.buttons.metamask": "Conectar Carteira",
   "login.buttons.local": "Usar no dispositivo local",
   "login.descriptions.or": "Ou",
   "login.snackbar.not-available": "Não disponível.",

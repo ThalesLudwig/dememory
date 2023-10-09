@@ -22,7 +22,7 @@
 
   "local-device": "Appareil local",
 
-  "login.buttons.metamask": "Se connecter avec MetaMask",
+  "login.buttons.metamask": "Connecter le portefeuille",
   "login.buttons.local": "Utiliser sur l'appareil local",
   "login.descriptions.or": "Ou",
   "login.snackbar.not-available": "Non disponible.",

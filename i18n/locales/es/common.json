@@ -22,7 +22,7 @@
 
   "local-device": "Dispositivo local",
 
-  "login.buttons.metamask": "Ingresar con MetaMask",
+  "login.buttons.metamask": "Conectar Billetera",
   "login.buttons.local": "Usar en dispositivo local",
   "login.descriptions.or": "O",
   "login.snackbar.not-available": "No disponible.",

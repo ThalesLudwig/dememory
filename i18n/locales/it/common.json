@@ -22,7 +22,7 @@
 
   "local-device": "Dispositivo locale",
 
-  "login.buttons.metamask": "Accedi con MetaMask",
+  "login.buttons.metamask": "Collega il portafoglio",
   "login.buttons.local": "Usa sul dispositivo locale",
   "login.descriptions.or": "O",
   "login.snackbar.not-available": "Non disponibile.",

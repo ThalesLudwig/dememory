@@ -22,7 +22,7 @@
 
   "local-device": "ローカルデバイス",
 
-  "login.buttons.metamask": "MetaMaskでログイン",
+  "login.buttons.metamask": "ウォレットを接続",
   "login.buttons.local": "ローカルデバイスで使用",
   "login.descriptions.or": "または",
   "login.snackbar.not-available": "利用できません。",

@@ -22,7 +22,7 @@
 
   "local-device": "Local Device",
 
-  "login.buttons.metamask": "Enter with metamask",
+  "login.buttons.metamask": "Connect Wallet",
   "login.buttons.local": "Use on local device",
   "login.descriptions.or": "Or",
   "login.snackbar.not-available": "Not available.",

@@ -22,7 +22,7 @@
 
   "local-device": "Lokales Gerät",
 
-  "login.buttons.metamask": "Mit MetaMask anmelden",
+  "login.buttons.metamask": "Wallet verbinden",
   "login.buttons.local": "Auf lokalem Gerät verwenden",
   "login.descriptions.or": "Oder",
   "login.snackbar.not-available": "Nicht verfügbar.",
