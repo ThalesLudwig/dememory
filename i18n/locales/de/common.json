@@ -33,6 +33,7 @@
   "modals.delete-entry.description": "Sind Sie sicher, dass Sie diesen Eintrag dauerhaft löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
   "modals.delete-entry.buttons.yes": "Löschen",
   "modals.delete-entry.buttons.no": "Abbrechen",
+  "modals.delete-entry.success": "Eintrag gelöscht",
 
   "modals.logout.title": "Möchten Sie sich wirklich abmelden?",
   "modals.logout.descriptions": "Diese Aktion wird Ihre aktuelle Brieftasche trennen. Ihr Benutzername und Ihre E-Mail werden nicht entfernt.",

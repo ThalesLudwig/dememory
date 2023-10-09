@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { SafeAreaView, View, FlatList, ScrollView } from "react-native";
-import { Button, Chip, Dialog, IconButton, Portal, Searchbar, Text, useTheme } from "react-native-paper";
+import { Button, Chip, Dialog, IconButton, Portal, Searchbar, Snackbar, Text, useTheme } from "react-native-paper";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -36,6 +36,7 @@ export default function Home() {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [swipedId, setSwipedId] = useState("");
+  const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
 
   const confirmDate = (date: Date) => {
     dispatch(setDate(format(new Date(date), "yyyy-MM-dd")));
@@ -58,6 +59,7 @@ export default function Home() {
 
   const onDelete = () => {
     dispatch(removeEntry(swipedId));
+    setIsSnackbarVisible(true);
     setIsDeleteDialogOpen(false);
   };
 
@@ -167,6 +169,14 @@ export default function Home() {
             <Button onPress={onDelete}>{t("common:modals.delete-entry.buttons.yes")}</Button>
           </Dialog.Actions>
         </Dialog>
+        <Snackbar
+          visible={isSnackbarVisible}
+          onDismiss={() => setIsSnackbarVisible(false)}
+          wrapperStyle={{ bottom: 80 }}
+          action={{ label: t("common:settings.buttons.close"), onPress: () => setIsSnackbarVisible(false) }}
+        >
+          {t("common:modals.delete-entry.success")}
+        </Snackbar>
       </Portal>
     </SafeAreaView>
   );

@@ -33,6 +33,7 @@
   "modals.delete-entry.description": "¿Estás seguro de que quieres eliminar permanentemente este registro? Esta acción no se puede deshacer.",
   "modals.delete-entry.buttons.yes": "Eliminar",
   "modals.delete-entry.buttons.no": "Cancelar",
+  "modals.delete-entry.success": "Entrada eliminada",
 
   "modals.logout.title": "¿Estás seguro de que deseas cerrar sesión?",
   "modals.logout.descriptions": "Esta acción desconectará tu billetera actual. Tu nombre de usuario y correo electrónico no serán eliminados.",

@@ -33,6 +33,7 @@
   "modals.delete-entry.description": "Sei sicuro di voler eliminare definitivamente questa registrazione? Questa azione non può essere annullata.",
   "modals.delete-entry.buttons.yes": "Elimina",
   "modals.delete-entry.buttons.no": "Annulla",
+  "modals.delete-entry.success": "Voce cancellata",
 
   "modals.logout.title": "Sei sicuro di voler effettuare il logout?",
   "modals.logout.descriptions": "Questa azione disconnetterà il tuo portafoglio attuale. Il tuo nome utente e l'email non saranno rimossi.",

@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { SafeAreaView, View, SectionList } from "react-native";
-import { Button, Chip, Dialog, Portal, Searchbar, Text, useTheme } from "react-native-paper";
+import { Button, Chip, Dialog, Portal, Searchbar, Snackbar, Text, useTheme } from "react-native-paper";
 import { format } from "date-fns";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
@@ -24,6 +24,7 @@ export default function Favorites() {
   const [searchInput, setSearchInput] = useState("");
   const [swipedId, setSwipedId] = useState("");
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
 
   const filteredEntries = useMemo(() => {
     if (!searchInput) return favoriteEntries;
@@ -48,6 +49,7 @@ export default function Favorites() {
 
   const onDelete = () => {
     dispatch(removeEntry(swipedId));
+    setIsSnackbarVisible(true);
     setIsDeleteDialogOpen(false);
   };
 
@@ -107,6 +109,14 @@ export default function Favorites() {
             <Button onPress={onDelete}>{t("common:modals.delete-entry.buttons.yes")}</Button>
           </Dialog.Actions>
         </Dialog>
+        <Snackbar
+          visible={isSnackbarVisible}
+          onDismiss={() => setIsSnackbarVisible(false)}
+          wrapperStyle={{ bottom: 80 }}
+          action={{ label: t("common:settings.buttons.close"), onPress: () => setIsSnackbarVisible(false) }}
+        >
+          {t("common:modals.delete-entry.success")}
+        </Snackbar>
       </Portal>
     </SafeAreaView>
   );

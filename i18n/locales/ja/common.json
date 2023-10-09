@@ -33,6 +33,7 @@
   "modals.delete-entry.description": "このエントリーを永久に削除してもよろしいですか？この操作は取り消すことはできません。",
   "modals.delete-entry.buttons.yes": "削除",
   "modals.delete-entry.buttons.no": "キャンセル",
+  "modals.delete-entry.success": "エントリが削除されました",
 
   "modals.logout.title": "ログアウトしますか？",
   "modals.logout.descriptions": "この操作は現在のウォレットを切断します。ユーザー名とメールアドレスは削除されません。",

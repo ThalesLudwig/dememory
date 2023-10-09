@@ -6,7 +6,7 @@ import { useMemo, useState } from "react";
 import { FlatList } from "react-native-gesture-handler";
 import { intersection } from "lodash";
 import { isWithinInterval } from "date-fns";
-import { Button, Dialog, Portal, Text, useTheme } from "react-native-paper";
+import { Button, Dialog, Portal, Snackbar, Text, useTheme } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 
 import EntryCard from "../Components/EntryCard";
@@ -27,6 +27,7 @@ export default function SearchResults({ route }: Props) {
   const { navigate, goBack } = useNavigation<any>();
   const [swipedId, setSwipedId] = useState("");
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
 
   const results = useMemo(() => {
     const { params } = route;
@@ -47,6 +48,7 @@ export default function SearchResults({ route }: Props) {
 
   const onDelete = () => {
     dispatch(removeEntry(swipedId));
+    setIsSnackbarVisible(true);
     setIsDeleteDialogOpen(false);
   };
 
@@ -92,6 +94,14 @@ export default function SearchResults({ route }: Props) {
             <Button onPress={onDelete}>{t("common:modals.delete-entry.buttons.yes")}</Button>
           </Dialog.Actions>
         </Dialog>
+        <Snackbar
+          visible={isSnackbarVisible}
+          onDismiss={() => setIsSnackbarVisible(false)}
+          wrapperStyle={{ bottom: 80 }}
+          action={{ label: t("common:settings.buttons.close"), onPress: () => setIsSnackbarVisible(false) }}
+        >
+          {t("common:modals.delete-entry.success")}
+        </Snackbar>
       </Portal>
     </SafeAreaView>
   );

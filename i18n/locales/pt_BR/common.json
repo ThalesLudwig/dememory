@@ -33,6 +33,7 @@
   "modals.delete-entry.description": "Tem certeza que quer permanentemente deletar este registro? Esta ação não pode ser desfeita.",
   "modals.delete-entry.buttons.yes": "Deletar",
   "modals.delete-entry.buttons.no": "Cancelar",
+  "modals.delete-entry.success": "Registro removido",
 
   "modals.logout.title": "Tem certeza que quer sair?",
   "modals.logout.descriptions": "Esta ação irá desconetar sua carteira atual. Seu nome de usuário e email não serão removidos.",

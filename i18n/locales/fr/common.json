@@ -33,6 +33,7 @@
   "modals.delete-entry.description": "Êtes-vous sûr de vouloir supprimer définitivement cette entrée ? Cette action est irréversible.",
   "modals.delete-entry.buttons.yes": "Supprimer",
   "modals.delete-entry.buttons.no": "Annuler",
+  "modals.delete-entry.success": "Entrée supprimée",
 
   "modals.logout.title": "Êtes-vous sûr de vouloir vous déconnecter?",
   "modals.logout.descriptions": "Cette action déconnectera votre portefeuille actuel. Votre nom d'utilisateur et votre e-mail ne seront pas supprimés.",
