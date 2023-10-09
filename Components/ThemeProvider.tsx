@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useMemo } from "react";
-import { Platform } from "react-native";
+import { Platform, useColorScheme } from "react-native";
 import { PaperProvider, MD3DarkTheme, MD3LightTheme } from "react-native-paper";
 import * as NavigationBar from "expo-navigation-bar";
 import { useMaterial3Theme } from "@pchmn/expo-material3-theme";
@@ -16,8 +16,12 @@ import yellow from "../themes/yellow";
 export default function ThemeProvider({ children }: { children: ReactNode }) {
   const { value: selectedTheme, color: selectedColor } = useSelector((state: RootState) => state.theme);
   const { theme: materialTheme } = useMaterial3Theme();
+  const colorSchemeName = useColorScheme();
 
-  const isDarkMode = useMemo(() => selectedTheme === "dark", [selectedTheme]);
+  const isDarkMode = useMemo(
+    () => selectedTheme === "dark" || colorSchemeName === "dark",
+    [selectedTheme, colorSchemeName],
+  );
 
   const palette = useMemo(() => {
     switch (selectedColor) {
