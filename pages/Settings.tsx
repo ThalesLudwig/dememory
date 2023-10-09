@@ -26,6 +26,7 @@ import { RootState } from "../config/store";
 import { walletShortener } from "../utils/walletShortener";
 import { setWallet } from "../config/profileSlice";
 import ColorsSettings from "../Components/Settings/ColorsSettings";
+import UserAvatar from "../Components/UserAvatar";
 
 export default function Settings() {
   const { colors } = useTheme();
@@ -58,7 +59,8 @@ export default function Settings() {
         <View style={styles.body}>
           <View style={styles.avatar}>
             <Pressable style={styles.avatar} onPress={() => navigate("Profile")}>
-              <Avatar.Icon icon="account-outline" size={70} />
+              {!wallet && <Avatar.Icon icon="account-outline" size={70} />}
+              {!!wallet && <UserAvatar />}
               <Text style={styles.wallet} variant="titleMedium">
                 {username ||
                   walletShortener(wallet).toUpperCase() ||
