@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
   },
   body: {
     marginTop: 3,
-    marginHorizontal: 15,
     gap: 15,
     paddingBottom: 15,
   },
