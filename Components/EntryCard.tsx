@@ -52,7 +52,7 @@ const EntryCard = (props: Entry & { onPress: Function; onEdit: Function; onDelet
           </Chip>
           <View style={styles.actions}>
             {!!props.mood && (
-              <Chip icon="emoticon-happy-outline" style={{ backgroundColor: moodColor }}>
+              <Chip icon="emoticon-happy-outline" style={{ backgroundColor: moodColor, height: 32 }}>
                 {getMoodName(props.mood)}
               </Chip>
             )}
