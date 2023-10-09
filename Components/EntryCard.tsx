@@ -1,9 +1,10 @@
 import * as React from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { Text, Card, Chip, Avatar, IconButton, useTheme, Surface } from "react-native-paper";
+import { Text, Card, Chip, IconButton, useTheme } from "react-native-paper";
 import { format } from "date-fns";
 import { useDispatch } from "react-redux";
 import Swipeable from "react-native-gesture-handler/Swipeable";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { ICON_SIZE } from "../constants/icons";
 import { Entry } from "../types/Entry";
@@ -11,7 +12,6 @@ import { getMoodColor, getMoodName } from "../utils/moodHelper";
 import { EntryStorage } from "../constants/EntryStorage";
 import { updateEntry } from "../config/entriesSlice";
 import { useDateLocale } from "../hooks/useDateLocale";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 const EntryCard = (props: Entry & { onPress: Function; onEdit: Function; onDelete: Function }) => {
   const dispatch = useDispatch();
@@ -51,12 +51,12 @@ const EntryCard = (props: Entry & { onPress: Function; onEdit: Function; onDelet
             {format(new Date(props.date), "MMM do, kk:mm", { locale })}
           </Chip>
           <View style={styles.actions}>
+            {props.storage === EntryStorage.BLOCKCHAIN && <IconButton size={ICON_SIZE} icon="ethereum" />}
             {!!props.mood && (
               <Chip icon="emoticon-happy-outline" style={{ backgroundColor: moodColor, height: 32 }}>
                 {getMoodName(props.mood)}
               </Chip>
             )}
-            {props.storage === EntryStorage.BLOCKCHAIN && <Avatar.Icon size={ICON_SIZE} icon="ethereum" />}
             <IconButton icon={props.isPinned ? "heart" : "cards-heart-outline"} onPress={toogleFavorites} />
           </View>
         </View>
@@ -64,6 +64,11 @@ const EntryCard = (props: Entry & { onPress: Function; onEdit: Function; onDelet
           <Text variant="bodyMedium" numberOfLines={4}>
             {props.content}
           </Text>
+          <View style={styles.tags}>
+            {props.tags?.map((tag, i) => (
+              <Chip key={i}>{tag}</Chip>
+            ))}
+          </View>
         </Card.Content>
         {!!props.imagesUrl && (
           <View style={styles.images}>
@@ -122,6 +127,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: 150,
     flexGrow: 1,
+  },
+  tags: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 7,
+    marginTop: 7,
   },
 });
 
