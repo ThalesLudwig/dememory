@@ -16,6 +16,7 @@ import { RootState } from "../config/store";
 import { RootStackParamList } from "../Components/Router";
 import { EntryStorage } from "../constants/EntryStorage";
 import { removeEntry } from "../config/entriesSlice";
+import DeleteEntryDialog from "../Components/DeleteEntryDialog";
 
 type Props = NativeStackScreenProps<RootStackParamList, "SearchResults">;
 
@@ -83,17 +84,7 @@ export default function SearchResults({ route }: Props) {
         }
       />
       <Portal>
-        <Dialog visible={isDeleteDialogOpen} onDismiss={() => setIsDeleteDialogOpen(false)}>
-          <Dialog.Icon icon="alert" />
-          <Dialog.Title style={{ textAlign: "center" }}>{t("common:modals.delete-entry.title")}</Dialog.Title>
-          <Dialog.Content>
-            <Text variant="bodyMedium">{t("common:modals.delete-entry.description")}</Text>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button onPress={() => setIsDeleteDialogOpen(false)}>{t("common:modals.delete-entry.buttons.no")}</Button>
-            <Button onPress={onDelete}>{t("common:modals.delete-entry.buttons.yes")}</Button>
-          </Dialog.Actions>
-        </Dialog>
+        <DeleteEntryDialog isOpen={isDeleteDialogOpen} onDelete={onDelete} setIsOpen={setIsDeleteDialogOpen} />
         <Snackbar
           visible={isSnackbarVisible}
           onDismiss={() => setIsSnackbarVisible(false)}

@@ -18,6 +18,7 @@ import { styles } from "../styles/viewEntryStyles";
 import { storageButtons } from "../constants/storage";
 import { useDateLocale } from "../hooks/useDateLocale";
 import { EntryStorage } from "../constants/EntryStorage";
+import DeleteEntryDialog from "../Components/DeleteEntryDialog";
 
 type Props = NativeStackScreenProps<RootStackParamList, "ViewEntry">;
 
@@ -147,17 +148,7 @@ export const ViewEntry = ({ route }: Props) => {
         onRequestClose={() => setIsImageOpen(false)}
       />
       <Portal>
-        <Dialog visible={isDeleteDialogOpen} onDismiss={() => setIsDeleteDialogOpen(false)}>
-          <Dialog.Icon icon="alert" />
-          <Dialog.Title style={{ textAlign: "center" }}>{t("common:modals.delete-entry.title")}</Dialog.Title>
-          <Dialog.Content>
-            <Text variant="bodyMedium">{t("common:modals.delete-entry.description")}</Text>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button onPress={() => setIsDeleteDialogOpen(false)}>{t("common:modals.delete-entry.buttons.no")}</Button>
-            <Button onPress={deleteEntry}>{t("common:modals.delete-entry.buttons.yes")}</Button>
-          </Dialog.Actions>
-        </Dialog>
+        <DeleteEntryDialog isOpen={isDeleteDialogOpen} onDelete={deleteEntry} setIsOpen={setIsDeleteDialogOpen} />
       </Portal>
     </SafeAreaView>
   );
