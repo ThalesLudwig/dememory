@@ -84,7 +84,7 @@ export const ViewEntry = ({ route }: Props) => {
             </>
           )}
           <Text variant="titleMedium">{t("common:view-entry.titles.thinking")}</Text>
-          <Surface style={styles.content}>
+          <Surface style={styles.content} mode="flat">
             <Text variant="bodyLarge">{entry.content}</Text>
           </Surface>
           <Button
@@ -134,7 +134,7 @@ export const ViewEntry = ({ route }: Props) => {
             <Button icon="pencil" mode="contained" onPress={() => navigate("EditEntry", { id: entry.id })}>
               {t("common:view-entry.buttons.edit").toUpperCase()}
             </Button>
-            <Button icon="delete" mode="elevated" onPress={() => setIsDeleteDialogOpen(true)}>
+            <Button icon="delete" mode="contained-tonal" onPress={() => setIsDeleteDialogOpen(true)}>
               {t("common:view-entry.buttons.delete").toUpperCase()}
             </Button>
           </View>

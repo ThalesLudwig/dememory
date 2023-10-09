@@ -18,7 +18,6 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   entryList: {
-    marginHorizontal: 15,
     gap: 20,
     marginVertical: 20,
   },
