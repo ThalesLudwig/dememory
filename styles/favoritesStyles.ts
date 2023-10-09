@@ -6,13 +6,10 @@ export const styles = StyleSheet.create({
   },
   body: {
     flex: 1,
-    marginHorizontal: 15,
     gap: 15,
   },
-  item: {
-    backgroundColor: "#f9c2ff",
-    padding: 20,
-    marginVertical: 8,
+  marginHorizontal: {
+    marginHorizontal: 15,
   },
   title: {
     fontSize: 16,

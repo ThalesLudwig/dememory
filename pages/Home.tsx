@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { SafeAreaView, View, FlatList, ScrollView } from "react-native";
-import { Button, Chip, IconButton, Searchbar, Text, useTheme } from "react-native-paper";
+import { Button, Chip, Dialog, IconButton, Portal, Searchbar, Text, useTheme } from "react-native-paper";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -20,6 +20,7 @@ import EmptyState from "../Components/EmptyState";
 import { useFavoriteEntries } from "../hooks/useFavoriteEntries";
 import { styles } from "../styles/homeStyles";
 import { SearchType } from "../types/Search";
+import { removeEntry } from "../config/entriesSlice";
 
 export default function Home() {
   const { t } = useTranslation("common");
@@ -31,9 +32,10 @@ export default function Home() {
   const currentDate = useCurrentDate();
   const favoriteEntries = useFavoriteEntries();
   const { colors } = useTheme();
-
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [searchInput, setSearchInput] = useState("");
+  const [swipedId, setSwipedId] = useState("");
 
   const confirmDate = (date: Date) => {
     dispatch(setDate(format(new Date(date), "yyyy-MM-dd")));
@@ -52,6 +54,16 @@ export default function Home() {
     const params: SearchType = { moods: [], storages: [], tags: [], content: searchInput };
     setSearchInput("");
     navigate("SearchResults", params);
+  };
+
+  const onDelete = () => {
+    dispatch(removeEntry(swipedId));
+    setIsDeleteDialogOpen(false);
+  };
+
+  const onSwipeDelete = (id: string) => {
+    setSwipedId(id);
+    setIsDeleteDialogOpen(true);
   };
 
   return (
@@ -125,7 +137,13 @@ export default function Home() {
         />
         <View style={styles.entryList}>
           {todaysEntries.map((item) => (
-            <EntryCard key={item.id} {...item} onPress={() => navigate("ViewEntry", { id: item.id })} />
+            <EntryCard
+              onDelete={() => onSwipeDelete(item.id)}
+              onEdit={() => navigate("EditEntry", { id: item.id })}
+              key={item.id}
+              {...item}
+              onPress={() => navigate("ViewEntry", { id: item.id })}
+            />
           ))}
           {todaysEntries.length === 0 && (
             <EmptyState
@@ -137,6 +155,19 @@ export default function Home() {
           )}
         </View>
       </ScrollView>
+      <Portal>
+        <Dialog visible={isDeleteDialogOpen} onDismiss={() => setIsDeleteDialogOpen(false)}>
+          <Dialog.Icon icon="alert" />
+          <Dialog.Title style={{ textAlign: "center" }}>{t("common:modals.delete-entry.title")}</Dialog.Title>
+          <Dialog.Content>
+            <Text variant="bodyMedium">{t("common:modals.delete-entry.description")}</Text>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={() => setIsDeleteDialogOpen(false)}>{t("common:modals.delete-entry.buttons.no")}</Button>
+            <Button onPress={onDelete}>{t("common:modals.delete-entry.buttons.yes")}</Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
     </SafeAreaView>
   );
 }

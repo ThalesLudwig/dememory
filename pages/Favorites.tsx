@@ -1,9 +1,10 @@
 import { useMemo, useState } from "react";
 import { SafeAreaView, View, SectionList } from "react-native";
-import { Chip, Searchbar, useTheme } from "react-native-paper";
+import { Button, Chip, Dialog, Portal, Searchbar, Text, useTheme } from "react-native-paper";
 import { format } from "date-fns";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
 
 import { useFavoriteEntries } from "../hooks/useFavoriteEntries";
 import { Entry } from "../types/Entry";
@@ -11,6 +12,7 @@ import EntryCard from "../Components/EntryCard";
 import EmptyState from "../Components/EmptyState";
 import { styles } from "../styles/favoritesStyles";
 import { useDateLocale } from "../hooks/useDateLocale";
+import { removeEntry } from "../config/entriesSlice";
 
 export default function Favorites() {
   const { t } = useTranslation("common");
@@ -18,7 +20,10 @@ export default function Favorites() {
   const favoriteEntries = useFavoriteEntries();
   const { navigate } = useNavigation<any>();
   const locale = useDateLocale();
+  const dispatch = useDispatch();
   const [searchInput, setSearchInput] = useState("");
+  const [swipedId, setSwipedId] = useState("");
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   const filteredEntries = useMemo(() => {
     if (!searchInput) return favoriteEntries;
@@ -41,7 +46,15 @@ export default function Favorites() {
     return list;
   }, [filteredEntries]);
 
-  const onSearch = () => {};
+  const onDelete = () => {
+    dispatch(removeEntry(swipedId));
+    setIsDeleteDialogOpen(false);
+  };
+
+  const onSwipeDelete = (id: string) => {
+    setSwipedId(id);
+    setIsDeleteDialogOpen(true);
+  };
 
   return (
     <SafeAreaView style={{ ...styles.container, backgroundColor: colors.background }}>
@@ -51,16 +64,25 @@ export default function Favorites() {
           onChangeText={(text) => setSearchInput(text)}
           value={searchInput}
           returnKeyType="done"
-          onSubmitEditing={onSearch}
-          onIconPress={onSearch}
+          style={styles.marginHorizontal}
         />
         <SectionList
           sections={parsedEntries}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <EntryCard key={item.id} {...item} onPress={() => navigate("ViewEntry", { id: item.id })} />
+            <EntryCard
+              onDelete={() => onSwipeDelete(item.id)}
+              onEdit={() => navigate("EditEntry", { id: item.id })}
+              key={item.id}
+              {...item}
+              onPress={() => navigate("ViewEntry", { id: item.id })}
+            />
           )}
-          renderSectionHeader={({ section: { title } }) => <Chip icon="clock">{title}</Chip>}
+          renderSectionHeader={({ section: { title } }) => (
+            <Chip style={styles.marginHorizontal} icon="clock">
+              {title}
+            </Chip>
+          )}
           contentContainerStyle={styles.list}
           ListEmptyComponent={
             <View style={styles.emptyState}>
@@ -73,6 +95,19 @@ export default function Favorites() {
           stickySectionHeadersEnabled={false}
         />
       </View>
+      <Portal>
+        <Dialog visible={isDeleteDialogOpen} onDismiss={() => setIsDeleteDialogOpen(false)}>
+          <Dialog.Icon icon="alert" />
+          <Dialog.Title style={{ textAlign: "center" }}>{t("common:modals.delete-entry.title")}</Dialog.Title>
+          <Dialog.Content>
+            <Text variant="bodyMedium">{t("common:modals.delete-entry.description")}</Text>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={() => setIsDeleteDialogOpen(false)}>{t("common:modals.delete-entry.buttons.no")}</Button>
+            <Button onPress={onDelete}>{t("common:modals.delete-entry.buttons.yes")}</Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
     </SafeAreaView>
   );
 }
