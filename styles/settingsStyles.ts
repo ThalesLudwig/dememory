@@ -23,4 +23,10 @@ export const styles = StyleSheet.create({
     alignSelf: "center",
     borderRadius: 10,
   },
+  favoritesToogle: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginLeft: 15,
+    marginTop: 10,
+  },
 });

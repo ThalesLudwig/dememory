@@ -7,6 +7,7 @@ import entriesReducer from "./entriesSlice";
 import themeReducer from "./themeSlice";
 import localeReducer from "./localeSlice";
 import profileReducer from "./profileSlice";
+import settingsReducer from "./settingsSlice";
 
 const rootReducer = combineReducers({
   date: dateReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   theme: persistReducer({ key: "theme", storage: AsyncStorage }, themeReducer),
   locale: persistReducer({ key: "locale", storage: AsyncStorage }, localeReducer),
   profile: persistReducer({ key: "profile", storage: AsyncStorage }, profileReducer),
+  settings: persistReducer({ key: "settings", storage: AsyncStorage }, settingsReducer),
 });
 
 const store = configureStore({

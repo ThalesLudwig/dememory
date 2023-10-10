@@ -9,6 +9,7 @@ import {
   List,
   Portal,
   Snackbar,
+  Switch,
   Text,
   useTheme,
 } from "react-native-paper";
@@ -27,6 +28,7 @@ import { walletShortener } from "../utils/walletShortener";
 import { setWallet } from "../config/profileSlice";
 import ColorsSettings from "../Components/Settings/ColorsSettings";
 import UserAvatar from "../Components/UserAvatar";
+import { setShowFavorites } from "../config/settingsSlice";
 
 export default function Settings() {
   const { colors } = useTheme();
@@ -34,6 +36,7 @@ export default function Settings() {
   const { navigate } = useNavigation<any>();
   const dispatch = useDispatch();
   const { name: username, wallet } = useSelector((state: RootState) => state.profile);
+  const { showFavorites } = useSelector((state: RootState) => state.settings);
   const { provider } = useWalletConnectModal();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -51,6 +54,10 @@ export default function Settings() {
     await provider?.disconnect();
     dispatch(setWallet(""));
     setIsLoading(false);
+  };
+
+  const toogleShowFavorites = () => {
+    dispatch(setShowFavorites(!showFavorites));
   };
 
   return (
@@ -85,6 +92,10 @@ export default function Settings() {
             <List.Item title={t("common:settings.menus.theme")} onPress={() => setIsThemeVisible(true)} />
             <List.Item title={t("common:settings.menus.colors")} onPress={() => setIsColorsVisible(true)} />
             <List.Item title={t("common:settings.menus.languages")} onPress={() => setIsLanguagesVisible(true)} />
+            <View style={styles.favoritesToogle}>
+              <Text variant="bodyLarge">{t("common:home.titles.recent-favorites")}</Text>
+              <Switch value={showFavorites} onValueChange={toogleShowFavorites} />
+            </View>
           </List.Section>
           <Divider />
           <List.Section>

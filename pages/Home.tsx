@@ -29,6 +29,7 @@ export default function Home() {
   const { navigate } = useNavigation<any>();
   const { value: selectedDay } = useSelector((state: RootState) => state.date);
   const { value: entries } = useSelector((state: RootState) => state.entries);
+  const { showFavorites } = useSelector((state: RootState) => state.settings);
   const daysInMonth = useMonthDays(new Date(selectedDay));
   const dispatch = useDispatch();
   const locale = useDateLocale();
@@ -88,29 +89,34 @@ export default function Home() {
             returnKeyType="done"
             onSubmitEditing={onSearch}
             onIconPress={onSearch}
+            style={{ marginBottom: showFavorites ? 0 : 15 }}
           />
-          <View style={styles.spaceBetween}>
-            <Text variant="titleMedium">{t("common:home.titles.recent-favorites")}</Text>
-            <Button mode="text" onPress={() => navigate("FavoritesStack")}>
-              {t("common:home.buttons.view-all")}
-            </Button>
-          </View>
+          {showFavorites && (
+            <View style={styles.spaceBetween}>
+              <Text variant="titleMedium">{t("common:home.titles.recent-favorites")}</Text>
+              <Button mode="text" onPress={() => navigate("FavoritesStack")}>
+                {t("common:home.buttons.view-all")}
+              </Button>
+            </View>
+          )}
         </View>
-        {sortedFavorites.length === 0 && (
+        {showFavorites && sortedFavorites.length === 0 && (
           <Chip icon="heart" style={styles.pinnedChip}>
             {t("common:home.titles.no-favorites")}
           </Chip>
         )}
-        <FlatList
-          data={sortedFavorites}
-          showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => <FavoriteCard {...item} onPress={() => navigate("ViewEntry", { id: item.id })} />}
-          keyExtractor={(item) => item.id}
-          extraData={selectedDay}
-          style={{ flexGrow: 0 }}
-          contentContainerStyle={styles.slider}
-          horizontal
-        />
+        {showFavorites && (
+          <FlatList
+            data={sortedFavorites}
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => <FavoriteCard {...item} onPress={() => navigate("ViewEntry", { id: item.id })} />}
+            keyExtractor={(item) => item.id}
+            extraData={selectedDay}
+            style={{ flexGrow: 0 }}
+            contentContainerStyle={styles.slider}
+            horizontal
+          />
+        )}
         <View style={styles.body}>
           <View style={styles.spaceBetween}>
             <Text variant="titleMedium">{currentDate("P")}</Text>
