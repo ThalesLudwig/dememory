@@ -1,7 +1,18 @@
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Image, KeyboardAvoidingView, Platform, View, ScrollView, Pressable } from "react-native";
-import { Button, Chip, IconButton, SegmentedButtons, Surface, Text, TextInput, useTheme } from "react-native-paper";
+import {
+  Button,
+  Chip,
+  Divider,
+  IconButton,
+  SegmentedButtons,
+  Surface,
+  Switch,
+  Text,
+  TextInput,
+  useTheme,
+} from "react-native-paper";
 import { SafeAreaView } from "react-navigation";
 import { useDispatch } from "react-redux";
 import uuid from "react-native-uuid";
@@ -18,6 +29,7 @@ import { addEntry } from "../config/entriesSlice";
 import { styles } from "../styles/newEntryStyles";
 import { storageButtons } from "../constants/storage";
 import { useDateLocale } from "../hooks/useDateLocale";
+import Alert from "../Components/Alert";
 
 export default function NewEntry() {
   const { colors, dark } = useTheme();
@@ -34,6 +46,7 @@ export default function NewEntry() {
   const [openedImageIndex, setOpenedImageIndex] = useState(0);
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
+  const [saveOnIPFS, setSaveOnIPFS] = useState(false);
 
   const resetForm = () => {
     setEntryStorage(EntryStorage.LOCAL.toString());
@@ -95,7 +108,7 @@ export default function NewEntry() {
     <SafeAreaView style={{ ...styles.container, backgroundColor: colors.background }}>
       <ScrollView>
         <KeyboardAvoidingView style={styles.body} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-          <Chip icon="clock">{format(new Date(), "PPPP - kk:mm", { locale })}</Chip>
+          <Alert text={format(new Date(), "PPPP - kk:mm", { locale })} icon="clock" />
           <Text variant="titleMedium">{t("common:new-entry.titles.save-on")}:</Text>
           <SegmentedButtons value={entryStorage} onValueChange={setEntryStorage} buttons={storageButtons()} />
           <Text variant="titleMedium">{t("common:new-entry.titles.thinking")}</Text>
@@ -156,9 +169,15 @@ export default function NewEntry() {
               </Surface>
             </Pressable>
           </View>
-          {parseInt(entryStorage) === EntryStorage.BLOCKCHAIN && images.length > 0 && (
-            <Chip icon="alert">{t("common:new-entry.descriptions.images-ipfs")}</Chip>
-          )}
+          <Divider />
+          <View style={styles.ipfsContainer}>
+            <View style={styles.ipfsContainer}>
+              <IconButton icon="content-save" iconColor={colors.primary} />
+              <Text variant="titleMedium">{t("common:new-entry.descriptions.save-with-ipfs")}</Text>
+            </View>
+            <Switch disabled value={saveOnIPFS} onValueChange={() => setSaveOnIPFS(!saveOnIPFS)} />
+          </View>
+          {saveOnIPFS && <Alert text={t("common:new-entry.descriptions.images-ipfs")} />}
         </KeyboardAvoidingView>
         <Button
           icon="send"

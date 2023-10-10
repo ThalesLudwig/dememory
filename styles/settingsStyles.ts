@@ -28,5 +28,6 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginLeft: 15,
     marginTop: 10,
+    alignItems: 'center'
   },
 });

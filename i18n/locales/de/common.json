@@ -60,7 +60,8 @@
   "moods.neutral": "Neutral",
 
   "new-entry.buttons.submit": "Eintragen",
-  "new-entry.descriptions.images-ipfs": "Bilder werden in IPFS gespeichert.",
+  "new-entry.descriptions.images-ipfs": "Mit IPFS gespeicherte Bilder können nicht gelöscht werden und sind öffentlich sichtbar.",
+  "new-entry.descriptions.save-with-ipfs": "Fotos mit IPFS speichern.",
   "new-entry.descriptions.notes-encrypted": "Ihre Einträge sind verschlüsselt.",
   "new-entry.titles.feeling": "Wie haben Sie sich gefühlt?",
   "new-entry.titles.new-entry": "Neuer Eintrag",

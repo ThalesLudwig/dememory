@@ -18,7 +18,8 @@ export const storageButtons = () => {
       value: EntryStorage.BLOCKCHAIN.toString(),
       label: t("common:blockchain"),
       icon: "ethereum",
-      disabled: !wallet,
+      // disabled: !wallet,
+      disabled: true,
     },
   ];
 };

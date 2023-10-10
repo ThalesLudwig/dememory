@@ -60,7 +60,8 @@
   "moods.neutral": "中立",
 
   "new-entry.buttons.submit": "記録する",
-  "new-entry.descriptions.images-ipfs": "画像はIPFSに保存されます。",
+  "new-entry.descriptions.images-ipfs": "IPFSで保存された画像は削除できず、一般に公開されています。",
+  "new-entry.descriptions.save-with-ipfs": "IPFSで写真を保存する。",
   "new-entry.descriptions.notes-encrypted": "あなたのエントリーは暗号化されています。",
   "new-entry.titles.feeling": "どのように感じていますか？",
   "new-entry.titles.new-entry": "新しいエントリー",

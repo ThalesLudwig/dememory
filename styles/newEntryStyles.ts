@@ -21,6 +21,7 @@ export const styles = StyleSheet.create({
   submit: {
     marginHorizontal: 15,
     marginVertical: 25,
+    marginTop: 25
   },
   thumbnail: {
     width: 115,
@@ -46,5 +47,10 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 10,
+  },
+  ipfsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
 });

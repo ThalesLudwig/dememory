@@ -60,7 +60,8 @@
   "moods.neutral": "Neutro",
 
   "new-entry.buttons.submit": "Registrar",
-  "new-entry.descriptions.images-ipfs": "Imagens serão salvas no IPFS.",
+  "new-entry.descriptions.images-ipfs": "Imagens salvas com IPFS não podem ser deletadas e são visíveis publicamente.",
+  "new-entry.descriptions.save-with-ipfs": "Salvar fotos com IPFS",
   "new-entry.descriptions.notes-encrypted": "Seus registros são encriptados.",
   "new-entry.titles.feeling": "Como está se sentindo?",
   "new-entry.titles.new-entry": "Novo Registro",
