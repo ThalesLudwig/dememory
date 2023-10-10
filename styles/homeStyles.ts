@@ -20,8 +20,15 @@ export const styles = StyleSheet.create({
   entryList: {
     gap: 20,
     marginVertical: 20,
+    paddingBottom: 70,
   },
   pinnedChip: {
     marginHorizontal: 15,
+  },
+  fab: {
+    position: "absolute",
+    margin: 16,
+    right: 0,
+    bottom: 0,
   },
 });

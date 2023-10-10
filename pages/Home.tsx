@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { SafeAreaView, View, FlatList, ScrollView } from "react-native";
-import { Button, Chip, Dialog, IconButton, Portal, Searchbar, Snackbar, Text, useTheme } from "react-native-paper";
+import { Button, Chip, FAB, IconButton, Portal, Searchbar, Snackbar, Text, useTheme } from "react-native-paper";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -22,6 +22,7 @@ import { styles } from "../styles/homeStyles";
 import { SearchType } from "../types/Search";
 import { removeEntry } from "../config/entriesSlice";
 import DeleteEntryDialog from "../Components/DeleteEntryDialog";
+import { useDateLocale } from "../hooks/useDateLocale";
 
 export default function Home() {
   const { t } = useTranslation("common");
@@ -30,6 +31,7 @@ export default function Home() {
   const { value: entries } = useSelector((state: RootState) => state.entries);
   const daysInMonth = useMonthDays(new Date(selectedDay));
   const dispatch = useDispatch();
+  const locale = useDateLocale();
   const currentDate = useCurrentDate();
   const favoriteEntries = useFavoriteEntries();
   const { colors } = useTheme();
@@ -40,17 +42,23 @@ export default function Home() {
   const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
 
   const confirmDate = (date: Date) => {
-    dispatch(setDate(format(new Date(date), "yyyy-MM-dd")));
+    const newDate = format(new Date(date), "yyyy-MM-dd");
+    dispatch(setDate(newDate));
     setDatePickerVisibility(false);
   };
 
   const sortedFavorites = useMemo(() => favoriteEntries.splice(0, 4), [entries]);
 
-  const todaysEntries = useMemo(() => {
+  const filteredEntries = useMemo(() => {
     return entries.filter(
       (entry) => !!entry.date && format(new Date(entry.date), "yyyy-MM-dd") === currentDate("yyyy-MM-dd"),
     );
   }, [selectedDay, entries]);
+
+  const today = useMemo(() => {
+    const rawDate = new Date();
+    return format(new Date(rawDate.valueOf() + rawDate.getTimezoneOffset() * 60 * 1000), "yyyy-MM-dd", { locale });
+  }, [selectedDay, locale]);
 
   const onSearch = () => {
     const params: SearchType = { moods: [], storages: [], tags: [], content: searchInput };
@@ -107,9 +115,14 @@ export default function Home() {
           <View style={styles.spaceBetween}>
             <Text variant="titleMedium">{currentDate("P")}</Text>
             <View style={styles.spaceBetween}>
-              <Button mode="contained" onPress={() => navigate("NewEntry")}>
-                {t("common:home.buttons.new-entry").toUpperCase()}
-              </Button>
+              {!(today === currentDate("yyyy-MM-dd")) && (
+                <IconButton
+                  icon="calendar-refresh"
+                  size={ICON_SIZE}
+                  mode="contained"
+                  onPress={() => dispatch(setDate(today))}
+                />
+              )}
               <IconButton
                 icon="calendar"
                 size={ICON_SIZE}
@@ -139,7 +152,7 @@ export default function Home() {
           horizontal
         />
         <View style={styles.entryList}>
-          {todaysEntries.map((item) => (
+          {filteredEntries.map((item) => (
             <EntryCard
               onDelete={() => onSwipeDelete(item.id)}
               onEdit={() => navigate("EditEntry", { id: item.id })}
@@ -148,7 +161,7 @@ export default function Home() {
               onPress={() => navigate("ViewEntry", { id: item.id })}
             />
           ))}
-          {todaysEntries.length === 0 && (
+          {filteredEntries.length === 0 && (
             <EmptyState
               title={t("common:home.titles.no-entries-here")}
               description={t("home.descriptions.no-entries")}
@@ -158,6 +171,7 @@ export default function Home() {
           )}
         </View>
       </ScrollView>
+      <FAB icon="pencil" style={styles.fab} onPress={() => navigate("NewEntry")} />
       <Portal>
         <DeleteEntryDialog isOpen={isDeleteDialogOpen} onDelete={onDelete} setIsOpen={setIsDeleteDialogOpen} />
         <Snackbar
