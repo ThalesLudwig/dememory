@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { SafeAreaView, View, FlatList, ScrollView } from "react-native";
 import { Button, Chip, FAB, IconButton, Portal, Searchbar, Snackbar, Text, useTheme } from "react-native-paper";
 import { format } from "date-fns";
@@ -36,11 +36,21 @@ export default function Home() {
   const currentDate = useCurrentDate();
   const favoriteEntries = useFavoriteEntries();
   const { colors } = useTheme();
+  const calendarRef = useRef<FlatList>(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [swipedId, setSwipedId] = useState("");
   const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
+
+  const scrollIndex = useMemo(() => {
+    const index = parseInt(currentDate("d")) - 4;
+    return index < 0 ? 0 : index;
+  }, [selectedDay]);
+
+  useEffect(() => {
+    calendarRef.current?.scrollToIndex({ index: scrollIndex });
+  }, [scrollIndex]);
 
   const confirmDate = (date: Date) => {
     const newDate = format(new Date(date), "yyyy-MM-dd");
@@ -147,13 +157,14 @@ export default function Home() {
         />
         <FlatList
           data={daysInMonth}
+          ref={calendarRef}
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => <MonthDayButton date={item} isSelected={item.key === currentDate("yyyy-MM-dd")} />}
           keyExtractor={(item) => item.key}
           extraData={selectedDay}
           style={{ flexGrow: 0 }}
           contentContainerStyle={styles.slider}
-          initialScrollIndex={parseInt(currentDate("d")) - 1}
+          initialScrollIndex={scrollIndex}
           getItemLayout={(_, i) => ({ length: 55, offset: 61 * i, index: i })}
           horizontal
         />
