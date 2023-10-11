@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   description: {
+    paddingHorizontal: 10,
     textAlign: "center",
   },
 });

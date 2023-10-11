@@ -3,7 +3,6 @@ import { SafeAreaView, View, FlatList, ScrollView } from "react-native";
 import { Button, Chip, FAB, IconButton, Portal, Searchbar, Snackbar, Text, useTheme } from "react-native-paper";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
@@ -23,6 +22,7 @@ import { SearchType } from "../types/Search";
 import { removeEntry } from "../config/entriesSlice";
 import DeleteEntryDialog from "../Components/DeleteEntryDialog";
 import { useDateLocale } from "../hooks/useDateLocale";
+import CalendarDialog from "../Components/CalendarDialog";
 
 export default function Home() {
   const { t } = useTranslation("common");
@@ -38,7 +38,7 @@ export default function Home() {
   const { colors } = useTheme();
   const calendarRef = useRef<FlatList>(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [isCalendarVisible, setCalendarVisibility] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [swipedId, setSwipedId] = useState("");
   const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
@@ -52,10 +52,9 @@ export default function Home() {
     calendarRef.current?.scrollToIndex({ index: scrollIndex });
   }, [scrollIndex]);
 
-  const confirmDate = (date: Date) => {
-    const newDate = format(new Date(date), "yyyy-MM-dd");
-    dispatch(setDate(newDate));
-    setDatePickerVisibility(false);
+  const confirmDate = (date: string) => {
+    dispatch(setDate(date));
+    setCalendarVisibility(false);
   };
 
   const sortedFavorites = useMemo(() => favoriteEntries.splice(0, 4), [entries]);
@@ -143,18 +142,11 @@ export default function Home() {
                 icon="calendar"
                 size={ICON_SIZE}
                 mode="contained"
-                onPress={() => setDatePickerVisibility(true)}
+                onPress={() => setCalendarVisibility(true)}
               />
             </View>
           </View>
         </View>
-        <DateTimePickerModal
-          isVisible={isDatePickerVisible}
-          mode="date"
-          display="inline"
-          onConfirm={confirmDate}
-          onCancel={() => setDatePickerVisibility(false)}
-        />
         <FlatList
           data={daysInMonth}
           ref={calendarRef}
@@ -165,7 +157,7 @@ export default function Home() {
           style={{ flexGrow: 0 }}
           contentContainerStyle={styles.slider}
           initialScrollIndex={scrollIndex}
-          getItemLayout={(_, i) => ({ length: 55, offset: 61 * i, index: i })}
+          getItemLayout={(_, i) => ({ length: 55, offset: 63 * i, index: i })}
           horizontal
         />
         <View style={styles.entryList}>
@@ -174,8 +166,8 @@ export default function Home() {
               onDelete={() => onSwipeDelete(item.id)}
               onEdit={() => navigate("EditEntry", { id: item.id })}
               key={item.id}
-              {...item}
               onPress={() => navigate("ViewEntry", { id: item.id })}
+              {...item}
             />
           ))}
           {filteredEntries.length === 0 && (
@@ -190,6 +182,7 @@ export default function Home() {
       </ScrollView>
       <FAB icon="pencil" style={styles.fab} onPress={() => navigate("NewEntry")} />
       <Portal>
+        <CalendarDialog isOpen={isCalendarVisible} setIsOpen={setCalendarVisibility} onSelect={confirmDate} />
         <DeleteEntryDialog isOpen={isDeleteDialogOpen} onDelete={onDelete} setIsOpen={setIsDeleteDialogOpen} />
         <Snackbar
           visible={isSnackbarVisible}

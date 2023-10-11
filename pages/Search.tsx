@@ -1,11 +1,10 @@
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-navigation";
-import { Button, Chip, Snackbar, Text, TextInput, useTheme } from "react-native-paper";
+import { Button, Chip, Portal, Snackbar, Text, TextInput, useTheme } from "react-native-paper";
 import { useMemo, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
+import { isBefore, isEqual } from "date-fns";
 
 import { styles } from "../styles/searchStyles";
 import { getMoodColor, getMoodsArray } from "../utils/moodHelper";
@@ -13,6 +12,7 @@ import { MoodEnum } from "../constants/moods";
 import { EntryStorage } from "../constants/EntryStorage";
 import { validateDateStr } from "../utils/validateDateStr";
 import { SearchType } from "../types/Search";
+import CalendarDialog from "../Components/CalendarDialog";
 
 export default function Search() {
   const { colors, dark } = useTheme();
@@ -31,8 +31,12 @@ export default function Search() {
   const [tagInput, setTagInput] = useState("");
 
   const onSearch = () => {
-    const isDateFieldsValid = (!!fromInput && !validateDateStr(fromInput)) || (!!toInput && !validateDateStr(toInput));
-    if (isDateFieldsValid) {
+    const isDateFieldsInvalid =
+      (!!fromInput && !validateDateStr(fromInput)) || (!!toInput && !validateDateStr(toInput));
+    const parsedFromDate = new Date(fromInput.replaceAll("/", "-"));
+    const parsedToDate = new Date(toInput.replaceAll("/", "-"));
+    const isIntervalValid = isBefore(parsedFromDate, parsedToDate) || isEqual(parsedFromDate, parsedToDate);
+    if (isDateFieldsInvalid || !isIntervalValid) {
       setIsDateErrorSnackbarVisible(true);
       return;
     }
@@ -47,13 +51,13 @@ export default function Search() {
     navigate("SearchResults", params);
   };
 
-  const confirmFromDate = (date: Date) => {
-    setFromInput(format(new Date(date), "yyyy/MM/dd"));
+  const confirmFromDate = (date: string) => {
+    setFromInput(date);
     setFromPickerVisibility(false);
   };
 
-  const confirmToDate = (date: Date) => {
-    setToInput(format(new Date(date), "yyyy/MM/dd"));
+  const confirmToDate = (date: string) => {
+    setToInput(date);
     setToPickerVisibility(false);
   };
 
@@ -181,13 +185,6 @@ export default function Search() {
               onChangeText={(text) => setFromInput(text)}
               onEndEditing={(e) => onDateFieldBlur(e.nativeEvent.text, () => setFromInput(""))}
             />
-            <DateTimePickerModal
-              isVisible={isFromPickerVisible}
-              mode="date"
-              display="inline"
-              onConfirm={confirmFromDate}
-              onCancel={() => setFromPickerVisibility(false)}
-            />
             <TextInput
               mode="outlined"
               right={<TextInput.Icon icon="calendar" onPress={() => setToPickerVisibility(true)} />}
@@ -198,13 +195,6 @@ export default function Search() {
               onChangeText={(text) => setToInput(text)}
               onEndEditing={(e) => onDateFieldBlur(e.nativeEvent.text, () => setToInput(""))}
             />
-            <DateTimePickerModal
-              isVisible={isToPickerVisible}
-              mode="date"
-              display="inline"
-              onConfirm={confirmToDate}
-              onCancel={() => setToPickerVisibility(false)}
-            />
           </View>
           <View style={styles.buttonsRow}>
             <Button onPress={() => clearFilters()}>{t("common:search.buttons.clear-filters").toUpperCase()}</Button>
@@ -214,9 +204,17 @@ export default function Search() {
           </View>
         </KeyboardAvoidingView>
       </ScrollView>
-      <Snackbar visible={isDateErrorSnackbarVisible} onDismiss={() => setIsDateErrorSnackbarVisible(false)}>
-        {t("common:search.descriptions.invalid-date")}
-      </Snackbar>
+      <Portal>
+        <Snackbar
+          visible={isDateErrorSnackbarVisible}
+          onDismiss={() => setIsDateErrorSnackbarVisible(false)}
+          wrapperStyle={{ bottom: 80 }}
+        >
+          {t("common:search.descriptions.invalid-date")}
+        </Snackbar>
+        <CalendarDialog isOpen={isFromPickerVisible} setIsOpen={setFromPickerVisibility} onSelect={confirmFromDate} />
+        <CalendarDialog isOpen={isToPickerVisible} setIsOpen={setToPickerVisibility} onSelect={confirmToDate} />
+      </Portal>
     </SafeAreaView>
   );
 }
