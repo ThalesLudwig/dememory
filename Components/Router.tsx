@@ -21,6 +21,7 @@ import { SearchType } from "../types/Search";
 import Login from "../pages/Login";
 import { RootState } from "../config/store";
 import Profile from "../pages/Profile";
+import SaveBackup from "../pages/SaveBackup";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -33,6 +34,7 @@ export type RootStackParamList = {
   SearchResults: SearchType;
   Login: undefined;
   Profile: undefined;
+  SaveBackup: undefined;
 };
 
 export type RootTabParamList = {
@@ -171,6 +173,11 @@ function SettingsStack() {
   return (
     <Stack.Navigator initialRouteName="Settings">
       <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="SaveBackup"
+        component={SaveBackup}
+        options={{ headerTitle: t("Salvar Backup"), header: (props) => <Header {...props} /> }}
+      />
       <Stack.Screen
         name="Profile"
         component={Profile}
