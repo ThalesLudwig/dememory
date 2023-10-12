@@ -171,7 +171,6 @@ function SettingsStack() {
   return (
     <Stack.Navigator initialRouteName="Settings">
       <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
-      <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
       <Stack.Screen
         name="Profile"
         component={Profile}

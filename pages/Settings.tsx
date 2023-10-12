@@ -4,7 +4,6 @@ import {
   ActivityIndicator,
   Avatar,
   Button,
-  Dialog,
   Divider,
   List,
   Portal,
@@ -13,7 +12,7 @@ import {
   Text,
   useTheme,
 } from "react-native-paper";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
@@ -29,6 +28,7 @@ import { setWallet } from "../config/profileSlice";
 import ColorsSettings from "../Components/Settings/ColorsSettings";
 import UserAvatar from "../Components/UserAvatar";
 import { setShowFavorites } from "../config/settingsSlice";
+import LogoutDialog from "../Components/LogoutDialog";
 
 export default function Settings() {
   const { colors } = useTheme();
@@ -37,7 +37,7 @@ export default function Settings() {
   const dispatch = useDispatch();
   const { name: username, wallet } = useSelector((state: RootState) => state.profile);
   const { showFavorites } = useSelector((state: RootState) => state.settings);
-  const { provider } = useWalletConnectModal();
+  const { provider, open: openConnectDialog, address, isConnected } = useWalletConnectModal();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isThemeVisible, setIsThemeVisible] = useState(false);
@@ -48,11 +48,21 @@ export default function Settings() {
   const [isUnavailableSnackbarVisible, setIsUnavailableSnackbarVisible] = useState(false);
   const [isLogoutDialogVisible, setIsLogoutDialogVisible] = useState(false);
 
+  useEffect(() => {
+    if (address) dispatch(setWallet(address));
+  }, [isConnected, address]);
+
   const logout = async () => {
     setIsLoading(true);
     setIsLogoutDialogVisible(false);
     await provider?.disconnect();
     dispatch(setWallet(""));
+    setIsLoading(false);
+  };
+
+  const onLogin = async () => {
+    setIsLoading(true);
+    await openConnectDialog({ route: "ConnectWallet" });
     setIsLoading(false);
   };
 
@@ -80,7 +90,7 @@ export default function Settings() {
               </Button>
             )}
             {!wallet && !isLoading && (
-              <Button mode="text" onPress={() => navigate("Login")}>
+              <Button mode="text" onPress={onLogin}>
                 {t("common:settings.buttons.login")}
               </Button>
             )}
@@ -139,16 +149,7 @@ export default function Settings() {
         >
           {t("common:settings.descriptions.option-unavailable")}
         </Snackbar>
-        <Dialog visible={isLogoutDialogVisible} onDismiss={() => setIsLogoutDialogVisible(false)}>
-          <Dialog.Title>{t("common:modals.logout.title")}</Dialog.Title>
-          <Dialog.Content>
-            <Text variant="bodyMedium">{t("common:modals.logout.descriptions")}</Text>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button onPress={() => setIsLogoutDialogVisible(false)}>{t("common:modals.logout.buttons.no")}</Button>
-            <Button onPress={logout}>{t("common:modals.logout.buttons.yes")}</Button>
-          </Dialog.Actions>
-        </Dialog>
+        <LogoutDialog isOpen={isLogoutDialogVisible} onLogout={logout} setIsOpen={setIsLogoutDialogVisible} />
       </Portal>
     </SafeAreaView>
   );

@@ -20,6 +20,7 @@ import { RootState } from "../config/store";
 import { styles } from "../styles/editEntryStyles";
 import { storageButtons } from "../constants/storage";
 import { useDateLocale } from "../hooks/useDateLocale";
+import Alert from "../Components/Alert";
 
 type Props = NativeStackScreenProps<RootStackParamList, "EditEntry">;
 
@@ -96,7 +97,7 @@ export default function EditEntry({ route }: Props) {
     <SafeAreaView style={{ ...styles.container, backgroundColor: colors.background }}>
       <ScrollView>
         <KeyboardAvoidingView style={styles.body} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-          <Chip icon="clock">{format(new Date(entry.date), "PPPP - kk:mm", { locale })}</Chip>
+          <Alert icon="clock" text={format(new Date(entry.date), "PPPP - kk:mm", { locale })} />
           <Text variant="titleMedium">{t("common:view-entry.titles.save-on")}:</Text>
           <SegmentedButtons value={entryStorage} onValueChange={setEntryStorage} buttons={storageButtons()} />
           <Text variant="titleMedium">{t("common:view-entry.titles.thinking")}</Text>

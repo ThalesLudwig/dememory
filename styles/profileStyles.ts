@@ -9,4 +9,8 @@ export const styles = StyleSheet.create({
     gap: 15,
     paddingBottom: 15,
   },
+  avatar: {
+    marginBottom: 15,
+    alignSelf: "center",
+  },
 });

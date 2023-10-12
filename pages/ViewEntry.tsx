@@ -1,7 +1,7 @@
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
 import { SafeAreaView, View, Image, ScrollView, Pressable } from "react-native";
-import { Button, Chip, Dialog, Portal, SegmentedButtons, Surface, Text, useTheme } from "react-native-paper";
+import { Button, Chip, Portal, SegmentedButtons, Surface, Text, useTheme } from "react-native-paper";
 import { format } from "date-fns";
 import { useDispatch } from "react-redux";
 import ImageView from "react-native-image-viewing";
@@ -19,6 +19,7 @@ import { storageButtons } from "../constants/storage";
 import { useDateLocale } from "../hooks/useDateLocale";
 import { EntryStorage } from "../constants/EntryStorage";
 import DeleteEntryDialog from "../Components/DeleteEntryDialog";
+import Alert from "../Components/Alert";
 
 type Props = NativeStackScreenProps<RootStackParamList, "ViewEntry">;
 
@@ -69,7 +70,7 @@ export const ViewEntry = ({ route }: Props) => {
       <ScrollView>
         <View style={styles.body}>
           <Text variant="titleLarge">{t("common:view-entry.titles.date")}</Text>
-          <Chip icon="clock">{format(new Date(entry.date), "PPPP - kk:mm", { locale })}</Chip>
+          <Alert icon="clock" text={format(new Date(entry.date), "PPPP - kk:mm", { locale })} />
           <Text variant="titleMedium">{t("common:view-entry.titles.save-on")}:</Text>
           <SegmentedButtons
             value={entry.storage?.toString() || "0"}

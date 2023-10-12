@@ -15,7 +15,6 @@ export default function Login() {
   const dispatch = useDispatch();
   const { t } = useTranslation("common");
   const { goBack } = useNavigation<any>();
-  const { reset } = useNavigation<any>();
   const { showLoginPage } = useSelector((state: RootState) => state.profile);
 
   const [isUnavailableSnackbarVisible, setIsUnavailableSnackbarVisible] = useState(false);
@@ -35,7 +34,6 @@ export default function Login() {
     if (address) {
       dispatch(setWallet(address));
       dispatch(setShowLoginPage(false));
-      reset({ index: 0, routes: [{ name: "HomeStack" }] });
     }
   }, [isConnected, address]);
 
