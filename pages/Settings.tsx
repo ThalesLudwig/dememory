@@ -123,6 +123,7 @@ export default function Settings() {
           <List.Section>
             <List.Subheader>{t("common:settings.titles.entries")}</List.Subheader>
             <List.Item title={t("common:settings.menus.save-backup")} onPress={() => navigate("SaveBackup")} />
+            <List.Item title={t("common:settings.backup.retrieve.title")} onPress={() => navigate("RetrieveBackup")} />
             <List.Item title={t("common:settings.menus.reset-entries")} onPress={() => setIsResetDialogVisible(true)} />
           </List.Section>
           <Button mode="contained">{t("common:settings.buttons.buy-app").toUpperCase()}</Button>

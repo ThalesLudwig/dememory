@@ -1,14 +1,18 @@
 import { StyleSheet } from "react-native";
 import { IconButton, Surface, Text, useTheme } from "react-native-paper";
 
-type AlertProps = { icon?: string; text: string };
+type AlertProps = { icon?: string; text: string; isDanger?: boolean };
 
-export default function Alert({ icon = "alert", text }: AlertProps) {
+export default function Alert({ icon = "alert", text, isDanger = false }: AlertProps) {
   const { colors } = useTheme();
 
   return (
-    <Surface mode="flat" elevation={2} style={styles.container}>
-      <IconButton icon={icon} iconColor={colors.primary} />
+    <Surface
+      mode="flat"
+      elevation={2}
+      style={isDanger ? { ...styles.container, backgroundColor: colors.errorContainer } : styles.container}
+    >
+      <IconButton icon={icon} iconColor={isDanger ? colors.onErrorContainer : colors.primary} />
       <Text variant="bodyLarge" style={styles.text}>
         {text}
       </Text>
@@ -26,6 +30,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   text: {
-    width: "85%",
+    width: "80%",
   },
 });

@@ -22,6 +22,7 @@ import Login from "../pages/Login";
 import { RootState } from "../config/store";
 import Profile from "../pages/Profile";
 import SaveBackup from "../pages/SaveBackup";
+import RetrieveBackup from "../pages/RetrieveBackup";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -35,6 +36,7 @@ export type RootStackParamList = {
   Login: undefined;
   Profile: undefined;
   SaveBackup: undefined;
+  RetrieveBackup: undefined;
 };
 
 export type RootTabParamList = {
@@ -176,7 +178,12 @@ function SettingsStack() {
       <Stack.Screen
         name="SaveBackup"
         component={SaveBackup}
-        options={{ headerTitle: t("Salvar Backup"), header: (props) => <Header {...props} /> }}
+        options={{ headerTitle: t("common:settings.backup.save.title"), header: (props) => <Header {...props} /> }}
+      />
+      <Stack.Screen
+        name="RetrieveBackup"
+        component={RetrieveBackup}
+        options={{ headerTitle: t("common:settings.backup.retrieve.title"), header: (props) => <Header {...props} /> }}
       />
       <Stack.Screen
         name="Profile"

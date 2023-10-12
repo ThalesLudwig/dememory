@@ -21,7 +21,7 @@ const ResetSettings = ({
   const { t } = useTranslation("common");
 
   const resetEntries = () => {
-    dispatch(resetState());
+    dispatch(resetState([]));
     setIsResetSnackbarVisible(true);
     setIsResetDialogVisible(false);
   };
@@ -44,7 +44,7 @@ const ResetSettings = ({
         onDismiss={() => setIsResetSnackbarVisible(false)}
         wrapperStyle={{ bottom: 80 }}
         action={{
-          label: "Close",
+          label: t("common:settings.buttons.close"),
           onPress: () => setIsResetSnackbarVisible(false),
         }}
       >

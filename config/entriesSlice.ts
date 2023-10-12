@@ -24,12 +24,15 @@ const EntriesSlice = createSlice({
       entries[index] = payload;
       state.value = entries;
     },
-    resetState(state) {
-      state.value = [];
+    resetState(state, { payload }) {
+      state.value = payload;
+    },
+    mergeState(state, { payload }) {
+      state.value = [...state.value, ...payload];
     },
   },
 });
 
-export const { addEntry, removeEntry, updateEntry, resetState } = EntriesSlice.actions;
+export const { addEntry, removeEntry, updateEntry, resetState, mergeState } = EntriesSlice.actions;
 
 export default EntriesSlice.reducer;
