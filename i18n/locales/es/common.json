@@ -81,7 +81,7 @@
   "search.buttons.clear-filters": "Limpiar filtros",
   "search.buttons.search": "Buscar",
   "search.descriptions.blockchain": "Blockchain",
-  "search.descriptions.invalid-date": "Fecha no válida.",
+  "search.descriptions.invalid-date": "Fecha o intervalo no válido",
   "search.descriptions.local-device": "Dispositivo local",
   "search.inputs.content": "Contenido",
   "search.inputs.from": "Desde",

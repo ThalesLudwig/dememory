@@ -81,7 +81,7 @@
   "search.buttons.clear-filters": "Cancella filtri",
   "search.buttons.search": "Cerca",
   "search.descriptions.blockchain": "Blockchain",
-  "search.descriptions.invalid-date": "Data non valida.",
+  "search.descriptions.invalid-date": "Data o intervallo non valido",
   "search.descriptions.local-device": "Dispositivo locale",
   "search.inputs.content": "Contenuto",
   "search.inputs.from": "Da",

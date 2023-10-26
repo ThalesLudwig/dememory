@@ -31,15 +31,19 @@ export default function Search() {
   const [tagInput, setTagInput] = useState("");
 
   const onSearch = () => {
-    const isDateFieldsInvalid =
-      (!!fromInput && !validateDateStr(fromInput)) || (!!toInput && !validateDateStr(toInput));
+    const isEmptyDates = !fromInput && !toInput;
+    const isDateFieldsValid = validateDateStr(fromInput) && validateDateStr(toInput);
+
     const parsedFromDate = new Date(fromInput.replaceAll("/", "-"));
     const parsedToDate = new Date(toInput.replaceAll("/", "-"));
+
     const isIntervalValid = isBefore(parsedFromDate, parsedToDate) || isEqual(parsedFromDate, parsedToDate);
-    if (isDateFieldsInvalid || !isIntervalValid) {
+
+    if (!isEmptyDates && (!isDateFieldsValid || !isIntervalValid)) {
       setIsDateErrorSnackbarVisible(true);
       return;
     }
+
     const params: SearchType = {
       moods: selectedMoods,
       storages: entryStorages,

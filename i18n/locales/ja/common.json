@@ -81,7 +81,7 @@
   "search.buttons.clear-filters": "フィルターをクリア",
   "search.buttons.search": "検索",
   "search.descriptions.blockchain": "ブロックチェーン",
-  "search.descriptions.invalid-date": "無効な日付。",
+  "search.descriptions.invalid-date": "無効な日付または間隔",
   "search.descriptions.local-device": "ローカルデバイス",
   "search.inputs.content": "コンテンツ",
   "search.inputs.from": "から",
