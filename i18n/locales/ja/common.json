@@ -126,6 +126,7 @@
   "settings.menus.save-backup": "ローカルバックアップを保存",
   "settings.menus.reset-entries": "エントリーをリセット",
   "settings.titles.entries": "エントリー",
+  "settings.titles.developer": "開発者",
   "settings.titles.preferences": "設定",
   "settings.titles.security": "セキュリティ",
   "settings.titles.local-user": "ローカルユーザー",

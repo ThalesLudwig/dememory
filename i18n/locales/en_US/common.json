@@ -126,6 +126,7 @@
   "settings.menus.save-backup": "Save Local Backup",
   "settings.menus.reset-entries": "Reset Entries",
   "settings.titles.entries": "Entries",
+  "settings.titles.developer": "Developer",
   "settings.titles.preferences": "Preferences",
   "settings.titles.security": "Security",
   "settings.titles.local-user": "Local User",
