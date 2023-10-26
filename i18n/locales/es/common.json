@@ -114,7 +114,7 @@
   "settings.buttons.close": "Cerrar",
   "settings.buttons.login": "Iniciar sesión",
   "settings.buttons.logout": "Cerrar sesión",
-  "settings.descriptions.option-unavailable": "Opción premium no disponible.",
+  "settings.descriptions.option-unavailable": "Opción aún no disponible",
   "settings.menus.colors": "Colores",
   "settings.menus.colors.basic": "Colores básicos",
   "settings.menus.colors.system": "Color del sistema",

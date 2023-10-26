@@ -114,7 +114,7 @@
   "settings.buttons.close": "閉じる",
   "settings.buttons.login": "ログイン",
   "settings.buttons.logout": "ログアウト",
-  "settings.descriptions.option-unavailable": "プレミアムオプションは利用できません。",
+  "settings.descriptions.option-unavailable": "まだ利用できないオプション",
   "settings.menus.colors": "色",
   "settings.menus.colors.basic": "基本色",
   "settings.menus.colors.system": "システムカラー",

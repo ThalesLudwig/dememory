@@ -114,7 +114,7 @@
   "settings.buttons.close": "Schließen",
   "settings.buttons.login": "Anmelden",
   "settings.buttons.logout": "Abmelden",
-  "settings.descriptions.option-unavailable": "Premium-Option nicht verfügbar.",
+  "settings.descriptions.option-unavailable": "Option noch nicht verfügbar",
   "settings.menus.colors": "Farben",
   "settings.menus.colors.basic": "Grundfarben",
   "settings.menus.colors.system": "Systemfarbe",
