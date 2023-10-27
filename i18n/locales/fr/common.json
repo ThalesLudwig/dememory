@@ -110,6 +110,9 @@
   "settings.backup.retrieve.success": "Enregistrements récupérés avec succès",
   "settings.backup.retrieve.error": "Une erreur s'est produite lors de la récupération du fichier",
 
+  "settings.lock.protect-toogle": "Protéger contenu des données",
+  "settings.lock.description": "Gardez vos entrées à l'abri des regards indiscrets. Nous utiliserons la méthode d'authentification de votre appareil.",
+
   "settings.buttons.buy-app": "Acheter Dememory",
   "settings.buttons.close": "Fermer",
   "settings.buttons.login": "Se connecter",
@@ -121,7 +124,7 @@
   "settings.menus.theme": "Thème",
   "settings.menus.languages": "Langues",
   "settings.menus.date-format": "Format de date",
-  "settings.menus.app-lock": "Verrouillage de l'application",
+  "settings.menus.app-lock": "Verrouillage des données",
   "settings.menus.therapy-share": "Partager avec un thérapeute",
   "settings.menus.save-backup": "Enregistrer la sauvegarde locale",
   "settings.menus.reset-entries": "Effacer les enregistrements",

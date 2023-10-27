@@ -110,6 +110,9 @@
   "settings.backup.retrieve.success": "正常に記録が回復しました",
   "settings.backup.retrieve.error": "ファイルの取得中にエラーが発生しました",
 
+  "settings.lock.protect-toogle": "データコンテンツを保護する",
+  "settings.lock.description": "入力内容を詮索好きな目から保護します。デバイスの認証方法を使用します。",
+
   "settings.buttons.buy-app": "Dememoryを購入",
   "settings.buttons.close": "閉じる",
   "settings.buttons.login": "ログイン",
@@ -121,7 +124,7 @@
   "settings.menus.theme": "テーマ",
   "settings.menus.languages": "言語",
   "settings.menus.date-format": "日付形式",
-  "settings.menus.app-lock": "アプリのロック",
+  "settings.menus.app-lock": "データロック",
   "settings.menus.therapy-share": "セラピストと共有",
   "settings.menus.save-backup": "ローカルバックアップを保存",
   "settings.menus.reset-entries": "エントリーをリセット",

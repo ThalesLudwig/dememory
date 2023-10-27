@@ -6,7 +6,7 @@ import { useMemo, useState } from "react";
 import { FlatList } from "react-native-gesture-handler";
 import { intersection } from "lodash";
 import { isWithinInterval } from "date-fns";
-import { Button, Dialog, Portal, Snackbar, Text, useTheme } from "react-native-paper";
+import { Portal, Snackbar, useTheme } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 
 import EntryCard from "../Components/EntryCard";
@@ -25,6 +25,7 @@ export default function SearchResults({ route }: Props) {
   const { colors } = useTheme();
   const dispatch = useDispatch();
   const { value: entries } = useSelector((state: RootState) => state.entries);
+  const { isAppLocked } = useSelector((state: RootState) => state.settings);
   const { navigate, goBack } = useNavigation<any>();
   const [swipedId, setSwipedId] = useState("");
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);

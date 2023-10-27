@@ -4,7 +4,7 @@ import { Button, Chip, Dialog, Portal, Searchbar, Snackbar, Text, useTheme } fro
 import { format } from "date-fns";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useFavoriteEntries } from "../hooks/useFavoriteEntries";
 import { Entry } from "../types/Entry";
@@ -14,6 +14,7 @@ import { styles } from "../styles/favoritesStyles";
 import { useDateLocale } from "../hooks/useDateLocale";
 import { removeEntry } from "../config/entriesSlice";
 import DeleteEntryDialog from "../Components/DeleteEntryDialog";
+import { RootState } from "../config/store";
 
 export default function Favorites() {
   const { t } = useTranslation("common");
@@ -26,6 +27,7 @@ export default function Favorites() {
   const [swipedId, setSwipedId] = useState("");
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
+  const { isAppLocked } = useSelector((state: RootState) => state.settings);
 
   const filteredEntries = useMemo(() => {
     if (!searchInput) return favoriteEntries;

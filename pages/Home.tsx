@@ -23,13 +23,14 @@ import { removeEntry } from "../config/entriesSlice";
 import DeleteEntryDialog from "../Components/DeleteEntryDialog";
 import { useDateLocale } from "../hooks/useDateLocale";
 import CalendarDialog from "../Components/CalendarDialog";
+import LockedState from "../Components/LockedState";
 
 export default function Home() {
   const { t } = useTranslation("common");
   const { navigate } = useNavigation<any>();
   const { value: selectedDay } = useSelector((state: RootState) => state.date);
   const { value: entries } = useSelector((state: RootState) => state.entries);
-  const { showFavorites } = useSelector((state: RootState) => state.settings);
+  const { showFavorites, isAppLocked } = useSelector((state: RootState) => state.settings);
   const daysInMonth = useMonthDays(new Date(selectedDay));
   const dispatch = useDispatch();
   const locale = useDateLocale();
@@ -161,16 +162,17 @@ export default function Home() {
           horizontal
         />
         <View style={styles.entryList}>
-          {filteredEntries.map((item) => (
-            <EntryCard
-              onDelete={() => onSwipeDelete(item.id)}
-              onEdit={() => navigate("EditEntry", { id: item.id })}
-              key={item.id}
-              onPress={() => navigate("ViewEntry", { id: item.id })}
-              {...item}
-            />
-          ))}
-          {filteredEntries.length === 0 && (
+          {!isAppLocked &&
+            filteredEntries.map((item) => (
+              <EntryCard
+                onDelete={() => onSwipeDelete(item.id)}
+                onEdit={() => navigate("EditEntry", { id: item.id })}
+                key={item.id}
+                onPress={() => navigate("ViewEntry", { id: item.id })}
+                {...item}
+              />
+            ))}
+          {filteredEntries.length === 0 && !isAppLocked && (
             <EmptyState
               title={t("common:home.titles.no-entries-here")}
               description={t("home.descriptions.no-entries")}
@@ -178,6 +180,7 @@ export default function Home() {
               onClick={() => navigate("NewEntry")}
             />
           )}
+          {isAppLocked && <LockedState />}
         </View>
       </ScrollView>
       <FAB icon="pencil" style={styles.fab} onPress={() => navigate("NewEntry")} />

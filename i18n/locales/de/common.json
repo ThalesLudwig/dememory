@@ -110,6 +110,9 @@
   "settings.backup.retrieve.success": "Datensätze erfolgreich wiederhergestellt",
   "settings.backup.retrieve.error": "Beim Abrufen der Datei ist ein Fehler aufgetreten",
 
+  "settings.lock.protect-toogle": "Dateninhalt schützen",
+  "settings.lock.description": "Halten Sie Ihre Eingaben vor neugierigen Blicken geschützt. Wir werden die Authentifizierungsmethode Ihres Geräts verwenden.",
+
   "settings.buttons.buy-app": "Dememory kaufen",
   "settings.buttons.close": "Schließen",
   "settings.buttons.login": "Anmelden",
@@ -121,7 +124,7 @@
   "settings.menus.theme": "Thema",
   "settings.menus.languages": "Sprachen",
   "settings.menus.date-format": "Datumsformat",
-  "settings.menus.app-lock": "App-Sperre",
+  "settings.menus.app-lock": "Datensperre",
   "settings.menus.therapy-share": "Mit Therapeuten teilen",
   "settings.menus.save-backup": "Lokales Backup speichern",
   "settings.menus.reset-entries": "Einträge zurücksetzen",

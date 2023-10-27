@@ -23,6 +23,7 @@ import { RootState } from "../config/store";
 import Profile from "../pages/Profile";
 import SaveBackup from "../pages/SaveBackup";
 import RetrieveBackup from "../pages/RetrieveBackup";
+import DataLock from "../pages/DataLock";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -37,6 +38,7 @@ export type RootStackParamList = {
   Profile: undefined;
   SaveBackup: undefined;
   RetrieveBackup: undefined;
+  DataLock: undefined;
 };
 
 export type RootTabParamList = {
@@ -189,6 +191,11 @@ function SettingsStack() {
         name="Profile"
         component={Profile}
         options={{ header: (props) => <Header {...props} />, headerTitle: t("common:profile.titles.profile") }}
+      />
+      <Stack.Screen
+        name="DataLock"
+        component={DataLock}
+        options={{ headerTitle: t("common:settings.menus.app-lock"), header: (props) => <Header {...props} /> }}
       />
     </Stack.Navigator>
   );

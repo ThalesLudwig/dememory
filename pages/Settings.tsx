@@ -112,10 +112,7 @@ export default function Settings() {
           <Divider />
           <List.Section>
             <List.Subheader>{t("common:settings.titles.security")}</List.Subheader>
-            <List.Item
-              title={t("common:settings.menus.app-lock")}
-              onPress={() => setIsUnavailableSnackbarVisible(true)}
-            />
+            <List.Item title={t("common:settings.menus.app-lock")} onPress={() => navigate("DataLock")} />
             <List.Item
               title={t("common:settings.menus.therapy-share")}
               onPress={() => setIsUnavailableSnackbarVisible(true)}

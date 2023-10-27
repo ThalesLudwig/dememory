@@ -51,7 +51,8 @@
     "redux-persist": "^6.0.0",
     "expo-file-system": "~15.4.4",
     "expo-sharing": "~11.5.0",
-    "expo-document-picker": "~11.5.4"
+    "expo-document-picker": "~11.5.4",
+    "expo-local-authentication": "~13.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

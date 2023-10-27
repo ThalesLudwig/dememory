@@ -110,6 +110,9 @@
   "settings.backup.retrieve.success": "Records successfully recovered",
   "settings.backup.retrieve.error": "An error occurred while retrieving the file",
 
+  "settings.lock.protect-toogle": "Protect data content",
+  "settings.lock.description": "Keep your entries secure from curious eyes. We will use your device's authentication method.",
+
   "settings.buttons.buy-app": "Buy Dememory",
   "settings.buttons.close": "Close",
   "settings.buttons.login": "Login",
@@ -121,7 +124,7 @@
   "settings.menus.theme": "Theme",
   "settings.menus.languages": "Languages",
   "settings.menus.date-format": "Date format",
-  "settings.menus.app-lock": "App Lock",
+  "settings.menus.app-lock": "Data Lock",
   "settings.menus.therapy-share": "Therapy Share",
   "settings.menus.save-backup": "Save Local Backup",
   "settings.menus.reset-entries": "Reset Entries",
