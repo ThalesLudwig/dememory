@@ -23,9 +23,9 @@ const EntryCardLocked = (props: { date: Date, onPress: Function; onFail: Functio
   }
 
   return (
-    <Card onPress={onLockedPress} mode="outlined" style={styles.card}>
+    <Card onPress={onLockedPress} style={styles.card}>
       <View style={styles.header}>
-        <Chip icon="calendar" mode="outlined" style={styles.time} textStyle={styles.timeText}>
+        <Chip icon="calendar" mode="outlined" style={{...styles.time, backgroundColor: theme.colors.elevation.level0}} textStyle={styles.timeText}>
           {format(new Date(props.date), "MMM do, kk:mm", { locale })}
         </Chip>
         <View style={styles.actions}>
@@ -52,7 +52,7 @@ const EntryCardLocked = (props: { date: Date, onPress: Function; onFail: Functio
 const styles = StyleSheet.create({
   card: {
     borderRadius: 0,
-    borderColor: "transparent",
+    shadowOpacity: 0,
   },
   header: {
     justifyContent: "space-between",

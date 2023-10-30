@@ -45,9 +45,9 @@ const EntryCard = (props: Entry & { onPress: Function; onEdit: Function; onDelet
 
   return (
     <Swipeable renderLeftActions={() => <SwipeLeft />} renderRightActions={() => <SwipeRight />}>
-      <Card onPress={() => props.onPress()} mode="outlined" style={styles.card}>
+      <Card onPress={() => props.onPress()} style={styles.card}>
         <View style={styles.header}>
-          <Chip icon="calendar" mode="outlined" style={styles.time} textStyle={styles.timeText}>
+          <Chip icon="calendar" mode="outlined" style={{...styles.time, backgroundColor: colors.elevation.level0}} textStyle={styles.timeText}>
             {format(new Date(props.date), "MMM do, kk:mm", { locale })}
           </Chip>
           <View style={styles.actions}>
@@ -57,7 +57,7 @@ const EntryCard = (props: Entry & { onPress: Function; onEdit: Function; onDelet
                 {getMoodName(props.mood)}
               </Chip>
             )}
-            <IconButton icon={props.isPinned ? "heart" : "cards-heart-outline"} onPress={toogleFavorites} />
+            <IconButton icon={props.isPinned ? "heart" : "cards-heart-outline"} onPress={toogleFavorites} iconColor={colors.primary} />
           </View>
         </View>
         <Card.Content>
@@ -85,7 +85,6 @@ const EntryCard = (props: Entry & { onPress: Function; onEdit: Function; onDelet
 const styles = StyleSheet.create({
   card: {
     borderRadius: 0,
-    borderColor: "transparent",
   },
   header: {
     justifyContent: "space-between",

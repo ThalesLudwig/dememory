@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
   },
   list: {
     padding: 1,
-    gap: 20,
+    gap: 2,
   },
   emptyState: {
     marginTop: 100,
