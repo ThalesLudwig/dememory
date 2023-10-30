@@ -139,6 +139,7 @@ export default function Settings() {
                 <IconButton icon="lock" size={ICON_SIZE} iconColor={colors.primary} />
                 <Text variant="bodyLarge" style={styles.listItem}>{t("common:settings.menus.app-lock")}</Text>
               </Pressable>
+              <Divider />
               <Pressable style={styles.listItem} onPress={() => setIsUnavailableSnackbarVisible(true)}>
                 <IconButton icon="share" size={ICON_SIZE} iconColor={colors.primary} />
                 <Text variant="bodyLarge" style={styles.listItem}>{t("common:settings.menus.therapy-share")}</Text>
@@ -154,6 +155,7 @@ export default function Settings() {
                 <IconButton icon="download" size={ICON_SIZE} iconColor={colors.primary} />
                 <Text variant="bodyLarge" style={styles.listItem}>{t("common:settings.menus.save-backup")}</Text>
               </Pressable>
+              <Divider />
               <Pressable style={styles.listItem} onPress={() => navigate("RetrieveBackup")}>
                 <IconButton icon="upload" size={ICON_SIZE} iconColor={colors.primary} />
                 <Text variant="bodyLarge" style={styles.listItem}>{t("common:settings.backup.retrieve.title")}</Text>
