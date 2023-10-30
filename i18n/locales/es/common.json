@@ -22,6 +22,11 @@
 
   "local-device": "Dispositivo local",
 
+  "locked-state.title": "Los registros están protegidos.",
+  "locked-state.description": "El sistema de protección de registros está activado. Haz clic en el botón de abajo para desbloquear, o accede al menú de seguridad y elimina la protección.",
+  "locked-state.button": "Desbloquear",
+  "locked-state.snackbar.auth-fail": "Error de autenticación",
+
   "login.buttons.metamask": "Conectar Billetera",
   "login.buttons.local": "Usar en dispositivo local",
   "login.descriptions.or": "O",

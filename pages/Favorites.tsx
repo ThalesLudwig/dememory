@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { SafeAreaView, View, SectionList } from "react-native";
-import { Button, Chip, Dialog, Portal, Searchbar, Snackbar, Text, useTheme } from "react-native-paper";
+import { Chip, Portal, Searchbar, Snackbar, useTheme } from "react-native-paper";
 import { format } from "date-fns";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
@@ -15,19 +15,21 @@ import { useDateLocale } from "../hooks/useDateLocale";
 import { removeEntry } from "../config/entriesSlice";
 import DeleteEntryDialog from "../Components/DeleteEntryDialog";
 import { RootState } from "../config/store";
+import EntryCardLocked from "../Components/EntryCardLocked";
 
 export default function Favorites() {
   const { t } = useTranslation("common");
   const { colors } = useTheme();
   const favoriteEntries = useFavoriteEntries();
   const { navigate } = useNavigation<any>();
+  const { isAppLocked } = useSelector((state: RootState) => state.settings);
   const locale = useDateLocale();
   const dispatch = useDispatch();
   const [searchInput, setSearchInput] = useState("");
   const [swipedId, setSwipedId] = useState("");
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
-  const { isAppLocked } = useSelector((state: RootState) => state.settings);
+  const [snackbarContent, setSnackbarContent] = useState("");
 
   const filteredEntries = useMemo(() => {
     if (!searchInput) return favoriteEntries;
@@ -52,6 +54,7 @@ export default function Favorites() {
 
   const onDelete = () => {
     dispatch(removeEntry(swipedId));
+    setSnackbarContent(t("common:modals.delete-entry.success"));
     setIsSnackbarVisible(true);
     setIsDeleteDialogOpen(false);
   };
@@ -59,6 +62,15 @@ export default function Favorites() {
   const onSwipeDelete = (id: string) => {
     setSwipedId(id);
     setIsDeleteDialogOpen(true);
+  };
+
+  const onEntryPress = (id: string) => {
+    navigate("ViewEntry", { id });
+  }
+
+  const onEntryPressFail = () => {
+    setSnackbarContent(t("common:locked-state.snackbar.auth-fail"));
+    setIsSnackbarVisible(true);
   };
 
   return (
@@ -75,6 +87,8 @@ export default function Favorites() {
           sections={parsedEntries}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
+            isAppLocked ? 
+            <EntryCardLocked key={item.id} onPress={() => onEntryPress(item.id)} onFail={onEntryPressFail} date={item.date} /> : 
             <EntryCard
               onDelete={() => onSwipeDelete(item.id)}
               onEdit={() => navigate("EditEntry", { id: item.id })}
@@ -108,7 +122,7 @@ export default function Favorites() {
           wrapperStyle={{ bottom: 80 }}
           action={{ label: t("common:settings.buttons.close"), onPress: () => setIsSnackbarVisible(false) }}
         >
-          {t("common:modals.delete-entry.success")}
+          {snackbarContent}
         </Snackbar>
       </Portal>
     </SafeAreaView>

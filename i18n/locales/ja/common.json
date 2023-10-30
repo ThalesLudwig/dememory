@@ -22,6 +22,11 @@
 
   "local-device": "ローカルデバイス",
 
+  "locked-state.title": "記録は保護されています。",
+  "locked-state.description": "記録保護システムが有効になっています。下のボタンをクリックして解除するか、セキュリティ メニューにアクセスして保護を削除してください。",
+  "locked-state.button": "解除",
+  "locked-state.snackbar.auth-fail": "認証失敗",
+
   "login.buttons.metamask": "ウォレットを接続",
   "login.buttons.local": "ローカルデバイスで使用",
   "login.descriptions.or": "または",

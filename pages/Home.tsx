@@ -2,8 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { SafeAreaView, View, FlatList, ScrollView } from "react-native";
 import { Button, Chip, FAB, IconButton, Portal, Searchbar, Snackbar, Text, useTheme } from "react-native-paper";
 import { format } from "date-fns";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 
@@ -23,7 +22,8 @@ import { removeEntry } from "../config/entriesSlice";
 import DeleteEntryDialog from "../Components/DeleteEntryDialog";
 import { useDateLocale } from "../hooks/useDateLocale";
 import CalendarDialog from "../Components/CalendarDialog";
-import LockedState from "../Components/LockedState";
+import FavoriteCardLocked from "../Components/FavoriteCardLocked";
+import EntryCardLocked from "../Components/EntryCardLocked";
 
 export default function Home() {
   const { t } = useTranslation("common");
@@ -43,6 +43,7 @@ export default function Home() {
   const [searchInput, setSearchInput] = useState("");
   const [swipedId, setSwipedId] = useState("");
   const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
+  const [snackbarContent, setSnackbarContent] = useState("");
 
   const scrollIndex = useMemo(() => {
     const index = parseInt(currentDate("d")) - 4;
@@ -58,12 +59,13 @@ export default function Home() {
     setCalendarVisibility(false);
   };
 
-  const sortedFavorites = useMemo(() => favoriteEntries.splice(0, 4), [entries]);
+  const sortedFavorites = useMemo(
+    () => favoriteEntries.splice(0, 4),
+    [entries],
+  );
 
   const filteredEntries = useMemo(() => {
-    return entries.filter(
-      (entry) => !!entry.date && format(new Date(entry.date), "yyyy-MM-dd") === currentDate("yyyy-MM-dd"),
-    );
+    return entries.filter((entry) => !!entry.date && format(new Date(entry.date), "yyyy-MM-dd") === currentDate("yyyy-MM-dd"));
   }, [selectedDay, entries]);
 
   const today = useMemo(() => {
@@ -79,6 +81,7 @@ export default function Home() {
 
   const onDelete = () => {
     dispatch(removeEntry(swipedId));
+    setSnackbarContent(t("common:modals.delete-entry.success"));
     setIsSnackbarVisible(true);
     setIsDeleteDialogOpen(false);
   };
@@ -86,6 +89,15 @@ export default function Home() {
   const onSwipeDelete = (id: string) => {
     setSwipedId(id);
     setIsDeleteDialogOpen(true);
+  };
+
+  const onEntryPress = (id: string) => {
+    navigate("ViewEntry", { id });
+  }
+
+  const onEntryPressFail = () => {
+    setSnackbarContent(t("common:locked-state.snackbar.auth-fail"));
+    setIsSnackbarVisible(true);
   };
 
   return (
@@ -103,7 +115,9 @@ export default function Home() {
           />
           {showFavorites && (
             <View style={styles.spaceBetween}>
-              <Text variant="titleMedium">{t("common:home.titles.recent-favorites")}</Text>
+              <Text variant="titleMedium">
+                {t("common:home.titles.recent-favorites")}
+              </Text>
               <Button mode="text" onPress={() => navigate("FavoritesStack")}>
                 {t("common:home.buttons.view-all")}
               </Button>
@@ -119,7 +133,13 @@ export default function Home() {
           <FlatList
             data={sortedFavorites}
             showsHorizontalScrollIndicator={false}
-            renderItem={({ item }) => <FavoriteCard {...item} onPress={() => navigate("ViewEntry", { id: item.id })} />}
+            renderItem={({ item }) =>
+              isAppLocked ? (
+                <FavoriteCardLocked onPress={() => onEntryPress(item.id)} onFail={onEntryPressFail} />
+              ) : (
+                <FavoriteCard {...item} onPress={() => onEntryPress(item.id)} />
+              )
+            }
             keyExtractor={(item) => item.id}
             extraData={selectedDay}
             style={{ flexGrow: 0 }}
@@ -132,19 +152,9 @@ export default function Home() {
             <Text variant="titleMedium">{currentDate("P")}</Text>
             <View style={styles.spaceBetween}>
               {!(today === currentDate("yyyy-MM-dd")) && (
-                <IconButton
-                  icon="calendar-refresh"
-                  size={ICON_SIZE}
-                  mode="contained"
-                  onPress={() => dispatch(setDate(today))}
-                />
+                <IconButton icon="calendar-refresh" size={ICON_SIZE} mode="contained" onPress={() => dispatch(setDate(today))} />
               )}
-              <IconButton
-                icon="calendar"
-                size={ICON_SIZE}
-                mode="contained"
-                onPress={() => setCalendarVisibility(true)}
-              />
+              <IconButton icon="calendar" size={ICON_SIZE} mode="contained" onPress={() => setCalendarVisibility(true)} />
             </View>
           </View>
         </View>
@@ -152,7 +162,7 @@ export default function Home() {
           data={daysInMonth}
           ref={calendarRef}
           showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => <MonthDayButton date={item} isSelected={item.key === currentDate("yyyy-MM-dd")} />}
+          renderItem={({ item }) => (<MonthDayButton date={item} isSelected={item.key === currentDate("yyyy-MM-dd")} />)}
           keyExtractor={(item) => item.key}
           extraData={selectedDay}
           style={{ flexGrow: 0 }}
@@ -162,17 +172,18 @@ export default function Home() {
           horizontal
         />
         <View style={styles.entryList}>
-          {!isAppLocked &&
-            filteredEntries.map((item) => (
-              <EntryCard
-                onDelete={() => onSwipeDelete(item.id)}
-                onEdit={() => navigate("EditEntry", { id: item.id })}
-                key={item.id}
-                onPress={() => navigate("ViewEntry", { id: item.id })}
-                {...item}
-              />
-            ))}
-          {filteredEntries.length === 0 && !isAppLocked && (
+          {filteredEntries.map((item) => (
+            isAppLocked ? 
+            <EntryCardLocked key={item.id} onPress={() => onEntryPress(item.id)} onFail={onEntryPressFail} date={item.date} /> : 
+            <EntryCard
+              onDelete={() => onSwipeDelete(item.id)}
+              onEdit={() => navigate("EditEntry", { id: item.id })}
+              key={item.id}
+              onPress={() => onEntryPress(item.id)}
+              {...item}
+            />
+          ))}
+          {filteredEntries.length === 0 && (
             <EmptyState
               title={t("common:home.titles.no-entries-here")}
               description={t("home.descriptions.no-entries")}
@@ -180,20 +191,22 @@ export default function Home() {
               onClick={() => navigate("NewEntry")}
             />
           )}
-          {isAppLocked && <LockedState />}
         </View>
       </ScrollView>
       <FAB icon="pencil" style={styles.fab} onPress={() => navigate("NewEntry")} />
       <Portal>
-        <CalendarDialog isOpen={isCalendarVisible} setIsOpen={setCalendarVisibility} onSelect={confirmDate} />
-        <DeleteEntryDialog isOpen={isDeleteDialogOpen} onDelete={onDelete} setIsOpen={setIsDeleteDialogOpen} />
-        <Snackbar
+        <CalendarDialog isOpen={isCalendarVisible} setIsOpen={setCalendarVisibility} onSelect={confirmDate}/>
+        <DeleteEntryDialog isOpen={isDeleteDialogOpen} onDelete={onDelete} setIsOpen={setIsDeleteDialogOpen}/>
+        <Snackbar 
           visible={isSnackbarVisible}
           onDismiss={() => setIsSnackbarVisible(false)}
           wrapperStyle={{ bottom: 80 }}
-          action={{ label: t("common:settings.buttons.close"), onPress: () => setIsSnackbarVisible(false) }}
+          action={{
+            label: t("common:settings.buttons.close"),
+            onPress: () => setIsSnackbarVisible(false),
+          }}
         >
-          {t("common:modals.delete-entry.success")}
+          {snackbarContent}
         </Snackbar>
       </Portal>
     </SafeAreaView>

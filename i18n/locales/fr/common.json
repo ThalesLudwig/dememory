@@ -22,6 +22,11 @@
 
   "local-device": "Appareil local",
 
+  "locked-state.title": "Les enregistrements sont protégés.",
+  "locked-state.description": "Le système de protection des enregistrements est activé. Cliquez sur le bouton ci-dessous pour déverrouiller, ou accédez au menu de sécurité et supprimez la protection.",
+  "locked-state.button": "Déverrouiller",
+  "locked-state.snackbar.auth-fail": "Échec d'authentification",
+
   "login.buttons.metamask": "Connecter le portefeuille",
   "login.buttons.local": "Utiliser sur l'appareil local",
   "login.descriptions.or": "Ou",

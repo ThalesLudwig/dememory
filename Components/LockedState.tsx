@@ -2,32 +2,31 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Button, Surface, Text } from "react-native-paper";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
 import { authenticateAsync } from "expo-local-authentication";
 
 import LockSvg from "./LockSvg";
-import { setIsAppLocked } from "../config/settingsSlice";
 
-const LockedState = () => {
+const LockedState = (props: { onUnlock: Function, onFail: Function }) => {
   const { t } = useTranslation("common");
-  const dispatch = useDispatch();
 
-  const onUnlock = async () => {
+  const onPress = async () => {
     const { success } = await authenticateAsync();
-    if (success) dispatch(setIsAppLocked(false));
+    if (success) {
+      props.onUnlock();
+    } else {
+      props.onFail();
+    }
   };
 
   return (
     <Surface elevation={0} style={styles.container}>
       <LockSvg width={135} height={135} />
-      <Text variant="titleLarge">{t("Os registros estão protegidos.")}</Text>
+      <Text variant="titleLarge">{t("common:locked-state.title")}</Text>
       <Text variant="bodyLarge" style={styles.description}>
-        {t(
-          "O sistema de proteção de registros está ativado. Clique no botão abaixo para desbloquear, ou acesse o menu de segurança em configurações.",
-        )}
+        {t("common:locked-state.description")}
       </Text>
-      <Button mode="contained" onPress={onUnlock}>
-        {t("Desbloquear").toUpperCase()}
+      <Button mode="contained" onPress={onPress}>
+        {t("common:locked-state.button").toUpperCase()}
       </Button>
     </Surface>
   );

@@ -22,6 +22,11 @@
 
   "local-device": "Dispositivo locale",
 
+  "locked-state.title": "I record sono protetti.",
+  "locked-state.description": "Il sistema di protezione dei record è attivato. Fai clic sul pulsante qui sotto per sbloccare, o accedi al menu di sicurezza e rimuovi la protezione.",
+  "locked-state.button": "Sblocca",
+  "locked-state.snackbar.auth-fail": "Autenticazione fallita",
+
   "login.buttons.metamask": "Collega il portafoglio",
   "login.buttons.local": "Usa sul dispositivo locale",
   "login.descriptions.or": "O",

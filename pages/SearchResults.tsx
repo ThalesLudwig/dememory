@@ -17,6 +17,7 @@ import { RootStackParamList } from "../Components/Router";
 import { EntryStorage } from "../constants/EntryStorage";
 import { removeEntry } from "../config/entriesSlice";
 import DeleteEntryDialog from "../Components/DeleteEntryDialog";
+import LockedState from "../Components/LockedState";
 
 type Props = NativeStackScreenProps<RootStackParamList, "SearchResults">;
 
@@ -30,26 +31,42 @@ export default function SearchResults({ route }: Props) {
   const [swipedId, setSwipedId] = useState("");
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
+  const [snackbarContent, setSnackbarContent] = useState("");
+  const [isUserAuthorized, setIsUserAuthorized] = useState(!isAppLocked);
 
   const results = useMemo(() => {
     const { params } = route;
     return entries.filter((entry) => {
-      const hasContent = entry.content.toLowerCase().includes(params.content.toLowerCase());
-      const hasMoods = params.moods.length === 0 || (entry.mood && params.moods.includes(entry.mood));
-      const hasStorages = params.storages.length === 0 || params.storages.includes(entry.storage || EntryStorage.LOCAL);
-      const hasTags = params.tags.length === 0 || intersection(params.tags, entry.tags).length > 0;
-      const hasInterval = isWithinInterval(new Date(entry.date).setHours(0, 0, 0), {
-        start: params.fromDate ? new Date(params.fromDate.replaceAll("/", "-")) : new Date(1970, 0, 1),
-        end: params.toDate
-          ? new Date(params.toDate.replaceAll("/", "-")).setHours(24, 60, 60)
-          : new Date().setHours(24, 60, 60),
-      });
+      const hasContent = entry.content
+        .toLowerCase()
+        .includes(params.content.toLowerCase());
+      const hasMoods =
+        params.moods.length === 0 ||
+        (entry.mood && params.moods.includes(entry.mood));
+      const hasStorages =
+        params.storages.length === 0 ||
+        params.storages.includes(entry.storage || EntryStorage.LOCAL);
+      const hasTags =
+        params.tags.length === 0 ||
+        intersection(params.tags, entry.tags).length > 0;
+      const hasInterval = isWithinInterval(
+        new Date(entry.date).setHours(0, 0, 0),
+        {
+          start: params.fromDate
+            ? new Date(params.fromDate.replaceAll("/", "-"))
+            : new Date(1970, 0, 1),
+          end: params.toDate
+            ? new Date(params.toDate.replaceAll("/", "-")).setHours(24, 60, 60)
+            : new Date().setHours(24, 60, 60),
+        },
+      );
       return hasContent && hasMoods && hasStorages && hasTags && hasInterval;
     });
   }, [entries, route.params]);
 
   const onDelete = () => {
     dispatch(removeEntry(swipedId));
+    setSnackbarContent(t("common:modals.delete-entry.success"));
     setIsSnackbarVisible(true);
     setIsDeleteDialogOpen(false);
   };
@@ -59,40 +76,61 @@ export default function SearchResults({ route }: Props) {
     setIsDeleteDialogOpen(true);
   };
 
+  const onAuthorizationFail = () => {
+    setSnackbarContent(t("common:locked-state.snackbar.auth-fail"));
+    setIsSnackbarVisible(true);
+  };
+
   return (
-    <SafeAreaView style={{ ...styles.container, backgroundColor: colors.background }}>
-      <FlatList
-        data={results}
-        renderItem={({ item }) => (
-          <EntryCard
-            onDelete={() => onSwipeDelete(item.id)}
-            onEdit={() => navigate("EditEntry", { id: item.id })}
-            onPress={() => navigate("ViewEntry", { id: item.id })}
-            {...item}
-          />
-        )}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.body}
-        ListEmptyComponent={
-          <View style={styles.emptyState}>
-            <EmptyState
-              title={t("common:search-results.titles.no-entries")}
-              description={t("common:search-results.descriptions.no-entries")}
-              buttonLabel={t("common:search-results.buttons.try-again")}
-              onClick={() => goBack()}
+    <SafeAreaView
+      style={{ ...styles.container, backgroundColor: colors.background }}
+    >
+      {isAppLocked && !isUserAuthorized ? (
+        <LockedState
+          onUnlock={() => setIsUserAuthorized(true)}
+          onFail={onAuthorizationFail}
+        />
+      ) : (
+        <FlatList
+          data={results}
+          renderItem={({ item }) => (
+            <EntryCard
+              onDelete={() => onSwipeDelete(item.id)}
+              onEdit={() => navigate("EditEntry", { id: item.id })}
+              onPress={() => navigate("ViewEntry", { id: item.id })}
+              {...item}
             />
-          </View>
-        }
-      />
+          )}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.body}
+          ListEmptyComponent={
+            <View style={styles.emptyState}>
+              <EmptyState
+                title={t("common:search-results.titles.no-entries")}
+                description={t("common:search-results.descriptions.no-entries")}
+                buttonLabel={t("common:search-results.buttons.try-again")}
+                onClick={() => goBack()}
+              />
+            </View>
+          }
+        />
+      )}
       <Portal>
-        <DeleteEntryDialog isOpen={isDeleteDialogOpen} onDelete={onDelete} setIsOpen={setIsDeleteDialogOpen} />
+        <DeleteEntryDialog
+          isOpen={isDeleteDialogOpen}
+          onDelete={onDelete}
+          setIsOpen={setIsDeleteDialogOpen}
+        />
         <Snackbar
           visible={isSnackbarVisible}
           onDismiss={() => setIsSnackbarVisible(false)}
           wrapperStyle={{ bottom: 80 }}
-          action={{ label: t("common:settings.buttons.close"), onPress: () => setIsSnackbarVisible(false) }}
+          action={{
+            label: t("common:settings.buttons.close"),
+            onPress: () => setIsSnackbarVisible(false),
+          }}
         >
-          {t("common:modals.delete-entry.success")}
+          {snackbarContent}
         </Snackbar>
       </Portal>
     </SafeAreaView>

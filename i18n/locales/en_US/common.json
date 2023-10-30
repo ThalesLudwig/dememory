@@ -22,6 +22,11 @@
 
   "local-device": "Local Device",
 
+  "locked-state.title": "Entries are protected.",
+  "locked-state.description": "The entry protection system is enabled. Click the button below to unlock, or access the security menu and remove protection.",
+  "locked-state.button": "Unlock",
+  "locked-state.snackbar.auth-fail": "Authentication failed",
+
   "login.buttons.metamask": "Connect Wallet",
   "login.buttons.local": "Use on local device",
   "login.descriptions.or": "Or",

@@ -22,6 +22,11 @@
 
   "local-device": "Lokales Gerät",
 
+  "locked-state.title": "Die Daten sind geschützt.",
+  "locked-state.description": "Das Datenschutzsystem ist aktiviert. Klicken Sie auf die Schaltfläche unten, um zu entsperren, oder rufen Sie das Sicherheitsmenü auf und entfernen Sie den Schutz.",
+  "locked-state.button": "Entsperren",
+  "locked-state.snackbar.auth-fail": "Authentifizierung fehlgeschlagen",
+
   "login.buttons.metamask": "Wallet verbinden",
   "login.buttons.local": "Auf lokalem Gerät verwenden",
   "login.descriptions.or": "Oder",

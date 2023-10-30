@@ -22,6 +22,11 @@
 
   "local-device": "Dispositivo Local",
 
+  "locked-state.title": "Os registros estão protegidos.",
+  "locked-state.description": "O sistema de proteção de registros está ativado. Clique no botão abaixo para desbloquear, ou acesse o menu de segurança e remova a proteção.",
+  "locked-state.button": "Desbloquear",
+  "locked-state.snackbar.auth-fail": "Autenticação falhou",
+
   "login.buttons.metamask": "Conectar Carteira",
   "login.buttons.local": "Usar no dispositivo local",
   "login.descriptions.or": "Ou",
