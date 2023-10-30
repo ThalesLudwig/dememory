@@ -5,6 +5,7 @@ import {
   Avatar,
   Button,
   Divider,
+  IconButton,
   List,
   Portal,
   Snackbar,
@@ -29,6 +30,7 @@ import ColorsSettings from "../Components/Settings/ColorsSettings";
 import UserAvatar from "../Components/UserAvatar";
 import { setShowFavorites } from "../config/settingsSlice";
 import LogoutDialog from "../Components/LogoutDialog";
+import { ICON_SIZE } from "../constants/icons";
 
 const isDeveloper = process.env.EXPO_PUBLIC_IS_DEVELOPER || false;
 
@@ -76,6 +78,7 @@ export default function Settings() {
     <SafeAreaView style={{ ...styles.container, backgroundColor: colors.background }}>
       <ScrollView>
         <View style={styles.body}>
+          {/* Avatar */}
           <View style={styles.avatar}>
             <Pressable style={styles.avatar} onPress={() => navigate("Profile")}>
               {!wallet && <Avatar.Icon icon="account-outline" size={70} />}
@@ -98,40 +101,76 @@ export default function Settings() {
             )}
             {!!isLoading && <ActivityIndicator />}
           </View>
-          <Divider />
+
+          {/* Preferences */}
           <List.Section>
             <List.Subheader>{t("common:settings.titles.preferences")}</List.Subheader>
-            <List.Item title={t("common:settings.menus.theme")} onPress={() => setIsThemeVisible(true)} />
-            <List.Item title={t("common:settings.menus.colors")} onPress={() => setIsColorsVisible(true)} />
-            <List.Item title={t("common:settings.menus.languages")} onPress={() => setIsLanguagesVisible(true)} />
-            <View style={styles.favoritesToogle}>
-              <Text variant="bodyLarge">{t("common:home.titles.recent-favorites")}</Text>
-              <Switch value={showFavorites} onValueChange={toogleShowFavorites} />
+            <View style={{ backgroundColor: colors.elevation.level1, ...styles.listContainer }}>
+              <Pressable style={styles.listItem} onPress={() => setIsThemeVisible(true)}>
+                <IconButton icon="theme-light-dark" size={ICON_SIZE} iconColor={colors.primary} />
+                <Text variant="bodyLarge">{t("common:settings.menus.theme")}</Text>
+              </Pressable>
+              <Divider />
+              <Pressable style={styles.listItem} onPress={() => setIsColorsVisible(true)}>
+                <IconButton icon="palette" size={ICON_SIZE} iconColor={colors.primary} />
+                <Text variant="bodyLarge" style={styles.listItem}>{t("common:settings.menus.colors")}</Text>
+              </Pressable>
+              <Divider />
+              <Pressable style={styles.listItem} onPress={() => setIsLanguagesVisible(true)}>
+                <IconButton icon="translate" size={ICON_SIZE} iconColor={colors.primary} />
+                <Text variant="bodyLarge" style={styles.listItem}>{t("common:settings.menus.languages")}</Text>
+              </Pressable>
+              <Divider />
+              <View style={styles.favoritesToogle}>
+                <View style={styles.listItem}>
+                  <IconButton icon="heart" size={ICON_SIZE} iconColor={colors.primary} />
+                  <Text variant="bodyLarge">{t("common:home.titles.recent-favorites")}</Text>
+                </View>
+                <Switch value={showFavorites} onValueChange={toogleShowFavorites} />
+              </View>
             </View>
           </List.Section>
-          <Divider />
+
+          {/* Security */}
           <List.Section>
             <List.Subheader>{t("common:settings.titles.security")}</List.Subheader>
-            <List.Item title={t("common:settings.menus.app-lock")} onPress={() => navigate("DataLock")} />
-            <List.Item
-              title={t("common:settings.menus.therapy-share")}
-              onPress={() => setIsUnavailableSnackbarVisible(true)}
-            />
+              <View style={{ backgroundColor: colors.elevation.level1, ...styles.listContainer }}>
+              <Pressable style={styles.listItem} onPress={() => navigate("DataLock")}>
+                <IconButton icon="lock" size={ICON_SIZE} iconColor={colors.primary} />
+                <Text variant="bodyLarge" style={styles.listItem}>{t("common:settings.menus.app-lock")}</Text>
+              </Pressable>
+              <Pressable style={styles.listItem} onPress={() => setIsUnavailableSnackbarVisible(true)}>
+                <IconButton icon="share" size={ICON_SIZE} iconColor={colors.primary} />
+                <Text variant="bodyLarge" style={styles.listItem}>{t("common:settings.menus.therapy-share")}</Text>
+              </Pressable>
+            </View>
           </List.Section>
-          <Divider />
+
+          {/* Entries */}
           <List.Section>
             <List.Subheader>{t("common:settings.titles.entries")}</List.Subheader>
-            <List.Item title={t("common:settings.menus.save-backup")} onPress={() => navigate("SaveBackup")} />
-            <List.Item title={t("common:settings.backup.retrieve.title")} onPress={() => navigate("RetrieveBackup")} />
+            <View style={{ backgroundColor: colors.elevation.level1, ...styles.listContainer }}>
+              <Pressable style={styles.listItem} onPress={() => navigate("SaveBackup")}>
+                <IconButton icon="download" size={ICON_SIZE} iconColor={colors.primary} />
+                <Text variant="bodyLarge" style={styles.listItem}>{t("common:settings.menus.save-backup")}</Text>
+              </Pressable>
+              <Pressable style={styles.listItem} onPress={() => navigate("RetrieveBackup")}>
+                <IconButton icon="upload" size={ICON_SIZE} iconColor={colors.primary} />
+                <Text variant="bodyLarge" style={styles.listItem}>{t("common:settings.backup.retrieve.title")}</Text>
+              </Pressable>
+            </View>
           </List.Section>
-          <Divider />
+
+          {/* Developer */}
           {isDeveloper && (
             <List.Section>
               <List.Subheader>{t("common:settings.titles.developer")}</List.Subheader>
-              <List.Item
-                title={t("common:settings.menus.reset-entries")}
-                onPress={() => setIsResetDialogVisible(true)}
-              />
+              <View style={{ backgroundColor: colors.elevation.level1, ...styles.listContainer }}>
+                <Pressable style={styles.listItem} onPress={() => setIsResetDialogVisible(true)}>
+                  <IconButton icon="trash-can-outline" size={ICON_SIZE} iconColor={colors.primary} />
+                  <Text variant="bodyLarge" style={styles.listItem}>{t("common:settings.menus.reset-entries")}</Text>
+                </Pressable>
+              </View>
             </List.Section>
           )}
           <Button mode="contained">{t("common:settings.buttons.buy-app").toUpperCase()}</Button>
