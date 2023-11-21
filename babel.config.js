@@ -6,12 +6,12 @@ module.exports = function (api) {
       production: {
         plugins: [
           "react-native-paper/babel",
-          [
-            "expo-document-picker",
-            {
-              iCloudContainerEnvironment: "Production",
-            },
-          ],
+          // [
+          //   "expo-document-picker",
+          //   {
+          //     iCloudContainerEnvironment: "Production",
+          //   },
+          // ],
         ],
       },
     },
