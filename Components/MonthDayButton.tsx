@@ -11,9 +11,10 @@ import { setDate } from "../config/dateSlice";
 type MonthDayButtonProps = {
   date: Day;
   isSelected?: boolean;
+  isMarked?: boolean;
 };
 
-const MonthDayButton = ({ date, isSelected }: MonthDayButtonProps) => {
+const MonthDayButton = ({ date, isSelected, isMarked }: MonthDayButtonProps) => {
   const dispatch = useDispatch();
   const { colors, dark } = useTheme();
 
@@ -40,6 +41,7 @@ const MonthDayButton = ({ date, isSelected }: MonthDayButtonProps) => {
           <Text style={selectedDayTextStyle}>{date.value}</Text>
         </View>
         <Text>{date.name.toUpperCase()}</Text>
+        {isMarked && <View style={{ ...styles.dot, backgroundColor: colors.primary }} />}
       </Surface>
     </Pressable>
   );
@@ -74,6 +76,12 @@ const styles = StyleSheet.create({
   dayText: {
     fontWeight: "bold",
   },
+  dot: {
+    width: 5,
+    height: 5,
+    borderRadius: 100,
+    marginTop: 10,
+  }
 });
 
 export default MonthDayButton;

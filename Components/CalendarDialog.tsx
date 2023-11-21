@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import { Theme } from "react-native-calendars/src/types";
 
 import { useDateLocale } from "../hooks/useDateLocale";
+import { useEntryDates } from "../hooks/useEntryDates";
 
 type DialogProps = {
   isOpen: boolean;
@@ -17,6 +18,7 @@ type DialogProps = {
 const CalendarDialog = ({ isOpen, onSelect, setIsOpen }: DialogProps) => {
   const { colors } = useTheme();
   const locale = useDateLocale();
+  const entryDates = useEntryDates();
 
   useEffect(() => {
     LocaleConfig.defaultLocale = locale.code;
@@ -52,7 +54,8 @@ const CalendarDialog = ({ isOpen, onSelect, setIsOpen }: DialogProps) => {
           theme={theme}
           maxDate={today}
           markedDates={{
-            [selectedDay]: { selected: true },
+            ...entryDates.map((date) => ({ [date]: { marked: true } })).reduce((acc, val) => ({ ...acc, ...val })),
+            [selectedDay]: { selected: true, marked: entryDates.includes(selectedDay) },
           }}
           onDayPress={(day) => {
             setSelectedDay(day.dateString);

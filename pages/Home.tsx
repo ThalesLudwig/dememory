@@ -24,6 +24,7 @@ import { useDateLocale } from "../hooks/useDateLocale";
 import CalendarDialog from "../Components/CalendarDialog";
 import FavoriteCardLocked from "../Components/FavoriteCardLocked";
 import EntryCardLocked from "../Components/EntryCardLocked";
+import { useEntryDates } from "../hooks/useEntryDates";
 
 export default function Home() {
   const { t } = useTranslation("common");
@@ -37,6 +38,7 @@ export default function Home() {
   const currentDate = useCurrentDate();
   const favoriteEntries = useFavoriteEntries();
   const { colors } = useTheme();
+  const entryDates = useEntryDates();
   const calendarRef = useRef<FlatList>(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isCalendarVisible, setCalendarVisibility] = useState(false);
@@ -162,7 +164,7 @@ export default function Home() {
           data={daysInMonth}
           ref={calendarRef}
           showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => (<MonthDayButton date={item} isSelected={item.key === currentDate("yyyy-MM-dd")} />)}
+          renderItem={({ item }) => (<MonthDayButton date={item} isMarked={entryDates.includes(item.key)} isSelected={item.key === currentDate("yyyy-MM-dd")} />)}
           keyExtractor={(item) => item.key}
           extraData={selectedDay}
           style={{ flexGrow: 0 }}

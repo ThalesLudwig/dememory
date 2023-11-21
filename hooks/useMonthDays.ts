@@ -1,5 +1,4 @@
 import { eachDayOfInterval, format } from "date-fns";
-import { ptBR } from "date-fns/locale";
 import { useMemo } from "react";
 
 import { Day } from "../types/Day";
