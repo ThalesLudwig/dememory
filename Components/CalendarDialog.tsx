@@ -46,6 +46,12 @@ const CalendarDialog = ({ isOpen, onSelect, setIsOpen }: DialogProps) => {
     [colors],
   );
 
+  const markedDates = useMemo(() => {
+    const dates = entryDates.map((date) => ({ [date]: { marked: true, dotColor: colors.primary } }))
+    if (dates.length === 0) return {};
+    return dates.reduce((acc, val) => ({ ...acc, ...val }));
+  }, [entryDates]);
+
   return (
     <Dialog key={colors.primary} visible={isOpen} onDismiss={() => setIsOpen(false)}>
       <Dialog.Content>
@@ -54,8 +60,8 @@ const CalendarDialog = ({ isOpen, onSelect, setIsOpen }: DialogProps) => {
           theme={theme}
           maxDate={today}
           markedDates={{
-            ...entryDates.map((date) => ({ [date]: { marked: true } })).reduce((acc, val) => ({ ...acc, ...val })),
-            [selectedDay]: { selected: true, marked: entryDates.includes(selectedDay) },
+            ...markedDates,
+            [selectedDay]: { selected: true, marked: entryDates.includes(selectedDay), selectedColor: colors.primary, selectedTextColor: colors.onPrimary },
           }}
           onDayPress={(day) => {
             setSelectedDay(day.dateString);
