@@ -17,7 +17,8 @@ export default function Login() {
   const { goBack } = useNavigation<any>();
   const { showLoginPage } = useSelector((state: RootState) => state.profile);
 
-  const [isUnavailableSnackbarVisible, setIsUnavailableSnackbarVisible] = useState(false);
+  const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
+  const [snackbarContent, setSnackbarContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const { open, isConnected, address } = useWalletConnectModal();
@@ -37,10 +38,16 @@ export default function Login() {
     }
   }, [isConnected, address]);
 
-  const onLogin = async () => {
+  const onLogin = () => {
     setIsLoading(true);
-    await open({ route: "ConnectWallet" });
-    setIsLoading(false);
+    open({ route: "ConnectWallet" })
+      .catch(error => {
+        setSnackbarContent(error);
+        setIsSnackbarVisible(true);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -75,12 +82,12 @@ export default function Login() {
       )}
       <Portal>
         <Snackbar
-          visible={isUnavailableSnackbarVisible}
-          onDismiss={() => setIsUnavailableSnackbarVisible(false)}
+          visible={isSnackbarVisible}
+          onDismiss={() => setIsSnackbarVisible(false)}
           wrapperStyle={{ bottom: showLoginPage ? 0 : 80 }}
-          action={{ label: t("common:settings.buttons.close"), onPress: () => setIsUnavailableSnackbarVisible(false) }}
+          action={{ label: t("common:settings.buttons.close"), onPress: () => setIsSnackbarVisible(false) }}
         >
-          {t("common:login.snackbar.not-available")}
+          {snackbarContent}
         </Snackbar>
       </Portal>
     </View>
