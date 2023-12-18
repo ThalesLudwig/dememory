@@ -41,7 +41,7 @@
   "modals.delete-entry.success": "エントリが削除されました",
 
   "modals.logout.title": "ログアウトしますか？",
-  "modals.logout.descriptions": "この操作は現在のウォレットを切断します。ユーザー名とメールアドレスは削除されません。",
+  "modals.logout.descriptions": "この操作は現在のウォレットを切断します。",
   "modals.logout.buttons.yes": "ログアウト",
   "modals.logout.buttons.no": "キャンセル",
 

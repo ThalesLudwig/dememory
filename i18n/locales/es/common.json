@@ -41,7 +41,7 @@
   "modals.delete-entry.success": "Entrada eliminada",
 
   "modals.logout.title": "¿Estás seguro de que deseas cerrar sesión?",
-  "modals.logout.descriptions": "Esta acción desconectará tu billetera actual. Tu nombre de usuario y correo electrónico no serán eliminados.",
+  "modals.logout.descriptions": "Esta acción desconectará tu billetera actual.",
   "modals.logout.buttons.yes": "Cerrar sesión",
   "modals.logout.buttons.no": "Cancelar",
 

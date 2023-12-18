@@ -41,7 +41,7 @@
   "modals.delete-entry.success": "Registro removido",
 
   "modals.logout.title": "Tem certeza que quer sair?",
-  "modals.logout.descriptions": "Esta ação irá desconetar sua carteira atual. Seu nome de usuário e email não serão removidos.",
+  "modals.logout.descriptions": "Esta ação irá desconetar sua carteira atual.",
   "modals.logout.buttons.yes": "Sair",
   "modals.logout.buttons.no": "Cancelar",
 

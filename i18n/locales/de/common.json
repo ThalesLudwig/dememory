@@ -41,7 +41,7 @@
   "modals.delete-entry.success": "Eintrag gelöscht",
 
   "modals.logout.title": "Möchten Sie sich wirklich abmelden?",
-  "modals.logout.descriptions": "Diese Aktion wird Ihre aktuelle Brieftasche trennen. Ihr Benutzername und Ihre E-Mail werden nicht entfernt.",
+  "modals.logout.descriptions": "Diese Aktion wird Ihre aktuelle Brieftasche trennen.",
   "modals.logout.buttons.yes": "Abmelden",
   "modals.logout.buttons.no": "Abbrechen",
 

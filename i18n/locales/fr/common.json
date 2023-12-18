@@ -41,7 +41,7 @@
   "modals.delete-entry.success": "Entrée supprimée",
 
   "modals.logout.title": "Êtes-vous sûr de vouloir vous déconnecter?",
-  "modals.logout.descriptions": "Cette action déconnectera votre portefeuille actuel. Votre nom d'utilisateur et votre e-mail ne seront pas supprimés.",
+  "modals.logout.descriptions": "Cette action déconnectera votre portefeuille actuel.",
   "modals.logout.buttons.yes": "Se déconnecter",
   "modals.logout.buttons.no": "Annuler",
 

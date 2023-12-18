@@ -7,9 +7,9 @@ import { useSelector } from "react-redux";
 
 import { RootState } from "../config/store";
 
-type UserAvatarProps = { small?: boolean };
+type UserAvatarProps = { small?: boolean, size?: number };
 
-export default function UserAvatar({ small = false }: UserAvatarProps) {
+export default function UserAvatar({ small = false, size }: UserAvatarProps) {
   const { wallet } = useSelector((state: RootState) => state.profile);
   const avatarSize = useMemo(() => (small ? "30" : "60"), [small]);
   const svgString = toSvg(wallet || "0", parseInt(avatarSize));
@@ -17,14 +17,14 @@ export default function UserAvatar({ small = false }: UserAvatarProps) {
 
   return (
     <View style={{ ...styles.container, backgroundColor: colors.primaryContainer }}>
-      <SvgXml xml={svgString} width={avatarSize} height={avatarSize} />
+      <SvgXml xml={svgString} width={size ?? avatarSize} height={size ?? avatarSize} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 50,
+    borderRadius: 100,
     padding: 5,
   },
 });

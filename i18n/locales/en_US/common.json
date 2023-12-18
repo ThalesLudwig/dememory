@@ -41,7 +41,7 @@
   "modals.delete-entry.success": "Entry deleted",
 
   "modals.logout.title": "Are you sure you want to logout?",
-  "modals.logout.descriptions": "This action will disconnect your current wallet. Your user name and email will not be removed.",
+  "modals.logout.descriptions": "This action will disconnect your current wallet.",
   "modals.logout.buttons.yes": "Logout",
   "modals.logout.buttons.no": "Cancel",
 

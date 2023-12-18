@@ -41,7 +41,7 @@
   "modals.delete-entry.success": "Voce cancellata",
 
   "modals.logout.title": "Sei sicuro di voler effettuare il logout?",
-  "modals.logout.descriptions": "Questa azione disconnetterà il tuo portafoglio attuale. Il tuo nome utente e l'email non saranno rimossi.",
+  "modals.logout.descriptions": "Questa azione disconnetterà il tuo portafoglio attuale.",
   "modals.logout.buttons.yes": "Logout",
   "modals.logout.buttons.no": "Annulla",
 

@@ -1,6 +1,6 @@
 import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-navigation";
-import { ActivityIndicator, Avatar, Button, Divider, Portal, Snackbar, TextInput, useTheme } from "react-native-paper";
+import { ActivityIndicator, Avatar, Button, Portal, Snackbar, TextInput, useTheme } from "react-native-paper";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,23 +10,21 @@ import * as Clipboard from "expo-clipboard";
 
 import { styles } from "../styles/profileStyles";
 import { RootState } from "../config/store";
-import { setEmail, setName, setWallet } from "../config/profileSlice";
+import { setName, setWallet } from "../config/profileSlice";
 import { walletShortener } from "../utils/walletShortener";
 import LogoutDialog from "../Components/LogoutDialog";
-import Alert from "../Components/Alert";
 import UserAvatar from "../Components/UserAvatar";
 
 export default function Profile() {
   const dispatch = useDispatch();
   const { colors } = useTheme();
   const { t } = useTranslation("common");
-  const { email, name, wallet } = useSelector((state: RootState) => state.profile);
+  const { name, wallet } = useSelector((state: RootState) => state.profile);
   const { open: openConnectDialog } = useWeb3Modal()
   const { address, isConnected } = useAccount()
   const { disconnect } = useDisconnect()
   const [isLoading, setIsLoading] = useState(false);
   const [nameInput, setNameInput] = useState(name);
-  const [emailInput, setEmailInput] = useState(email);
   const [isConfirmSnackbarVisible, setIsConfirmSnackbarVisible] = useState(false);
   const [isCopySnackbarVisible, setIsCopySnackbarVisible] = useState(false);
   const [isLogoutDialogVisible, setIsLogoutDialogVisible] = useState(false);
@@ -43,7 +41,6 @@ export default function Profile() {
 
   const onUpdate = () => {
     dispatch(setName(nameInput));
-    dispatch(setEmail(emailInput));
     setIsConfirmSnackbarVisible(true);
   };
 
@@ -64,13 +61,10 @@ export default function Profile() {
       <ScrollView>
         <View style={styles.body}>
           <View style={styles.avatar}>
-            {!wallet && <Avatar.Icon icon="account-outline" size={70} />}
-            {!!wallet && <UserAvatar />}
+            {!wallet && <Avatar.Icon icon="account-outline" size={80} />}
+            {!!wallet && <UserAvatar size={80} />}
           </View>
           <TextInput label={t("common:profile.inputs.name")} value={nameInput} onChangeText={setNameInput} />
-          <TextInput label={t("common:profile.inputs.email")} value={emailInput} onChangeText={setEmailInput} />
-          <Alert icon="alert" text={t("common:profile.descriptions.therapy-share")} />
-          <Divider />
           <TextInput
             disabled
             label={t("common:wallet")}
