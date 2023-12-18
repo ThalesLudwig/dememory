@@ -1,24 +1,55 @@
 import { View } from "react-native";
 import { SafeAreaView } from "react-navigation";
-import { Button, Portal, Snackbar, Switch, Text, useTheme } from "react-native-paper";
-import { useState } from "react";
+import { ActivityIndicator, Button, Portal, Snackbar, Switch, Text, useTheme } from "react-native-paper";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system";
 import { useDispatch } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 
 import { styles } from "../styles/retrieveBackupStyles";
 import RetrieveSvg from "../Components/RetrieveSvg";
 import { resetState, mergeState } from "../config/entriesSlice";
 import Alert from "../Components/Alert";
+import { useRSAKeys } from "../hooks/useRSAKeys";
+import { Entry } from "../types/Entry";
 
 export default function RetrieveBackup() {
   const { colors } = useTheme();
   const { t } = useTranslation("common");
   const dispatch = useDispatch();
+  const { navigate } = useNavigation<any>();
+  const { error, isLoading, decryptContent, hasKeys } = useRSAKeys();
   const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
   const [snackbarContent, setSnackbarContent] = useState("");
   const [shouldMerge, setShouldMerge] = useState(true);
+  const [displayManageKeys, setDisplayManageKeys] = useState(false);
+
+  useEffect(() => {
+    if (error) {
+      setSnackbarContent(t("common:settings.backup.retrieve.error"));
+      setIsSnackbarVisible(true);
+      console.error(error);
+    }
+  }, [error]);
+
+  const parseEntries = async (resultStr: string) => {
+    let entries: Entry[] = [];
+    const isEncrypted = resultStr[resultStr.length - 1] === "=";
+    if (isEncrypted && !hasKeys) {
+      setDisplayManageKeys(true);
+      throw new Error(t("common:settings.backup.retrieve.key-error"));
+    }
+    if (isEncrypted) {
+      const decryptedContent = await decryptContent(resultStr);
+      if (!decryptedContent) throw new Error("common:settings.backup.retrieve.key-error");
+      entries = JSON.parse(decryptedContent ?? "");
+    } else {
+      entries = JSON.parse(resultStr);
+    }
+    return entries;
+  };
 
   const retrieveBackup = async () => {
     try {
@@ -30,12 +61,12 @@ export default function RetrieveBackup() {
       const fileUri = fileResponse.assets?.[0].uri;
       if (!fileUri) throw new Error();
       const resultStr = await FileSystem.readAsStringAsync(fileUri);
-      const entries = JSON.parse(resultStr);
+      const entries = await parseEntries(resultStr);
       dispatch(shouldMerge ? mergeState(entries) : resetState(entries));
       setSnackbarContent(t("common:settings.backup.retrieve.success"));
       setIsSnackbarVisible(true);
-    } catch (error) {
-      setSnackbarContent(t("common:settings.backup.retrieve.error"));
+    } catch (error: any) {
+      setSnackbarContent(error.message ?? t("common:settings.backup.retrieve.error"));
       setIsSnackbarVisible(true);
     }
   };
@@ -55,9 +86,17 @@ export default function RetrieveBackup() {
           <Switch value={shouldMerge} onValueChange={setShouldMerge} />
         </View>
         {!shouldMerge && <Alert text={t("common:settings.backup.retrieve.alert.merge")} isDanger />}
-        <Button mode="contained" onPress={retrieveBackup}>
-          {t("common:settings.backup.retrieve.title").toUpperCase()}
-        </Button>
+        {isLoading && <ActivityIndicator />}
+        {!isLoading && (
+          <Button mode="contained" onPress={retrieveBackup}>
+            {t("common:settings.backup.retrieve.title").toUpperCase()}
+          </Button>
+        )}
+        {displayManageKeys && (
+          <Button mode="outlined" onPress={() => navigate("ManageKeys")}>
+            {t("common:settings.menus.manage-keys").toUpperCase()}
+          </Button>
+        )}
       </View>
       <Portal>
         <Snackbar

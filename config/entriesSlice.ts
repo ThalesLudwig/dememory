@@ -28,7 +28,10 @@ const EntriesSlice = createSlice({
       state.value = payload;
     },
     mergeState(state, { payload }) {
-      state.value = [...state.value, ...payload];
+      const existingIds = new Set(state.value.map(entry => entry.id));
+      const newEntries = payload.filter((entry: Entry) => !existingIds.has(entry.id));
+      const newState = [...state.value, ...newEntries];
+      state.value = newState;
     },
   },
 });

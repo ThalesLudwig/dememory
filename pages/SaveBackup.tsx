@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { SafeAreaView } from "react-navigation";
-import { Button, Portal, Snackbar, Switch, Text, useTheme } from "react-native-paper";
-import { useState } from "react";
+import { Button, Portal, Snackbar, Switch, Text, useTheme, ActivityIndicator } from "react-native-paper";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import * as FileSystem from "expo-file-system";
@@ -10,6 +10,8 @@ import * as Sharing from "expo-sharing";
 import { styles } from "../styles/saveBackupStyles";
 import BackupSvg from "../Components/BackupSvg";
 import { RootState } from "../config/store";
+import Alert from "../Components/Alert";
+import { useRSAKeys } from "../hooks/useRSAKeys";
 
 const fileUri = FileSystem.documentDirectory + "dememory.json";
 
@@ -17,13 +19,23 @@ export default function SaveBackup() {
   const { colors } = useTheme();
   const { t } = useTranslation("common");
   const { value: entries } = useSelector((state: RootState) => state.entries);
-
+  const { error, isLoading, encryptContent } = useRSAKeys();
   const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
   const [snackbarContent, setSnackbarContent] = useState("");
-  const [shouldEncrypt, setShouldEncrypt] = useState(false);
+  const [shouldEncrypt, setShouldEncrypt] = useState(true);
+
+  useEffect(() => {
+    if (error) {
+      setSnackbarContent(t("common:settings.backup.save.error"));
+      setIsSnackbarVisible(true);
+      console.error(error);
+    }
+  }, [error]);
 
   const saveBackup = async () => {
-    FileSystem.writeAsStringAsync(fileUri, JSON.stringify(entries), { encoding: FileSystem.EncodingType.UTF8 });
+    let content = JSON.stringify(entries)
+    if (shouldEncrypt) content = await encryptContent(content);
+    FileSystem.writeAsStringAsync(fileUri, content, { encoding: FileSystem.EncodingType.UTF8 });
     Sharing.shareAsync(fileUri)
       .then(() => {
         setSnackbarContent(t("common:settings.backup.save.success"));
@@ -47,11 +59,17 @@ export default function SaveBackup() {
         </View>
         <View style={styles.switch}>
           <Text variant="bodyLarge">{t("common:settings.backup.save.encrypt-toogle")}</Text>
-          <Switch value={shouldEncrypt} onValueChange={setShouldEncrypt} disabled />
+          <Switch value={shouldEncrypt} onValueChange={setShouldEncrypt} />
         </View>
-        <Button mode="contained" onPress={saveBackup}>
-          {t("common:settings.menus.save-backup").toUpperCase()}
-        </Button>
+        {!shouldEncrypt && (
+          <Alert icon="key" text={t("common:settings.backup.save.alert.encrypt")} />
+        )}
+        {isLoading && <ActivityIndicator />}
+        {!isLoading && (
+          <Button mode="contained" onPress={saveBackup}>
+            {t("common:settings.menus.save-backup").toUpperCase()}
+          </Button>
+        )}
       </View>
       <Portal>
         <Snackbar

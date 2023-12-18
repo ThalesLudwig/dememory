@@ -24,6 +24,7 @@ import Profile from "../pages/Profile";
 import SaveBackup from "../pages/SaveBackup";
 import RetrieveBackup from "../pages/RetrieveBackup";
 import DataLock from "../pages/DataLock";
+import ManageKeys from "../pages/ManageKeys";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -39,6 +40,7 @@ export type RootStackParamList = {
   SaveBackup: undefined;
   RetrieveBackup: undefined;
   DataLock: undefined;
+  ManageKeys: undefined;
 };
 
 export type RootTabParamList = {
@@ -196,6 +198,11 @@ function SettingsStack() {
         name="DataLock"
         component={DataLock}
         options={{ headerTitle: t("common:settings.menus.app-lock"), header: (props) => <Header {...props} /> }}
+      />
+      <Stack.Screen
+        name="ManageKeys"
+        component={ManageKeys}
+        options={{ headerTitle: t("common:settings.menus.manage-keys"), header: (props) => <Header {...props} /> }}
       />
     </Stack.Navigator>
   );

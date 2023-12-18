@@ -149,6 +149,11 @@ export default function Settings() {
                 <IconButton icon="share" size={ICON_SIZE} iconColor={colors.primary} />
                 <Text variant="bodyLarge" style={styles.listItem}>{t("common:settings.menus.therapy-share")}</Text>
               </Pressable>
+              <Divider />
+              <Pressable style={styles.listItem} onPress={() => navigate("ManageKeys")}>
+                <IconButton icon="key" size={ICON_SIZE} iconColor={colors.primary} />
+                <Text variant="bodyLarge" style={styles.listItem}>{t("common:settings.menus.manage-keys")}</Text>
+              </Pressable>
             </View>
           </List.Section>
 
