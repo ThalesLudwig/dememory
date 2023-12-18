@@ -1,9 +1,12 @@
-import { useTheme } from "react-native-paper";
-import { IProviderMetadata, WalletConnectModal } from "@walletconnect/modal-react-native";
+import '@walletconnect/react-native-compat';
+
+import { WagmiConfig } from 'wagmi'
+import { mainnet, polygon, arbitrum } from 'viem/chains'
+import { createWeb3Modal, defaultWagmiConfig, Web3Modal } from '@web3modal/wagmi-react-native'
 
 const projectId = process.env.EXPO_PUBLIC_WALLET_CONNECT_ID || "";
 
-const providerMetadata: IProviderMetadata = {
+const metadata = {
   name: "Dememory",
   description: "Your memories on the Blockchain.",
   url: "https://your-project-website.com/",
@@ -11,8 +14,15 @@ const providerMetadata: IProviderMetadata = {
   redirect: { native: "dememory://" },
 };
 
-export default function WalletProvider() {
-  const { colors } = useTheme();
+const chains = [mainnet, polygon, arbitrum]
+const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
+createWeb3Modal({ projectId, chains, wagmiConfig })
 
-  return <WalletConnectModal accentColor={colors.primary} projectId={projectId} providerMetadata={providerMetadata} />;
+export default function WalletProvider({ children }: { children: React.ReactNode }) {
+  return (
+    <WagmiConfig config={wagmiConfig}>
+      {children}
+      <Web3Modal />
+    </WagmiConfig>
+  );
 }

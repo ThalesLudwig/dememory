@@ -18,9 +18,10 @@ export default function App() {
         <ThemeProvider>
           <LocaleProvider>
             <NavigationProvider>
-              <WalletProvider />
-              <StatusBar style="auto" />
-              <Router />
+              <WalletProvider>
+                <StatusBar style="auto" />
+                <Router />
+              </WalletProvider>
             </NavigationProvider>
           </LocaleProvider>
         </ThemeProvider>

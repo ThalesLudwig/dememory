@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { useWalletConnectModal } from "@walletconnect/modal-react-native";
+import { useWeb3Modal } from "@web3modal/wagmi-react-native";
+import { useAccount } from "wagmi";
 
 import { styles } from "../styles/loginStyles";
 import { setShowLoginPage, setWallet } from "../config/profileSlice";
@@ -16,12 +17,11 @@ export default function Login() {
   const { t } = useTranslation("common");
   const { goBack } = useNavigation<any>();
   const { showLoginPage } = useSelector((state: RootState) => state.profile);
-
   const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
   const [snackbarContent, setSnackbarContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  const { open, isConnected, address } = useWalletConnectModal();
+  const { open: openConnectDialog } = useWeb3Modal()
+  const { address, isConnected } = useAccount()
 
   const onUseOnLocalDevice = () => {
     if (!showLoginPage) {
@@ -40,7 +40,7 @@ export default function Login() {
 
   const onLogin = () => {
     setIsLoading(true);
-    open({ route: "ConnectWallet" })
+    openConnectDialog()
       .catch(error => {
         setSnackbarContent(error);
         setIsSnackbarVisible(true);

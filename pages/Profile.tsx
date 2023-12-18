@@ -4,8 +4,9 @@ import { ActivityIndicator, Avatar, Button, Divider, Portal, Snackbar, TextInput
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
+import { useWeb3Modal } from "@web3modal/wagmi-react-native";
+import { useAccount, useDisconnect } from "wagmi";
 import * as Clipboard from "expo-clipboard";
-import { useWalletConnectModal } from "@walletconnect/modal-react-native";
 
 import { styles } from "../styles/profileStyles";
 import { RootState } from "../config/store";
@@ -19,9 +20,10 @@ export default function Profile() {
   const dispatch = useDispatch();
   const { colors } = useTheme();
   const { t } = useTranslation("common");
-  const { provider, open: openConnectDialog, address, isConnected } = useWalletConnectModal();
   const { email, name, wallet } = useSelector((state: RootState) => state.profile);
-
+  const { open: openConnectDialog } = useWeb3Modal()
+  const { address, isConnected } = useAccount()
+  const { disconnect } = useDisconnect()
   const [isLoading, setIsLoading] = useState(false);
   const [nameInput, setNameInput] = useState(name);
   const [emailInput, setEmailInput] = useState(email);
@@ -45,17 +47,15 @@ export default function Profile() {
     setIsConfirmSnackbarVisible(true);
   };
 
-  const logout = async () => {
-    setIsLoading(true);
+  const logout = () => {
     setIsLogoutDialogVisible(false);
-    await provider?.disconnect();
+    disconnect();
     dispatch(setWallet(""));
-    setIsLoading(false);
   };
 
   const onLogin = async () => {
     setIsLoading(true);
-    await openConnectDialog({ route: "ConnectWallet" });
+    await openConnectDialog();
     setIsLoading(false);
   };
 

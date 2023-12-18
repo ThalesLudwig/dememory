@@ -17,7 +17,8 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
-import { useWalletConnectModal } from "@walletconnect/modal-react-native";
+import { useWeb3Modal } from '@web3modal/wagmi-react-native'
+import { useAccount, useDisconnect } from 'wagmi'
 
 import { styles } from "../styles/settingsStyles";
 import ThemeSettings from "../Components/Settings/ThemeSettings";
@@ -41,8 +42,9 @@ export default function Settings() {
   const dispatch = useDispatch();
   const { name: username, wallet } = useSelector((state: RootState) => state.profile);
   const { showFavorites } = useSelector((state: RootState) => state.settings);
-  const { provider, open: openConnectDialog, address, isConnected } = useWalletConnectModal();
-
+  const { open: openConnectDialog } = useWeb3Modal()
+  const { address, isConnected } = useAccount()
+  const { disconnect } = useDisconnect()
   const [isLoading, setIsLoading] = useState(false);
   const [isThemeVisible, setIsThemeVisible] = useState(false);
   const [isColorsVisible, setIsColorsVisible] = useState(false);
@@ -56,17 +58,15 @@ export default function Settings() {
     if (address) dispatch(setWallet(address));
   }, [isConnected, address]);
 
-  const logout = async () => {
-    setIsLoading(true);
+  const logout = () => {
     setIsLogoutDialogVisible(false);
-    await provider?.disconnect();
+    disconnect();
     dispatch(setWallet(""));
-    setIsLoading(false);
   };
 
   const onLogin = async () => {
     setIsLoading(true);
-    await openConnectDialog({ route: "ConnectWallet" });
+    await openConnectDialog();
     setIsLoading(false);
   };
 
