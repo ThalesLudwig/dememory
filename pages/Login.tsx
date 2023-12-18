@@ -8,7 +8,7 @@ import { useWeb3Modal } from "@web3modal/wagmi-react-native";
 import { useAccount } from "wagmi";
 
 import { styles } from "../styles/loginStyles";
-import { setShowLoginPage, setWallet } from "../config/profileSlice";
+import { setShowLoginPage } from "../config/profileSlice";
 import { RootState } from "../config/store";
 
 export default function Login() {
@@ -21,7 +21,7 @@ export default function Login() {
   const [snackbarContent, setSnackbarContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { open: openConnectDialog } = useWeb3Modal()
-  const { address, isConnected } = useAccount()
+  const { isConnected } = useAccount()
 
   const onUseOnLocalDevice = () => {
     if (!showLoginPage) {
@@ -32,11 +32,8 @@ export default function Login() {
   };
 
   useEffect(() => {
-    if (address) {
-      dispatch(setWallet(address));
-      dispatch(setShowLoginPage(false));
-    }
-  }, [isConnected, address]);
+    if (isConnected) dispatch(setShowLoginPage(false));
+  }, [isConnected]);
 
   const onLogin = () => {
     setIsLoading(true);

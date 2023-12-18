@@ -1,12 +1,11 @@
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import { useAccount } from "wagmi";
 
 import { EntryStorage } from "./EntryStorage";
-import { RootState } from "../config/store";
 
 export const storageButtons = () => {
   const { t } = useTranslation("common");
-  const { wallet } = useSelector((state: RootState) => state.profile);
+  const { isConnected } = useAccount();
 
   return [
     {
@@ -18,8 +17,7 @@ export const storageButtons = () => {
       value: EntryStorage.BLOCKCHAIN.toString(),
       label: t("common:blockchain"),
       icon: "ethereum",
-      // disabled: !wallet,
-      disabled: true,
+      disabled: !isConnected,
     },
   ];
 };

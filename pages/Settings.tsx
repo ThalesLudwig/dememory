@@ -13,13 +13,13 @@ import {
   Text,
   useTheme,
 } from "react-native-paper";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
-import { useWeb3Modal } from '@web3modal/wagmi-react-native'
-import { useAccount, useDisconnect } from 'wagmi'
-import * as Linking from 'expo-linking';
+import { useWeb3Modal } from "@web3modal/wagmi-react-native";
+import { useAccount, useDisconnect } from "wagmi";
+import * as Linking from "expo-linking";
 
 import { styles } from "../styles/settingsStyles";
 import ThemeSettings from "../Components/Settings/ThemeSettings";
@@ -27,7 +27,6 @@ import ResetSettings from "../Components/Settings/ResetSettings";
 import LanguageSettings from "../Components/Settings/LanguageSettings";
 import { RootState } from "../config/store";
 import { walletShortener } from "../utils/walletShortener";
-import { setWallet } from "../config/profileSlice";
 import ColorsSettings from "../Components/Settings/ColorsSettings";
 import UserAvatar from "../Components/UserAvatar";
 import { setShowFavorites } from "../config/settingsSlice";
@@ -41,12 +40,10 @@ export default function Settings() {
   const { t } = useTranslation("common");
   const { navigate } = useNavigation<any>();
   const dispatch = useDispatch();
-  const { name: username, wallet } = useSelector((state: RootState) => state.profile);
   const { showFavorites } = useSelector((state: RootState) => state.settings);
-  const { open: openConnectDialog } = useWeb3Modal()
-  const { address, isConnected } = useAccount()
-  const { disconnect } = useDisconnect()
-  const [isLoading, setIsLoading] = useState(false);
+  const { open: openConnectDialog } = useWeb3Modal();
+  const { address, isConnected, isConnecting } = useAccount();
+  const { disconnect, isLoading: isDisconnecting } = useDisconnect();
   const [isThemeVisible, setIsThemeVisible] = useState(false);
   const [isColorsVisible, setIsColorsVisible] = useState(false);
   const [isLanguagesVisible, setIsLanguagesVisible] = useState(false);
@@ -54,21 +51,15 @@ export default function Settings() {
   const [isResetSnackbarVisible, setIsResetSnackbarVisible] = useState(false);
   const [isUnavailableSnackbarVisible, setIsUnavailableSnackbarVisible] = useState(false);
   const [isLogoutDialogVisible, setIsLogoutDialogVisible] = useState(false);
-
-  useEffect(() => {
-    if (address) dispatch(setWallet(address));
-  }, [isConnected, address]);
+  const isLoading = useMemo(() => isConnecting || isDisconnecting, [isConnecting, isDisconnecting]);
 
   const logout = () => {
     setIsLogoutDialogVisible(false);
     disconnect();
-    dispatch(setWallet(""));
   };
 
   const onLogin = async () => {
-    setIsLoading(true);
     await openConnectDialog();
-    setIsLoading(false);
   };
 
   const toogleShowFavorites = () => {
@@ -76,35 +67,34 @@ export default function Settings() {
   };
 
   const supportDeveloper = () => {
-    Linking.openURL('https://www.buymeacoffee.com/thalesludwig')
+    Linking.openURL("https://www.buymeacoffee.com/thalesludwig");
   };
 
   return (
     <SafeAreaView style={{ ...styles.container, backgroundColor: colors.background }}>
       <ScrollView>
         <View style={styles.body}>
+          
           {/* Avatar */}
           <View style={styles.avatar}>
             <Pressable style={styles.avatar} onPress={() => navigate("Profile")}>
-              {!wallet && <Avatar.Icon icon="account-outline" size={70} />}
-              {!!wallet && <UserAvatar />}
+              {!isConnected && <Avatar.Icon icon="account-outline" size={70} />}
+              {isConnected && <UserAvatar />}
               <Text style={styles.wallet} variant="titleMedium">
-                {username ||
-                  walletShortener(wallet).toUpperCase() ||
-                  t("common:settings.titles.local-user").toUpperCase()}
+                {walletShortener(address).toUpperCase() || t("common:settings.titles.local-user").toUpperCase()}
               </Text>
             </Pressable>
-            {!!wallet && !isLoading && (
+            {isConnected && !isLoading && (
               <Button mode="text" onPress={() => setIsLogoutDialogVisible(true)}>
                 {t("common:settings.buttons.logout")}
               </Button>
             )}
-            {!wallet && !isLoading && (
+            {!isConnected && !isLoading && (
               <Button mode="text" onPress={onLogin}>
                 {t("common:settings.buttons.login")}
               </Button>
             )}
-            {!!isLoading && <ActivityIndicator />}
+            {isLoading && <ActivityIndicator />}
           </View>
 
           {/* Preferences */}
@@ -118,12 +108,16 @@ export default function Settings() {
               <Divider />
               <Pressable style={styles.listItem} onPress={() => setIsColorsVisible(true)}>
                 <IconButton icon="palette" size={ICON_SIZE} iconColor={colors.primary} />
-                <Text variant="bodyLarge" style={styles.listItem}>{t("common:settings.menus.colors")}</Text>
+                <Text variant="bodyLarge" style={styles.listItem}>
+                  {t("common:settings.menus.colors")}
+                </Text>
               </Pressable>
               <Divider />
               <Pressable style={styles.listItem} onPress={() => setIsLanguagesVisible(true)}>
                 <IconButton icon="translate" size={ICON_SIZE} iconColor={colors.primary} />
-                <Text variant="bodyLarge" style={styles.listItem}>{t("common:settings.menus.languages")}</Text>
+                <Text variant="bodyLarge" style={styles.listItem}>
+                  {t("common:settings.menus.languages")}
+                </Text>
               </Pressable>
               <Divider />
               <View style={styles.favoritesToogle}>
@@ -139,20 +133,26 @@ export default function Settings() {
           {/* Security */}
           <List.Section>
             <List.Subheader>{t("common:settings.titles.security")}</List.Subheader>
-              <View style={{ backgroundColor: colors.elevation.level1, ...styles.listContainer }}>
+            <View style={{ backgroundColor: colors.elevation.level1, ...styles.listContainer }}>
               <Pressable style={styles.listItem} onPress={() => navigate("DataLock")}>
                 <IconButton icon="lock" size={ICON_SIZE} iconColor={colors.primary} />
-                <Text variant="bodyLarge" style={styles.listItem}>{t("common:settings.menus.app-lock")}</Text>
+                <Text variant="bodyLarge" style={styles.listItem}>
+                  {t("common:settings.menus.app-lock")}
+                </Text>
               </Pressable>
               <Divider />
               <Pressable style={styles.listItem} onPress={() => setIsUnavailableSnackbarVisible(true)}>
                 <IconButton icon="share" size={ICON_SIZE} iconColor={colors.primary} />
-                <Text variant="bodyLarge" style={styles.listItem}>{t("common:settings.menus.therapy-share")}</Text>
+                <Text variant="bodyLarge" style={styles.listItem}>
+                  {t("common:settings.menus.therapy-share")}
+                </Text>
               </Pressable>
               <Divider />
               <Pressable style={styles.listItem} onPress={() => navigate("ManageKeys")}>
                 <IconButton icon="key" size={ICON_SIZE} iconColor={colors.primary} />
-                <Text variant="bodyLarge" style={styles.listItem}>{t("common:settings.menus.manage-keys")}</Text>
+                <Text variant="bodyLarge" style={styles.listItem}>
+                  {t("common:settings.menus.manage-keys")}
+                </Text>
               </Pressable>
             </View>
           </List.Section>
@@ -163,12 +163,16 @@ export default function Settings() {
             <View style={{ backgroundColor: colors.elevation.level1, ...styles.listContainer }}>
               <Pressable style={styles.listItem} onPress={() => navigate("SaveBackup")}>
                 <IconButton icon="download" size={ICON_SIZE} iconColor={colors.primary} />
-                <Text variant="bodyLarge" style={styles.listItem}>{t("common:settings.menus.save-backup")}</Text>
+                <Text variant="bodyLarge" style={styles.listItem}>
+                  {t("common:settings.menus.save-backup")}
+                </Text>
               </Pressable>
               <Divider />
               <Pressable style={styles.listItem} onPress={() => navigate("RetrieveBackup")}>
                 <IconButton icon="upload" size={ICON_SIZE} iconColor={colors.primary} />
-                <Text variant="bodyLarge" style={styles.listItem}>{t("common:settings.backup.retrieve.title")}</Text>
+                <Text variant="bodyLarge" style={styles.listItem}>
+                  {t("common:settings.backup.retrieve.title")}
+                </Text>
               </Pressable>
             </View>
           </List.Section>
@@ -180,14 +184,18 @@ export default function Settings() {
               <View style={{ backgroundColor: colors.elevation.level1, ...styles.listContainer }}>
                 <Pressable style={styles.listItem} onPress={() => setIsResetDialogVisible(true)}>
                   <IconButton icon="trash-can-outline" size={ICON_SIZE} iconColor={colors.primary} />
-                  <Text variant="bodyLarge" style={styles.listItem}>{t("common:settings.menus.reset-entries")}</Text>
+                  <Text variant="bodyLarge" style={styles.listItem}>
+                    {t("common:settings.menus.reset-entries")}
+                  </Text>
                 </Pressable>
               </View>
             </List.Section>
           )}
 
           {/* Support the developer */}
-          <Button mode="contained" onPress={supportDeveloper}>{t("common:settings.buttons.buy-app").toUpperCase()}</Button>
+          <Button mode="contained" onPress={supportDeveloper}>
+            {t("common:settings.buttons.buy-app").toUpperCase()}
+          </Button>
         </View>
       </ScrollView>
       <Portal>
