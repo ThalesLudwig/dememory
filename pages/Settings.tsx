@@ -19,6 +19,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
 import { useWeb3Modal } from '@web3modal/wagmi-react-native'
 import { useAccount, useDisconnect } from 'wagmi'
+import * as Linking from 'expo-linking';
 
 import { styles } from "../styles/settingsStyles";
 import ThemeSettings from "../Components/Settings/ThemeSettings";
@@ -72,6 +73,10 @@ export default function Settings() {
 
   const toogleShowFavorites = () => {
     dispatch(setShowFavorites(!showFavorites));
+  };
+
+  const supportDeveloper = () => {
+    Linking.openURL('https://www.buymeacoffee.com/thalesludwig')
   };
 
   return (
@@ -175,7 +180,9 @@ export default function Settings() {
               </View>
             </List.Section>
           )}
-          <Button mode="contained">{t("common:settings.buttons.buy-app").toUpperCase()}</Button>
+
+          {/* Support the developer */}
+          <Button mode="contained" onPress={supportDeveloper}>{t("common:settings.buttons.buy-app").toUpperCase()}</Button>
         </View>
       </ScrollView>
       <Portal>
