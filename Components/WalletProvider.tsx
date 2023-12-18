@@ -16,7 +16,7 @@ const metadata = {
 
 const chains = [mainnet, polygon, arbitrum]
 const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
-createWeb3Modal({ projectId, chains, wagmiConfig })
+createWeb3Modal({ projectId, chains, wagmiConfig, defaultChain: polygon })
 
 export default function WalletProvider({ children }: { children: React.ReactNode }) {
   return (
