@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { SafeAreaView, View, FlatList, ScrollView } from "react-native";
-import { Button, Chip, FAB, IconButton, Portal, Searchbar, Snackbar, Text, useTheme } from "react-native-paper";
+import { Button, FAB, IconButton, Portal, Searchbar, Snackbar, Text, useTheme } from "react-native-paper";
 import { format } from "date-fns";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
@@ -66,6 +66,10 @@ export default function Home() {
     [entries],
   );
 
+  const displayFavorites = useMemo(() => {
+    return showFavorites && sortedFavorites.length > 0;
+  }, [showFavorites, sortedFavorites]);
+
   const filteredEntries = useMemo(() => {
     return entries.filter((entry) => !!entry.date && format(new Date(entry.date), "yyyy-MM-dd") === currentDate("yyyy-MM-dd"));
   }, [selectedDay, entries]);
@@ -113,9 +117,9 @@ export default function Home() {
             returnKeyType="done"
             onSubmitEditing={onSearch}
             onIconPress={onSearch}
-            style={{ marginBottom: showFavorites ? 0 : 15 }}
+            style={{ marginBottom: displayFavorites ? 0 : 15 }}
           />
-          {showFavorites && (
+          {displayFavorites && (
             <View style={styles.spaceBetween}>
               <Text variant="titleMedium">
                 {t("common:home.titles.recent-favorites")}
@@ -126,12 +130,7 @@ export default function Home() {
             </View>
           )}
         </View>
-        {showFavorites && sortedFavorites.length === 0 && (
-          <Chip icon="heart" style={styles.pinnedChip}>
-            {t("common:home.titles.no-favorites")}
-          </Chip>
-        )}
-        {showFavorites && (
+        {displayFavorites && (
           <FlatList
             data={sortedFavorites}
             showsHorizontalScrollIndicator={false}
