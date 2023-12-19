@@ -94,7 +94,7 @@ export default function Profile() {
             <DigitalCurrencySvg width={135} height={135} />
             <Text style={styles.textCenter} variant="titleLarge">{t("common:profile.balance.body-one")}</Text>
             <Text style={styles.textCenter} variant="bodyLarge">{t("common:profile.balance.body-two")}</Text>
-            <Button mode="contained" onPress={onLogin}>
+            <Button style={styles.connectButton} mode="contained" onPress={onLogin}>
               {t("common:login.buttons.metamask").toUpperCase()}
             </Button>
           </View>

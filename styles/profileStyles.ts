@@ -41,6 +41,9 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 20,
   },
+  connectButton: {
+    marginTop: 10,
+  },
   textCenter: {
     textAlign: "center",
   },
