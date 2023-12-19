@@ -17,6 +17,10 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  avatarIcon: {
+    borderRadius: 100,
+    padding: 5,
+  },
   modal: {
     padding: 20,
     width: "80%",

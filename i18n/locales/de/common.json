@@ -82,6 +82,9 @@
   "profile.snackbar.copy": "Adresse kopiert",
   "profile.snackbar.updated": "Profil aktualisiert",
   "profile.titles.profile": "Profil",
+  "profile.balance.amount": "Aktuelles Guthaben",
+  "profile.balance.body-one": "Sie verwenden die App mit einem lokalen Benutzer.",
+  "profile.balance.body-two": "Verbinden Sie Ihre Brieftasche, um Ihre Aufzeichnungen dauerhaft zu erfassen.",
 
   "search.buttons.clear-filters": "Filter zurücksetzen",
   "search.buttons.search": "Suchen",

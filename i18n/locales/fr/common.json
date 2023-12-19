@@ -82,6 +82,9 @@
   "profile.snackbar.copy": "Adresse copiée",
   "profile.snackbar.updated": "Profil mis à jour",
   "profile.titles.profile": "Profil",
+  "profile.balance.amount": "Solde actuel",
+  "profile.balance.body-one": "Vous utilisez l'application avec un utilisateur local.",
+  "profile.balance.body-two": "Connectez votre portefeuille pour enregistrer vos enregistrements de manière permanente.",
 
   "search.buttons.clear-filters": "Effacer les filtres",
   "search.buttons.search": "Rechercher",

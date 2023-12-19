@@ -82,6 +82,9 @@
   "profile.snackbar.copy": "Address copied",
   "profile.snackbar.updated": "Profile updated",
   "profile.titles.profile": "Profile",
+  "profile.balance.amount": "Current balance",
+  "profile.balance.body-one": "You are using the app with a local user.",
+  "profile.balance.body-two": "Connect your wallet to permanently record your records.",
 
   "search.buttons.clear-filters": "Clear Filters",
   "search.buttons.search": "Search",

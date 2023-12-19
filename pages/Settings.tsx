@@ -77,8 +77,10 @@ export default function Settings() {
           {/* Avatar */}
           <View style={styles.avatar}>
             <Pressable style={styles.avatar} onPress={() => navigate("Profile")}>
-              {!isConnected && <Avatar.Icon icon="account-outline" size={70} />}
-              {isConnected && <UserAvatar />}
+              <View style={{ ...styles.avatarIcon, backgroundColor: colors.inversePrimary }}>
+                {!isConnected && <Avatar.Icon icon="account-outline" size={70} />}
+                {isConnected && <UserAvatar />}
+              </View>
               <Text style={styles.wallet} variant="titleMedium">
                 {walletShortener(address).toUpperCase() || t("common:settings.titles.local-user").toUpperCase()}
               </Text>

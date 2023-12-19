@@ -10,7 +10,38 @@ export const styles = StyleSheet.create({
     paddingBottom: 15,
   },
   avatar: {
-    marginBottom: 15,
     alignSelf: "center",
+    borderRadius: 100,
+    padding: 5,
+  },
+  chip: {
+    alignSelf: "center",
+    height: 35,
+    marginBottom: 10,
+  },
+  bottomContainer: {
+    flex: 1,
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+    padding: 40,
+    gap: 15,
+  },
+  balanceContainer: {
+    gap: 10,
+    alignItems: "center",
+    marginVertical: 20,
+  },
+  balance: {
+    flexDirection: "row",
+    gap: 15,
+    alignItems: "center",
+  },
+  connectContainer: {
+    gap: 15,
+    alignItems: "center",
+    paddingHorizontal: 20,
+  },
+  textCenter: {
+    textAlign: "center",
   },
 });

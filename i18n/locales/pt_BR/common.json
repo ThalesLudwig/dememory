@@ -82,6 +82,9 @@
   "profile.snackbar.copy": "Endereço copiado",
   "profile.snackbar.updated": "Perfil atualizado",
   "profile.titles.profile": "Perfil",
+  "profile.balance.amount": "Saldo atual",
+  "profile.balance.body-one": "Você está usando o aplicativo com um usuário local.",
+  "profile.balance.body-two": "Conecte sua carteira para gravar seus registros permanentemente.",
 
   "search.buttons.clear-filters": "Limpar Filtros",
   "search.buttons.search": "Pesquisar",

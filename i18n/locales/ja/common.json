@@ -82,6 +82,9 @@
   "profile.snackbar.copy": "アドレスがコピーされました",
   "profile.snackbar.updated": "プロフィールが更新されました",
   "profile.titles.profile": "プロフィール",
+  "profile.balance.amount": "現在の残高",
+  "profile.balance.body-one": "あなたはローカルユーザーでアプリを使用しています。",
+  "profile.balance.body-two": "ウォレットを接続して、記録を永続的に記録します。",
 
   "search.buttons.clear-filters": "フィルターをクリア",
   "search.buttons.search": "検索",
