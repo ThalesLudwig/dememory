@@ -49,7 +49,6 @@ export default function Settings() {
   const [isLanguagesVisible, setIsLanguagesVisible] = useState(false);
   const [isResetDialogVisible, setIsResetDialogVisible] = useState(false);
   const [isResetSnackbarVisible, setIsResetSnackbarVisible] = useState(false);
-  const [isUnavailableSnackbarVisible, setIsUnavailableSnackbarVisible] = useState(false);
   const [isLogoutDialogVisible, setIsLogoutDialogVisible] = useState(false);
   const isLoading = useMemo(() => isConnecting || isDisconnecting, [isConnecting, isDisconnecting]);
 
@@ -141,13 +140,6 @@ export default function Settings() {
                 </Text>
               </Pressable>
               <Divider />
-              <Pressable style={styles.listItem} onPress={() => setIsUnavailableSnackbarVisible(true)}>
-                <IconButton icon="share" size={ICON_SIZE} iconColor={colors.primary} />
-                <Text variant="bodyLarge" style={styles.listItem}>
-                  {t("common:settings.menus.therapy-share")}
-                </Text>
-              </Pressable>
-              <Divider />
               <Pressable style={styles.listItem} onPress={() => navigate("ManageKeys")}>
                 <IconButton icon="key" size={ICON_SIZE} iconColor={colors.primary} />
                 <Text variant="bodyLarge" style={styles.listItem}>
@@ -208,14 +200,6 @@ export default function Settings() {
           setIsResetDialogVisible={setIsResetDialogVisible}
           setIsResetSnackbarVisible={setIsResetSnackbarVisible}
         />
-        <Snackbar
-          visible={isUnavailableSnackbarVisible}
-          onDismiss={() => setIsUnavailableSnackbarVisible(false)}
-          wrapperStyle={{ bottom: 80 }}
-          action={{ label: t("common:settings.buttons.close"), onPress: () => setIsUnavailableSnackbarVisible(false) }}
-        >
-          {t("common:settings.descriptions.option-unavailable")}
-        </Snackbar>
         <LogoutDialog isOpen={isLogoutDialogVisible} onLogout={logout} setIsOpen={setIsLogoutDialogVisible} />
       </Portal>
     </SafeAreaView>
