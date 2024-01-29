@@ -25,11 +25,10 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     flexDirection: "row",
-    gap: 5,
     justifyContent: "space-between",
     alignItems: "center",
   },
   text: {
-    width: "80%",
+    width: "90%",
   },
 });

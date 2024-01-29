@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
   body: {
     marginTop: 60,
     marginHorizontal: 15,
-    gap: 15,
+    gap: 2,
     paddingBottom: 15,
   },
   wallet: {
@@ -30,14 +30,14 @@ export const styles = StyleSheet.create({
   favoritesToogle: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: 'center',
+    alignItems: "center",
   },
   listContainer: {
     padding: 10,
     borderRadius: 20,
   },
   listItem: {
-    flexDirection: 'row',
+    flexDirection: "row",
     alignItems: "center",
     margin: 5,
   },
