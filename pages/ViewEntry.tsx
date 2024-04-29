@@ -115,9 +115,9 @@ export const ViewEntry = ({ route }: Props) => {
             <>
               <Text variant="titleMedium">{t("common:view-entry.titles.photos")}:</Text>
               <View style={styles.images}>
-                {entry.imagesUrl.map((imageUrl, i) => (
+                {entry.imagesUrl.map((image, i) => (
                   <Pressable onPress={() => onPressImage(i)} key={i}>
-                    <Image source={{ uri: imageUrl }} style={styles.thumbnail} />
+                    <Image source={{ uri: image.path }} style={styles.thumbnail} />
                   </Pressable>
                 ))}
               </View>
@@ -143,7 +143,7 @@ export const ViewEntry = ({ route }: Props) => {
         )}
       </ScrollView>
       <ImageView
-        images={[{ uri: entry.imagesUrl?.[openedImageIndex] }]}
+        images={[{ uri: entry.imagesUrl?.[openedImageIndex]?.path }]}
         imageIndex={0}
         visible={isImageOpen}
         onRequestClose={() => setIsImageOpen(false)}

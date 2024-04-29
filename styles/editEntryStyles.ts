@@ -23,13 +23,13 @@ export const styles = StyleSheet.create({
     marginVertical: 25,
   },
   thumbnail: {
-    width: 115,
-    height: 115,
+    width: 100,
+    height: 100,
     borderRadius: 10,
   },
   addImage: {
-    width: 115,
-    height: 115,
+    width: 100,
+    height: 100,
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",

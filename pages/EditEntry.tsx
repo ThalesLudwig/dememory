@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 
 import { getMoodColor, getMoodsArray } from "../utils/moodHelper";
 import { MoodEnum } from "../constants/moods";
-import { Entry } from "../types/Entry";
+import { Entry, PinnedImage } from "../types/Entry";
 import { updateEntry } from "../config/entriesSlice";
 import { RootStackParamList } from "../Components/Router";
 import { RootState } from "../config/store";
@@ -43,7 +43,7 @@ export default function EditEntry({ route }: Props) {
   const [entryStorage, setEntryStorage] = useState<string>(entry.storage?.toString() || "0");
   const [content, setContent] = useState(entry.content);
   const [selectedMood, setSelectedMood] = useState<MoodEnum>(entry.mood || 1);
-  const [images, setImages] = useState<string[]>(entry.imagesUrl || []);
+  const [images, setImages] = useState<PinnedImage[]>(entry.imagesUrl || []);
   const [isImageOpen, setIsImageOpen] = useState(false);
   const [openedImageIndex, setOpenedImageIndex] = useState(0);
   const [tags, setTags] = useState<string[]>(entry.tags || []);
@@ -68,7 +68,7 @@ export default function EditEntry({ route }: Props) {
       aspect: [4, 3],
       quality: 1,
     });
-    if (!result.canceled) setImages([...images, result.assets[0].uri]);
+    if (!result.canceled) setImages([...images, { path: result.assets[0].uri }]);
   };
 
   const onPressImage = (index: number) => {
@@ -134,10 +134,10 @@ export default function EditEntry({ route }: Props) {
           </View>
           <Text variant="titleMedium">{t("common:view-entry.titles.photos")}:</Text>
           <View style={styles.images}>
-            {images.map((imageUrl, i) => (
+            {images.map((image, i) => (
               <View key={i}>
                 <Pressable onPress={() => onPressImage(i)}>
-                  <Image source={{ uri: imageUrl }} style={styles.thumbnail} />
+                  <Image source={{ uri: image.path }} style={styles.thumbnail} />
                 </Pressable>
                 <IconButton
                   style={styles.deleteImage}
@@ -168,7 +168,7 @@ export default function EditEntry({ route }: Props) {
         </Button>
       </ScrollView>
       <ImageView
-        images={[{ uri: images[openedImageIndex] }]}
+        images={[{ uri: images[openedImageIndex]?.path }]}
         imageIndex={0}
         visible={isImageOpen}
         onRequestClose={() => setIsImageOpen(false)}

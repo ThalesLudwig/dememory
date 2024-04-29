@@ -2,11 +2,14 @@ import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Image, KeyboardAvoidingView, Platform, View, ScrollView, Pressable } from "react-native";
 import {
+  ActivityIndicator,
   Button,
   Chip,
   Divider,
   IconButton,
+  Portal,
   SegmentedButtons,
+  Snackbar,
   Surface,
   Switch,
   Text,
@@ -24,12 +27,14 @@ import { useTranslation } from "react-i18next";
 import { EntryStorage } from "../constants/EntryStorage";
 import { getMoodColor, getMoodsArray } from "../utils/moodHelper";
 import { MoodEnum } from "../constants/moods";
-import { Entry } from "../types/Entry";
+import { Entry, PinnedImage } from "../types/Entry";
 import { addEntry } from "../config/entriesSlice";
 import { styles } from "../styles/newEntryStyles";
 import { storageButtons } from "../constants/storage";
 import { useDateLocale } from "../hooks/useDateLocale";
 import Alert from "../Components/Alert";
+import usePinFileToIPFS from "../hooks/usePinFileToIPFS";
+import useUnpinFileToIPFS from "../hooks/useUnpinFileToIPFS";
 
 export default function NewEntry() {
   const { colors, dark } = useTheme();
@@ -37,11 +42,14 @@ export default function NewEntry() {
   const { navigate } = useNavigation<any>();
   const { t } = useTranslation("common");
   const locale = useDateLocale();
-
+  const { pinFile, isLoading: isUploadLoading } = usePinFileToIPFS();
+  const { unpinFile } = useUnpinFileToIPFS();
+  const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
+  const [snackbarText, setSnackbarText] = useState("");
   const [entryStorage, setEntryStorage] = useState(EntryStorage.LOCAL.toString());
   const [content, setContent] = useState("");
   const [selectedMood, setSelectedMood] = useState(MoodEnum.NEUTRAL);
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<PinnedImage[]>([]);
   const [isImageOpen, setIsImageOpen] = useState(false);
   const [openedImageIndex, setOpenedImageIndex] = useState(0);
   const [tags, setTags] = useState<string[]>([]);
@@ -57,7 +65,26 @@ export default function NewEntry() {
     setTagInput("");
   };
 
-  const submitForm = () => {
+  const uploadImagesToIPFS = async () => {
+    if (!images.length) return true;
+    const promises = images.map((image) => pinFile(image.path));
+    const results = await Promise.all(promises);
+    const failed = results.filter((result) => !result);
+    if (failed.length > 0) {
+      setSnackbarText(t("Erro ao salvar imagens no IPFS. Tente novamente."));
+      setIsSnackbarVisible(true);
+      return false;
+    } else {
+      setImages(results.map((result) => ({ path: result!.localPath, cid: result!.IpfsHash })));
+      return true;
+    }
+  };
+
+  const submitForm = async () => {
+    if (saveOnIPFS) {
+      const success = await uploadImagesToIPFS();
+      if (!success) return;
+    }
     const entry: Entry = {
       id: uuid.v4().toString(),
       mood: selectedMood,
@@ -74,12 +101,14 @@ export default function NewEntry() {
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [4, 3],
       quality: 1,
+      presentationStyle: ImagePicker.UIImagePickerPresentationStyle.POPOVER,
     });
-    if (!result.canceled) setImages([...images, result.assets[0].uri]);
+    if (!result.canceled) {
+      setImages([...images, { path: result.assets[0].uri }]);
+    }
   };
 
   const onPressImage = (index: number) => {
@@ -106,8 +135,8 @@ export default function NewEntry() {
 
   return (
     <SafeAreaView style={{ ...styles.container, backgroundColor: colors.background }}>
-      <ScrollView>
-        <KeyboardAvoidingView style={styles.body} behavior={Platform.OS === "ios" ? "padding" : "height"}>
+      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}>
+        <ScrollView contentContainerStyle={styles.body}>
           <Alert text={format(new Date(), "PPPP - kk:mm", { locale })} icon="clock" />
           <Text variant="titleMedium">{t("common:new-entry.titles.save-on")}:</Text>
           <SegmentedButtons value={entryStorage} onValueChange={setEntryStorage} buttons={storageButtons()} />
@@ -148,10 +177,10 @@ export default function NewEntry() {
           </View>
           <Text variant="titleMedium">{t("common:new-entry.titles.photos")}:</Text>
           <View style={styles.images}>
-            {images.map((imageUrl, i) => (
+            {images.map((image, i) => (
               <View key={i}>
                 <Pressable onPress={() => onPressImage(i)}>
-                  <Image source={{ uri: imageUrl }} style={styles.thumbnail} />
+                  <Image source={{ uri: image.path }} style={styles.thumbnail} />
                 </Pressable>
                 <IconButton
                   style={styles.deleteImage}
@@ -161,7 +190,7 @@ export default function NewEntry() {
                 />
               </View>
             ))}
-            <Pressable onPress={pickImage}>
+            <Pressable onPress={pickImage} disabled={isUploadLoading}>
               <Surface style={styles.addImage} elevation={0}>
                 <Text variant="titleLarge" style={{ color: "lightgrey" }}>
                   +
@@ -175,27 +204,37 @@ export default function NewEntry() {
               <IconButton icon="content-save" iconColor={colors.primary} />
               <Text variant="titleMedium">{t("common:new-entry.descriptions.save-with-ipfs")}</Text>
             </View>
-            <Switch disabled value={saveOnIPFS} onValueChange={() => setSaveOnIPFS(!saveOnIPFS)} />
+            <Switch value={saveOnIPFS} onValueChange={() => setSaveOnIPFS(!saveOnIPFS)} disabled={isUploadLoading} />
           </View>
           {saveOnIPFS && <Alert text={t("common:new-entry.descriptions.images-ipfs")} />}
-        </KeyboardAvoidingView>
-        <Button
-          icon="send"
-          contentStyle={{ flexDirection: "row-reverse" }}
-          style={styles.submit}
-          mode="contained"
-          onPress={submitForm}
-          disabled={!content.trim()}
-        >
-          {t("common:new-entry.buttons.submit").toUpperCase()}
-        </Button>
-      </ScrollView>
+          {isUploadLoading && <ActivityIndicator style={styles.spinner} animating={true} />}
+          <Button
+            icon="send"
+            contentStyle={{ flexDirection: "row-reverse" }}
+            style={styles.submit}
+            mode="contained"
+            onPress={submitForm}
+            disabled={!content.trim() || isUploadLoading}
+          >
+            {t("common:new-entry.buttons.submit").toUpperCase()}
+          </Button>
+        </ScrollView>
+      </KeyboardAvoidingView>
       <ImageView
-        images={[{ uri: images[openedImageIndex] }]}
+        images={[{ uri: images[openedImageIndex]?.path }]}
         imageIndex={0}
         visible={isImageOpen}
         onRequestClose={() => setIsImageOpen(false)}
       />
+      <Portal>
+        <Snackbar
+          visible={isSnackbarVisible}
+          onDismiss={() => setIsSnackbarVisible(false)}
+          wrapperStyle={{ bottom: 80 }}
+        >
+          {snackbarText}
+        </Snackbar>
+      </Portal>
     </SafeAreaView>
   );
 }

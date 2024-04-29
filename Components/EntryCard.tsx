@@ -72,8 +72,8 @@ const EntryCard = (props: Entry & { onPress: Function; onEdit: Function; onDelet
         </Card.Content>
         {!!props.imagesUrl && (
           <View style={styles.images}>
-            {props.imagesUrl.map((imageUrl, i) => (
-              <Image key={i} source={{ uri: imageUrl }} style={styles.thumbnail} />
+            {props.imagesUrl.map((image, i) => (
+              <Image key={i} source={{ uri: image.path }} style={styles.thumbnail} />
             ))}
           </View>
         )}
